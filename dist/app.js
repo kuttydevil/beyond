@@ -85171,7 +85171,7 @@ const copyToClipboard = ()=>{
             });
             clicked = true;
             hovered = true;
-            var email = "hello@beyond.fun";
+            var email = "info@totaldecorsdoha.com";
             navigator.clipboard.writeText(email);
         });
     });
