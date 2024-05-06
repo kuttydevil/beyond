@@ -1,0 +1,174 @@
+<!-- <script src="http://localhost:1234/app.js"></script> -->
+<!-- tries to load from local host -->
+<script src="https://psychoactive-studios.github.io/beyond-studio-scoping/dist/app.js?v=29"></script>
+
+<!-- <script>
+	if (typeof parceled === 'undefined') {
+		let script = document.createElement('script')
+		script.type = 'text/javascript'
+		script.src = 'https://psychoactive-studios.github.io/beyond-studio-scoping/dist/app.js?v=27';
+		document.head.appendChild(script)
+	}
+	//checks if the parceled variable from app.js is undefined- meaning local host isn't up and running
+	//if not loads from the github pages
+</script> -->
+
+<style>
+
+	.bg-img.full-height{
+		width: auto;
+		height: 100vh;
+		aspect-ratio: 16/9;
+	}
+
+	.cs-img-wrap:last-child:nth-child(odd){
+	width: 100%;
+	}
+
+	.casestudy-content {
+		pointer-events: none;
+	}
+
+	.scrolldom {
+		overscroll-behavior: none;
+	}
+
+	.mail-tag > .text-regular:not(:first-child) {
+		top: 0;
+		position: absolute;
+	}
+
+	.img-wrapper:not(:first-child) {
+		position: absolute;
+	}
+
+	#preloader {
+		display: flex;
+	}
+
+	.w-editor #preloader{
+		display: none;
+	}
+
+	@media screen and (min-width: 568px) {
+		#preloader {
+		scrollbar-gutter: stable;
+		}
+	}
+
+	/* #preloader p {
+		opacity: 0;
+	} */
+
+	.blink{
+		animation: blink 1s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+	}
+
+	#preloader .hero-text-wrapper svg {
+		position: absolute;
+	}
+
+	@keyframes blink {
+		0% {
+			opacity: 1;
+		}
+
+		100% {
+			opacity: 0;
+		}
+	}
+
+	.bg-img {
+		pointer-events: none;
+	}
+
+	.footer-logo-wrapper {
+		fill: #f5f5f5;
+	}
+
+	.hero-text-wrapper {
+		fill: #040707;
+	}
+</style>
+
+<style>
+	html, body {
+		direction: ltr;
+		overscroll-behavior: none;
+		overflow: hidden;
+	}
+
+	/* iframe button{
+		pointer-events: all;
+	} */
+
+	.filters-active{
+		border-color: #ff9a47;
+    	background-color: #ff9a47;
+    	color: #040707;
+	}
+
+	::-webkit-scrollbar {
+		width: 0.5vw;
+		/* Controls the overall width of the scrollbar */
+		padding: 10px;
+		/* Controls the padding of the Scrollbar */
+	}
+
+	::-webkit-scrollbar:horizontal {
+		height: 4px;
+	}
+
+	::-webkit-scrollbar-thumb:horizontal:hover {
+		background: #040707;
+	}
+
+	/* Track - This is the part that contains the bit you click and drag */
+	::-webkit-scrollbar-track {
+		background: #040707;
+		/* Sets the background to transparent, change to a Hex or RGB value if you would like */
+	}
+
+	/* Handle - This is the bit you actually click and drag */
+	::-webkit-scrollbar-thumb {
+		background: #ffffff;
+		/* Change the Hex value to change the scroll handle */
+		border-radius: 0px;
+	}
+
+	::selection {
+		color: #0F1212 !important;
+		background: #61FCC4 !important;
+	}
+
+	::-moz-selection {
+		background: #0F1212;
+		/* Gecko Browsers */
+	}
+
+	/*custom scroll bar for div*/
+</style>
+
+<style>
+	html {
+		font-size: calc(0.625rem + 0.41666666666666663vw);
+	}
+
+	@media screen and (max-width:1920px) {
+		html {
+			font-size: calc(0.625rem + 0.41666666666666674vw);
+		}
+	}
+
+	@media screen and (max-width:1440px) {
+		html {
+			font-size: calc(0.8126951092611863rem + 0.20811654526534862vw);
+		}
+	}
+
+	@media screen and (max-width:479px) {
+		html {
+			font-size: calc(0.7497384937238494rem + 0.41841004184100417vw);
+		}
+	}
+</style>
