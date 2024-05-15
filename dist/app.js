@@ -672,44 +672,27 @@ class App {
     }
     init() {
         document.querySelector("#canvas").style.height = `${this.height}px`;
-      
         // create curtains instance
-        this.curtains = new Curtains({
-          container: "canvas",
-          pixelRatio: this.pixelRatio,
-          watchScroll: false,
-          autoResize: false 
+        this.curtains = new (0, _curtainsjs.Curtains)({
+            container: "canvas",
+            pixelRatio: this.pixelRatio,
+            watchScroll: false,
+            autoResize: false
         });
-      
-        // Wait for WebGL context to be ready:
-        this.curtains.onContextLost(() => {
-          console.warn("WebGL context lost!!");
-        });
-        this.curtains.onReady(() => {
-          console.log("Curtains is ready, WebGL context is available");
-      
-          // Set blend modes (ONLY after WebGL context is ready)
-          this.curtains.gl.blendFunc(this.curtains.gl.SRC_ALPHA, this.curtains.gl.ONE_MINUS_SRC_ALPHA); 
-          this.curtains.gl.blendFunc(this.curtains.gl.ONE_MINUS_DST_ALPHA, this.curtains.gl.DST_ALPHA);
-      
-          // Additional settings (ONLY after WebGL context is ready)
-          // this.curtains.gl.blendFunc(this.curtains.gl.SRC_COLOR, this.curtains.gl.ONE_MINUS_SRC_COLOR);
-          this.curtains.gl.pixelStorei(this.curtains.gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
-      
-          this.textureOptions = {
+        this.curtains.gl.blendFunc(this.curtains.gl.SRC_ALPHA, this.curtains.gl.ONE_MINUS_SRC_ALPHA);
+        this.curtains.gl.blendFunc(this.curtains.gl.ONE_MINUS_DST_ALPHA, this.curtains.gl.DST_ALPHA);
+        //this.curtains.gl.blendFunc(this.curtains.gl.SRC_COLOR, this.curtains.gl.ONE_MINUS_SRC_COLOR)
+        this.curtains.gl.pixelStorei(this.curtains.gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+        this.textureOptions = {
             // premultiplyAlpha: true,
             // minFilter: this.curtains.gl.LINEAR_MIPMAP_NEAREST,
             // anisotropy: 16,
             clear: true
-          };
-      
-          this.filters = document.querySelectorAll("label.filters"); 
-        });
-      
-        // Success and Error Handling:
+        };
+        this.filters = document.querySelectorAll("label.filters");
         this.curtains.onSuccess(this.onSuccess.bind(this));
-        this.curtains.onError(this.onError.bind(this)); 
-      }
+        this.curtains.onError(this.onError.bind(this));
+    }
     onError() {
         document.querySelectorAll("img[puck]").forEach((el)=>{
             el.style.display = "none";
