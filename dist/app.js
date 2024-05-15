@@ -671,26 +671,30 @@ class App {
         this.textPlanes = [];
     }
     init() {
-        document.querySelector("#canvas").style.height = `${this.height}px`;
-        // create curtains instance
-        this.curtains = new (0, _curtainsjs.Curtains)({
-            container: "canvas",
-            pixelRatio: this.pixelRatio,
+        document.querySelector("#canvas").style.height = `${this.height}px`; 
+    
+        // 1. Create Curtains Instance 
+        this.curtains = new Curtains({
+            container: "canvas", 
+            pixelRatio: this.pixelRatio, 
             watchScroll: false,
-            autoResize: false
+            autoResize: false 
         });
-        this.curtains.gl.blendFunc(this.curtains.gl.SRC_ALPHA, this.curtains.gl.ONE_MINUS_SRC_ALPHA);
-        this.curtains.gl.blendFunc(this.curtains.gl.ONE_MINUS_DST_ALPHA, this.curtains.gl.DST_ALPHA);
-        //this.curtains.gl.blendFunc(this.curtains.gl.SRC_COLOR, this.curtains.gl.ONE_MINUS_SRC_COLOR)
-        this.curtains.gl.pixelStorei(this.curtains.gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
-        this.textureOptions = {
-            // premultiplyAlpha: true,
-            // minFilter: this.curtains.gl.LINEAR_MIPMAP_NEAREST,
-            // anisotropy: 16,
-            clear: true
-        };
-        this.filters = document.querySelectorAll("label.filters");
-        this.curtains.onSuccess(this.onSuccess.bind(this));
+    
+        // 2.  Wait for Curtains to Initialize
+        this.curtains.onSuccess(() => {
+            // 3. Set Blending and Texture Options AFTER Curtains is ready
+            this.curtains.gl.blendFunc(this.curtains.gl.SRC_ALPHA, this.curtains.gl.ONE_MINUS_SRC_ALPHA);
+            // (Optional) this.curtains.gl.blendFunc(this.curtains.gl.ONE_MINUS_DST_ALPHA, this.curtains.gl.DST_ALPHA); 
+            this.curtains.gl.pixelStorei(this.curtains.gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+            this.textureOptions = {
+                clear: true // Other texture options here
+            };
+    
+            this.filters = document.querySelectorAll("label.filters");
+            this.onError(this.onError.bind(this)); 
+        });
+    
         this.curtains.onError(this.onError.bind(this));
     }
     onError() {
@@ -85171,7 +85175,7 @@ const copyToClipboard = ()=>{
             });
             clicked = true;
             hovered = true;
-            var email = "info@totaldecorsdoha.com";
+            var email = "hello@beyond.fun";
             navigator.clipboard.writeText(email);
         });
     });
