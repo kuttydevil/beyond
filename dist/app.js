@@ -1,11 +1,3 @@
-// modules are defined as an array
-// [ module function, map of requires ]
-//
-// map of requires is short require name -> numeric require
-//
-// anything defined in a previous bundle is accessed via the
-// orig method which is the require for previous bundles
-
 (function (modules, entry, mainEntry, parcelRequireName, globalName) {
   /* eslint-disable no-undef */
   var globalObject =
@@ -35,9 +27,7 @@
   function newRequire(name, jumped) {
     if (!cache[name]) {
       if (!modules[name]) {
-        // if we cannot find the module within our internal map or
-        // cache jump to the current global require ie. the last bundle
-        // that was added to the page.
+
         var currentRequire =
           typeof globalObject[parcelRequireName] === 'function' &&
           globalObject[parcelRequireName];
@@ -45,10 +35,7 @@
           return currentRequire(name, true);
         }
 
-        // If there are other bundles on this page the require from the
-        // previous one is saved to 'previousRequire'. Repeat this as
-        // many times as there are bundles until the module is found or
-        // we exhaust the require chain.
+
         if (previousRequire) {
           return previousRequire(name, true);
         }
@@ -123,8 +110,7 @@
   }
 
   if (mainEntry) {
-    // Expose entry point to Node, AMD or browser globals
-    // Based on https://github.com/ForbesLindesay/umd/blob/master/template.js
+
     var mainExports = newRequire(mainEntry);
 
     // CommonJS
@@ -150,52 +136,8 @@ var HMR_PORT = 50619;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
 module.bundle.HMR_BUNDLE_ID = "138b6a135baa4167";
-/* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, globalThis, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
-import type {
-  HMRAsset,
-  HMRMessage,
-} from '@parcel/reporter-dev-server/src/HMRServer.js';
-interface ParcelRequire {
-  (string): mixed;
-  cache: {|[string]: ParcelModule|};
-  hotData: mixed;
-  Module: any;
-  parent: ?ParcelRequire;
-  isParcelRequire: true;
-  modules: {|[string]: [Function, {|[string]: string|}]|};
-  HMR_BUNDLE_ID: string;
-  root: ParcelRequire;
-}
-interface ParcelModule {
-  hot: {|
-    data: mixed,
-    accept(cb: (Function) => void): void,
-    dispose(cb: (mixed) => void): void,
-    // accept(deps: Array<string> | string, cb: (Function) => void): void,
-    // decline(): void,
-    _acceptCallbacks: Array<(Function) => void>,
-    _disposeCallbacks: Array<(mixed) => void>,
-  |};
-}
-interface ExtensionContext {
-  runtime: {|
-    reload(): void,
-    getURL(url: string): string;
-    getManifest(): {manifest_version: number, ...};
-  |};
-}
-declare var module: {bundle: ParcelRequire, ...};
-declare var HMR_HOST: string;
-declare var HMR_PORT: string;
-declare var HMR_ENV_HASH: string;
-declare var HMR_SECURE: boolean;
-declare var chrome: ExtensionContext;
-declare var browser: ExtensionContext;
-declare var __parcel__import__: (string) => Promise<void>;
-declare var __parcel__importScripts__: (string) => Promise<void>;
-declare var globalThis: typeof self;
-declare var ServiceWorkerGlobalScope: Object;
-*/ var OVERLAY_ID = "__parcel__error__overlay__";
+
+var OVERLAY_ID = "__parcel__error__overlay__";
 var OldModule = module.bundle.Module;
 function Module(moduleName) {
     OldModule.call(this, moduleName);
@@ -385,12 +327,7 @@ async function hmrApplyUpdates(assets) {
     global.parcelHotUpdate = Object.create(null);
     let scriptsToRemove;
     try {
-        // If sourceURL comments aren't supported in eval, we need to load
-        // the update from the dev server over HTTP so that stack traces
-        // are correct in errors/logs. This is much slower than eval, so
-        // we only do it if needed (currently just Safari).
-        // https://bugs.webkit.org/show_bug.cgi?id=137297
-        // This path is also taken if a CSP disallows eval.
+
         if (!supportsSourceURL) {
             let promises = assets.map((asset)=>{
                 var _hmrDownload;
@@ -497,8 +434,7 @@ function hmrAcceptCheckOne(bundle, id, depsByBundle) {
     var modules = bundle.modules;
     if (!modules) return;
     if (depsByBundle && !depsByBundle[bundle.HMR_BUNDLE_ID]) {
-        // If we reached the root bundle without finding where the asset should go,
-        // there's nothing to do. Mark as "accepted" so we don't reload the page.
+
         if (!bundle.parent) return true;
         return hmrAcceptCheck(bundle.parent, id, depsByBundle);
     }
@@ -684,9 +620,6 @@ class App {
         //this.curtains.gl.blendFunc(this.curtains.gl.SRC_COLOR, this.curtains.gl.ONE_MINUS_SRC_COLOR)
         this.curtains.gl.pixelStorei(this.curtains.gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
         this.textureOptions = {
-            // premultiplyAlpha: true,
-            // minFilter: this.curtains.gl.LINEAR_MIPMAP_NEAREST,
-            // anisotropy: 16,
             clear: true
         };
         this.filters = document.querySelectorAll("label.filters");
@@ -950,10 +883,7 @@ class App {
     onLoaded() {
         this.container.style.height = "100%";
         this.container.style.overflow = "hidden";
-        // this.stats = new Stats();
-        // this.stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-        // this.stats.dom.classList.add('stats');
-        // document.body.appendChild( this.stats.dom );
+
         this.initTimeline();
         this.pass = new (0, _curtainsjs.ShaderPass)(this.curtains, {
             fragmentShader: (0, _pageFragDefault.default),
@@ -1211,8 +1141,7 @@ class App {
             });
             this.isAnimed = true;
             console.log("isAnimed");
-        //    document.removeEventListener('click', () => this.startAnim())
-        //    this.container.removeEventListener("scroll", () => this.startAnim())
+
         }
     }
     trans() {
@@ -1269,15 +1198,7 @@ class App {
         this.transition = true;
         this.impulses.opacity = 0;
         this.menuColors.mix = 1;
-        // anime({
-        //     targets: this.hoverColors,
-        //     c:"#040707",
-        //     d:"#040707",
-        //     opacity: 1,
-        //     mix: 1,
-        //     duration: 1000,
-        //     easing: "easeInOutSine"
-        // })
+
         (0, _animejsDefault.default)({
             targets: [
                 this.container,
@@ -1527,34 +1448,7 @@ var _fxaapassJs = require("./extras/FXAAPass.js");
 },{"./core/Curtains.js":"9mwPF","./core/Plane.js":"7VSYC","./core/Texture.js":"fuCjC","./framebuffers/RenderTarget.js":"7FPO3","./framebuffers/ShaderPass.js":"ax2D8","./loaders/TextureLoader.js":"6VoSy","./math/Vec2.js":"d6cuD","./math/Vec3.js":"3k5OT","./math/Mat4.js":"8VQeF","./math/Quat.js":"8I282","./extras/PingPongPlane.js":"64j5G","./extras/FXAAPass.js":"3zUbz","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9mwPF":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Here we create our Curtains object
-
-
- params:
- @container (HTML element or string, optional): the container HTML element or ID that will hold our canvas. Could be set later if not passed as parameter here
-
- (WebGL context parameters)
- @alpha (bool, optional): whether the WebGL context should handle transparency. Default to true.
- @premultipliedAlpha (bool, optional): whether the WebGL context should handle premultiplied alpha. Default to false.
- @antialias (bool, optional): whether the WebGL context should use the default antialiasing. When using render targets, WebGL disables antialiasing, so you can safely set this to false to improve the performance. Default to true.
- @depth (bool, optional): whether the WebGL context should handle depth. Default to true.
- @failIfMajorPerformanceCaveat (bool, optional): whether the WebGL context creation should fail in case of major performance caveat. Default to true.
- @preserveDrawingBuffer (bool, optional): whether the WebGL context should preserve the drawing buffer. Default to false.
- @stencil (bool, optional): whether the WebGL context should handle stencil. Default to false.
-
- @autoResize (bool, optional): Whether the library should listen to the window resize event and actually resize the scene. Set it to false if you want to handle this by yourself using the resize() method. Default to true.
- @autoRender (bool, optional): Whether the library should create a request animation frame loop to render the scene. Set it to false if you want to handle this by yourself using the render() method. Default to true.
- @watchScroll (bool, optional): Whether the library should listen to the window scroll event. Set it to false if you want to handle this by yourself. Default to true.
-
- @pixelRatio (float, optional): Defines the pixel ratio value. Use it to limit it on init to increase performance. Default to window.devicePixelRatio.
- @renderingScale (float, optional): Use it to downscale your rendering canvas. May improve performance but will decrease quality. Default to 1 (minimum: 0.25, maximum: 1).
-
- @production (bool, optional): Whether the library should throw useful console warnings and errors and check shaders and programs compilation status. Default to false.
-
- returns :
- @this: our Renderer
- ***/ parcelHelpers.export(exports, "Curtains", ()=>Curtains);
+parcelHelpers.export(exports, "Curtains", ()=>Curtains);
 var _rendererJs = require("./Renderer.js");
 var _scrollManagerJs = require("../utils/ScrollManager.js");
 var _utilsJs = require("../utils/utils.js");
@@ -1589,14 +1483,7 @@ class Curtains {
         if (container) this.setContainer(container);
         else if (!this.production) (0, _utilsJs.throwWarning)(this.type + ": no container provided in the initial parameters. Use setContainer() method to set one later and initialize the WebGL context");
     }
-    /***
-     Set up our Curtains container and start initializing everything
-     Called on Curtains instancing if a params container has been provided, could be call afterwards else
-     Useful with JS frameworks to init our Curtains class globally and then set the container in a canvas component afterwards to fully instantiate everything
-
-     params:
-     @container (HTML element or string): the container HTML element or ID that will hold our canvas
-     ***/ setContainer(container) {
+setContainer(container) {
         if (!container) {
             let container1 = document.createElement("div");
             container1.setAttribute("id", "curtains-canvas");
@@ -1617,10 +1504,7 @@ class Curtains {
         }
         this._initCurtains();
     }
-    /***
-     Initialize everything that the class will need: WebGL renderer, scroll manager, sizes, listeners
-     Then starts our animation frame loop if needed
-     ***/ _initCurtains() {
+_initCurtains() {
         this.planes = [];
         this.renderTargets = [];
         this.shaderPasses = [];
@@ -1641,9 +1525,7 @@ class Curtains {
         this._animationFrameID = null;
         if (this._autoRender) this._animate();
     }
-    /*** WEBGL CONTEXT ***/ /***
-     Initialize the Renderer class object
-     ***/ _initRenderer() {
+_initRenderer() {
         this.renderer = new (0, _rendererJs.Renderer)({
             alpha: this.alpha,
             antialias: this.antialias,
@@ -1667,70 +1549,38 @@ class Curtains {
         this.gl = this.renderer.gl;
         this.canvas = this.renderer.canvas;
     }
-    /***
-     Force our renderer to restore the WebGL context
-     ***/ restoreContext() {
+restoreContext() {
         this.renderer.restoreContext();
     }
-    /***
-     This just handles our drawing animation frame
-     ***/ _animate() {
+_animate() {
         this.render();
         this._animationFrameID = window.requestAnimationFrame(this._animate.bind(this));
     }
-    /*** RENDERING ***/ /***
-     Enables rendering
-     ***/ enableDrawing() {
+enableDrawing() {
         this.renderer.enableDrawing();
     }
-    /***
-     Disables rendering
-     ***/ disableDrawing() {
+ disableDrawing() {
         this.renderer.disableDrawing();
     }
-    /***
-     Forces the rendering of the next frame, even if disabled
-     ***/ needRender() {
+needRender() {
         this.renderer.needRender();
     }
-    /***
-     Executes a callback on next frame
-
-     params:
-     @callback (function): callback to execute on next frame
-     @keep (bool): whether to keep calling that callback on each rendering call or not (act as a setInterval). Default to false
-
-     returns:
-     @queueItem: the queue item. Allows to keep a track of it and set its keep property to false when needed
-     ***/ nextRender(callback, keep = false) {
+nextRender(callback, keep = false) {
         return this.renderer.nextRender.add(callback, keep);
     }
-    /***
-     Clear our WebGL renderer colors and depth buffers
-     ***/ clear() {
+clear() {
         this.renderer && this.renderer.clear();
     }
-    /***
-     Clear our WebGL renderer depth buffer
-     ***/ clearDepth() {
+clearDepth() {
         this.renderer && this.renderer.clearDepth();
     }
-    /***
-     Clear our WebGL renderer color buffer
-     ***/ clearColor() {
+clearColor() {
         this.renderer && this.renderer.clearColor();
     }
-    /***
-     Check whether the created context is WebGL2
-
-     return:
-     @isWebGL2 (bool): whether the created WebGL context is 2.0 or not
-     ***/ isWebGL2() {
+isWebGL2() {
         return this.gl ? this.renderer._isWebGL2 : false;
     }
-    /***
-     Tells our renderer to render the scene if the drawing is enabled
-     ***/ render() {
+render() {
         // always execute callback queue
         this.renderer.nextRender.execute();
         // If forceRender is true, force rendering this frame even if drawing is not enabled.
@@ -1742,9 +1592,7 @@ class Curtains {
         if (this._onRenderCallback) this._onRenderCallback();
         this.renderer.render();
     }
-    /*** LISTENERS ***/ /***
-     Adds our resize event listener if needed
-     ***/ _addListeners() {
+_addListeners() {
         // handling window resize event
         this._resizeHandler = null;
         if (this._autoResize) {
@@ -1752,17 +1600,13 @@ class Curtains {
             window.addEventListener("resize", this._resizeHandler, false);
         }
     }
-    /*** SIZING ***/ /***
-     Set the pixel ratio property and update everything by calling the resize() method
-     ***/ setPixelRatio(pixelRatio, triggerCallback) {
+setPixelRatio(pixelRatio, triggerCallback) {
         this.pixelRatio = parseFloat(Math.max(pixelRatio, 1)) || 1;
         this.renderer.setPixelRatio(pixelRatio);
         // apply new pixel ratio to all our elements but don't trigger onAfterResize callback
         this.resize(triggerCallback);
     }
-    /***
-     Set our renderer container and canvas sizes and update the scroll values
-     ***/ _setSize() {
+_setSize() {
         this.renderer.setSize();
         // update scroll values ass well
         if (this._scrollManager.shouldWatch) {
@@ -1770,20 +1614,10 @@ class Curtains {
             this._scrollManager.yOffset = window.pageYOffset;
         }
     }
-    /***
-     Useful to get our container bounding rectangle without triggering a reflow/layout
-
-     returns :
-     @boundingRectangle (object): an object containing our container bounding rectangle (width, height, top and left properties)
-     ***/ getBoundingRect() {
+getBoundingRect() {
         return this.renderer._boundingRect;
     }
-    /***
-     Resize our container and the renderer
-
-     params:
-     @triggerCallback (bool): Whether we should trigger onAfterResize callback
-     ***/ resize(triggerCallback) {
+resize(triggerCallback) {
         if (!this.gl) return;
         this._setSize();
         this.renderer.resize();
@@ -1791,9 +1625,7 @@ class Curtains {
             if (this._onAfterResizeCallback && triggerCallback) this._onAfterResizeCallback();
         });
     }
-    /*** SCROLL ***/ /***
-     Init our ScrollManager class object
-     ***/ _initScroll() {
+_initScroll() {
         this._scrollManager = new (0, _scrollManagerJs.ScrollManager)({
             // init values
             xOffset: window.pageXOffset,
@@ -1804,181 +1636,86 @@ class Curtains {
             onScroll: (lastXDelta, lastYDelta)=>this._updateScroll(lastXDelta, lastYDelta)
         });
     }
-    /***
-     Handles the different values associated with a scroll event (scroll and delta values)
-     If no plane watch the scroll then those values won't be retrieved to avoid unnecessary reflow calls
-     If at least a plane is watching, update all watching planes positions based on the scroll values
-     And force render for at least one frame to actually update the scene
-     ***/ _updateScroll(lastXDelta, lastYDelta) {
+ _updateScroll(lastXDelta, lastYDelta) {
         for(let i = 0; i < this.planes.length; i++)// if our plane is watching the scroll, update its position
         if (this.planes[i].watchScroll) this.planes[i].updateScrollPosition(lastXDelta, lastYDelta);
         // be sure we'll update the scene even if drawing is disabled
         this.renderer.needRender();
         this._onScrollCallback && this._onScrollCallback();
     }
-    /***
-     Updates the scroll manager X and Y scroll values as well as last X and Y deltas
-     Internally called by the scroll handler if at least one plane is watching the scroll
-     Could be called externally as well if the user wants to handle the scroll by himself
-
-     params:
-     @x (float): scroll value along X axis
-     @y (float): scroll value along Y axis
-     ***/ updateScrollValues(x, y) {
+updateScrollValues(x, y) {
         this._scrollManager.updateScrollValues(x, y);
     }
-    /***
-     Returns last delta scroll values
-
-     returns:
-     @delta (object): an object containing X and Y last delta values
-     ***/ getScrollDeltas() {
+getScrollDeltas() {
         return {
             x: this._scrollManager.lastXDelta,
             y: this._scrollManager.lastYDelta
         };
     }
-    /***
-     Returns last window scroll values
-
-     returns:
-     @scrollValues (object): an object containing X and Y last scroll values
-     ***/ getScrollValues() {
+getScrollValues() {
         return {
             x: this._scrollManager.xOffset,
             y: this._scrollManager.yOffset
         };
     }
-    /*** ADDING / REMOVING OBJECTS TO THE RENDERER ***/ /***
-     Always keep sync between renderer and Curtains scene objects when adding/removing objects
-     ***/ _keepSync() {
+_keepSync() {
         this.planes = this.renderer.planes;
         this.shaderPasses = this.renderer.shaderPasses;
         this.renderTargets = this.renderer.renderTargets;
     }
-    /*** UTILS ***/ /***
-     Linear interpolation helper defined in utils
-     ***/ lerp(start, end, amount) {
+lerp(start, end, amount) {
         return (0, _utilsJs.lerp)(start, end, amount);
     }
-    /*** EVENTS ***/ /***
-     This is called each time our container has been resized
-
-     params :
-     @callback (function) : a function to execute
-
-     returns :
-     @this: our Curtains element to handle chaining
-     ***/ onAfterResize(callback) {
+onAfterResize(callback) {
         if (callback) this._onAfterResizeCallback = callback;
         return this;
     }
-    /***
-     This is called when an error has been detected
-
-     params:
-     @callback (function): a function to execute
-
-     returns:
-     @this: our Curtains element to handle chaining
-     ***/ onError(callback) {
+onError(callback) {
         if (callback) this._onErrorCallback = callback;
         return this;
     }
-    /***
-     This triggers the onError callback and is called by the renderer when an error has been detected
-     ***/ _onRendererError() {
+_onRendererError() {
         // be sure that the callback has been registered and only call the global error callback once
         setTimeout(()=>{
             if (this._onErrorCallback && !this.errors) this._onErrorCallback();
             this.errors = true;
         }, 0);
     }
-    /***
-     This is called when the WebGL context has been successfully created
-
-     params:
-     @callback (function): a function to execute
-
-     returns:
-     @this: our Curtains element to handle chaining
-     ***/ onSuccess(callback) {
+onSuccess(callback) {
         if (callback) this._onSuccessCallback = callback;
         return this;
     }
-    /***
-     This triggers the onSuccess callback and is called by the renderer when the context has been successfully created
-     ***/ _onRendererSuccess() {
+ _onRendererSuccess() {
         setTimeout(()=>{
             this._onSuccessCallback && this._onSuccessCallback();
         }, 0);
     }
-    /***
-     This is called once our context has been lost
-
-     params:
-     @callback (function): a function to execute
-
-     returns:
-     @this: our Curtains element to handle chaining
-     ***/ onContextLost(callback) {
+onContextLost(callback) {
         if (callback) this._onContextLostCallback = callback;
         return this;
     }
-    /***
-     This triggers the onContextLost callback and is called by the renderer when the context has been lost
-     ***/ _onRendererContextLost() {
+_onRendererContextLost() {
         this._onContextLostCallback && this._onContextLostCallback();
     }
-    /***
-     This is called once our context has been restored
-
-     params:
-     @callback (function): a function to execute
-
-     returns:
-     @this: our Curtains element to handle chaining
-     ***/ onContextRestored(callback) {
+onContextRestored(callback) {
         if (callback) this._onContextRestoredCallback = callback;
         return this;
     }
-    /***
-     This triggers the onContextRestored callback and is called by the renderer when the context has been restored
-     ***/ _onRendererContextRestored() {
+_onRendererContextRestored() {
         this._onContextRestoredCallback && this._onContextRestoredCallback();
     }
-    /***
-     This is called once at each request animation frame call
-
-     params:
-     @callback (function): a function to execute
-
-     returns:
-     @this: our Curtains element to handle chaining
-     ***/ onRender(callback) {
+onRender(callback) {
         if (callback) this._onRenderCallback = callback;
         return this;
     }
-    /***
-     This is called each time window is scrolled and if our scrollManager is active
-
-     params :
-     @callback (function) : a function to execute
-
-     returns :
-     @this: our Curtains element to handle chaining
-     ***/ onScroll(callback) {
+onScroll(callback) {
         if (callback) this._onScrollCallback = callback;
         return this;
     }
-    /*** DESTROYING ***/ /***
-     Dispose everything
-     ***/ dispose() {
+dispose() {
         this.renderer.dispose();
     }
-    /***
-     This is called when the renderer has finished disposing all the WebGL stuff
-     ***/ _onRendererDisposed() {
+_onRendererDisposed() {
         // cancel animation frame
         this._animationFrameID && window.cancelAnimationFrame(this._animationFrameID);
         // remove event listeners
@@ -1990,26 +1727,7 @@ class Curtains {
 },{"./Renderer.js":"5FGAx","../utils/ScrollManager.js":"7Z9lN","../utils/utils.js":"6sdZo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5FGAx":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Here we create our Renderer object
- It will create our WebGL context and handle everything that relates to it
- Will create a container, append a canvas, handle WebGL extensions, context lost/restoration events
- Will create a Scene class object that will keep tracks of all added objects
- Will also handle all global WebGL commands, like clearing scene, binding frame buffers, setting depth, blend func, etc.
- Will use a state object to handle all those commands and keep a track of what is being drawned to avoid redundant WebGL calls.
-
- params:
- @Curtainsparams see Curtains class object
-
- @onError (function): called when there has been an error while initiating the WebGL context
- @onSuccess (function): called when the WebGL context has been successfully created
- @onContextLost (function): called when the WebGL context is lost
- @onContextRestored (function): called when the WebGL context is restored
- @onSceneChange (function): called every time an object has been added/removed from the scene
-
- returns :
- @this: our Renderer
- ***/ parcelHelpers.export(exports, "Renderer", ()=>Renderer);
+parcelHelpers.export(exports, "Renderer", ()=>Renderer);
 var _sceneJs = require("./Scene.js");
 var _cacheManagerJs = require("../utils/CacheManager.js");
 var _callbackQueueManagerJs = require("../utils/CallbackQueueManager.js");
@@ -2067,9 +1785,7 @@ class Renderer {
         } else if (this.onSuccess) this.onSuccess();
         this.initRenderer();
     }
-    /***
-     Set/reset our context state object
-     ***/ initState() {
+initState() {
         this.state = {
             // if we are currently rendering
             isActive: true,
@@ -2099,14 +1815,10 @@ class Renderer {
             premultiplyAlpha: null
         };
     }
-    /***
-     Add a callback queueing manager (execute functions on the next render call, see CallbackQueueManager class object)
-     ***/ initCallbackQueueManager() {
+initCallbackQueueManager() {
         this.nextRender = new (0, _callbackQueueManagerJs.CallbackQueueManager)();
     }
-    /***
-     Init our renderer
-     ***/ initRenderer() {
+initRenderer() {
         this.planes = [];
         this.renderTargets = [];
         this.shaderPasses = [];
@@ -2132,10 +1844,7 @@ class Renderer {
         this._contextRestoredHandler = this.contextRestored.bind(this);
         this.canvas.addEventListener("webglcontextrestored", this._contextRestoredHandler, false);
     }
-    /***
-     Get all available WebGL extensions based on WebGL used version
-     Called on init and on context restoration
-     ***/ getExtensions() {
+getExtensions() {
         this.extensions = [];
         if (this._isWebGL2) {
             this.extensions["EXT_color_buffer_float"] = this.gl.getExtension("EXT_color_buffer_float");
@@ -2157,18 +1866,14 @@ class Renderer {
             this.extensions["WEBGL_lose_context"] = this.gl.getExtension("WEBGL_lose_context");
         }
     }
-    /*** HANDLING CONTEXT LOST/RESTORE ***/ /***
-     Called when the WebGL context is lost
-     ***/ contextLost(event) {
+contextLost(event) {
         this.state.isContextLost = true;
         // do not try to restore the context if we're disposing everything!
         if (!this.state.isActive) return;
         event.preventDefault();
         this.nextRender.add(()=>this.onContextLost && this.onContextLost());
     }
-    /***
-     Call this method to restore your context
-     ***/ restoreContext() {
+restoreContext() {
         // do not try to restore the context if we're disposing everything!
         if (!this.state.isActive) return;
         this.initState();
@@ -2179,12 +1884,7 @@ class Renderer {
             if (this.onError) this.onError();
         }
     }
-    /***
-     Check that all objects and textures have been restored
-
-     returns:
-     @isRestored (bool): whether everything has been restored or not
-     ***/ isContextexFullyRestored() {
+isContextexFullyRestored() {
         let isRestored = true;
         for(let i = 0; i < this.renderTargets.length; i++){
             if (!this.renderTargets[i].textures[0]._canDraw) isRestored = false;
@@ -2214,9 +1914,7 @@ class Renderer {
         }
         return isRestored;
     }
-    /***
-     Called when the WebGL context is restored
-     ***/ contextRestored() {
+ contextRestored() {
         this.getExtensions();
         // set blend func
         this.setBlendFunc();
@@ -2247,14 +1945,10 @@ class Renderer {
             }
         }, true);
     }
-    /*** SIZING ***/ /***
-     Updates pixelRatio property
-     ***/ setPixelRatio(pixelRatio) {
+setPixelRatio(pixelRatio) {
         this.pixelRatio = pixelRatio;
     }
-    /***
-     Set/reset container sizes and WebGL viewport sizes
-     ***/ setSize() {
+setSize() {
         if (!this.gl) return;
         // get our container bounding client rectangle
         const containerBoundingRect = this.container.getBoundingClientRect();
@@ -2265,10 +1959,7 @@ class Renderer {
             top: containerBoundingRect.top * this.pixelRatio,
             left: containerBoundingRect.left * this.pixelRatio
         };
-        // iOS Safari > 8+ has a known bug due to navigation bar appearing/disappearing
-        // this causes wrong bounding client rect calculations, especially negative top value when it shouldn't
-        // to fix this we'll use a dirty but useful workaround
-        // first we check if we're on iOS Safari
+
         const isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
         const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         if (isSafari && iOS) {
@@ -2290,10 +1981,7 @@ class Renderer {
         this.canvas.height = Math.floor(this._boundingRect.height * this._renderingScale);
         this.gl.viewport(0, 0, this.gl.drawingBufferWidth, this.gl.drawingBufferHeight);
     }
-    /***
-     Resize all our elements: planes, shader passes and render targets
-     Their textures will be resized as well
-     ***/ resize() {
+resize() {
         // resize the planes only if they are fully initiated
         for(let i = 0; i < this.planes.length; i++)if (this.planes[i]._canDraw) this.planes[i].resize();
         // resize the shader passes only if they are fully initiated
@@ -2303,9 +1991,7 @@ class Renderer {
         // be sure we'll update the scene even if drawing is disabled
         this.needRender();
     }
-    /*** CLEAR SCENE ***/ /***
-     Clear our WebGL scene colors and depth
-     ***/ clear() {
+clear() {
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
     }
     /***
@@ -2318,13 +2004,7 @@ class Renderer {
      ***/ clearColor() {
         this.gl.clear(this.gl.COLOR_BUFFER_BIT);
     }
-    /*** FRAME BUFFER OBJECTS ***/ /***
-     Called to bind or unbind a FBO
-
-     params:
-     @frameBuffer (frameBuffer): if frameBuffer is not null, bind it, unbind it otherwise
-     @cancelClear (bool / undefined): if we should cancel clearing the frame buffer (typically on init & resize)
-     ***/ bindFrameBuffer(frameBuffer, cancelClear) {
+bindFrameBuffer(frameBuffer, cancelClear) {
         let bufferId = null;
         if (frameBuffer) {
             bufferId = frameBuffer.index;
@@ -2341,13 +2021,7 @@ class Renderer {
         }
         this.state.frameBufferID = bufferId;
     }
-    /*** DEPTH ***/ /***
-     Called to set whether the renderer will handle depth test or not
-     Depth test is enabled by default
-
-     params:
-     @setDepth (boolean): if we should enable or disable the depth test
-     ***/ setDepthTest(depthTest) {
+setDepthTest(depthTest) {
         if (depthTest && !this.state.depthTest) {
             this.state.depthTest = depthTest;
             // enable depth test
@@ -2358,20 +2032,10 @@ class Renderer {
             this.gl.disable(this.gl.DEPTH_TEST);
         }
     }
-    /***
-     Called to set the depth buffer behavior
-     Only available option is gl.LEQUAL at the moment
-     (see https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/depthFunc)
-     ***/ setDepthFunc() {
+setDepthFunc() {
         this.gl.depthFunc(this.gl.LEQUAL);
     }
-    /*** BLENDING ***/ /***
-     Whether we should enable or disable the blending state
-     Used to draw transparent planes
-
-     params:
-     @enableBlending (boolean): if we should enable or disable the blending (default to false)
-     ***/ setBlending(enableBlending = false) {
+setBlending(enableBlending = false) {
         if (enableBlending && !this.state.blending) {
             this.state.blending = enableBlending;
             // enable blending
@@ -2382,21 +2046,14 @@ class Renderer {
             this.gl.disable(this.gl.BLEND);
         }
     }
-    /***
-     Called to set the blending function (transparency)
-     ***/ setBlendFunc() {
+setBlendFunc() {
         // allows transparency
         // based on how three.js solves this
         this.gl.enable(this.gl.BLEND);
         if (this.premultipliedAlpha) this.gl.blendFuncSeparate(this.gl.ONE, this.gl.ONE_MINUS_SRC_ALPHA, this.gl.ONE, this.gl.ONE_MINUS_SRC_ALPHA);
         else this.gl.blendFuncSeparate(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA, this.gl.ONE, this.gl.ONE_MINUS_SRC_ALPHA);
     }
-    /*** FACE CULLING ***/ /***
-     Called to set whether we should cull an object face or not
-
-     params:
-     @cullFace (boolean): what face we should cull
-     ***/ setFaceCulling(cullFace) {
+setFaceCulling(cullFace) {
         if (this.state.cullFace !== cullFace) {
             this.state.cullFace = cullFace;
             if (cullFace === "none") this.gl.disable(this.gl.CULL_FACE);
@@ -2408,23 +2065,13 @@ class Renderer {
             }
         }
     }
-    /***
-     Tell WebGL to use the specified program if it's not already in use
-
-     params:
-     @program (object): a program object
-     ***/ useProgram(program) {
+useProgram(program) {
         if (this.state.currentProgramID === null || this.state.currentProgramID !== program.id) {
             this.gl.useProgram(program.program);
             this.state.currentProgramID = program.id;
         }
     }
-    /*** PLANES ***/ /***
-     Removes a Plane element (that has already been disposed) from the scene and the planes array
-
-     params:
-     @plane (Plane object): the plane to remove
-     ***/ removePlane(plane) {
+removePlane(plane) {
         if (!this.gl) return;
         // remove from our planes array
         this.planes = this.planes.filter((element)=>element.uuid !== plane.uuid);
@@ -2436,12 +2083,7 @@ class Renderer {
         // we've removed an object, keep Curtains class in sync with our renderer
         this.onSceneChange();
     }
-    /*** POST PROCESSING ***/ /***
-     Completely remove a RenderTarget element
-
-     params:
-     @renderTarget (RenderTarget object): the render target to remove
-     ***/ removeRenderTarget(renderTarget) {
+removeRenderTarget(renderTarget) {
         if (!this.gl) return;
         let hasPlane = this.planes.find((plane)=>plane.type !== "PingPongPlane" && plane.target && plane.target.uuid === renderTarget.uuid);
         // loop through all planes that might use that render target and reset it
@@ -2458,12 +2100,7 @@ class Renderer {
         // we've removed an object, keep Curtains class in sync with our renderer
         this.onSceneChange();
     }
-    /*** SHADER PASSES ***/ /***
-     Removes a ShaderPass element (that has already been disposed) from the scene and the shaderPasses array
-
-     params:
-     @shaderPass (ShaderPass object): the shader pass to remove
-     ***/ removeShaderPass(shaderPass) {
+removeShaderPass(shaderPass) {
         if (!this.gl) return;
         // remove from shaderPasses our array
         this.shaderPasses = this.shaderPasses.filter((element)=>element.uuid !== shaderPass.uuid);
@@ -2475,25 +2112,16 @@ class Renderer {
         // we've removed an object, keep Curtains class in sync with our renderer
         this.onSceneChange();
     }
-    /***
-     Enables the render loop
-     ***/ enableDrawing() {
+enableDrawing() {
         this.state.drawingEnabled = true;
     }
-    /***
-     Disables the render loop
-     ***/ disableDrawing() {
+disableDrawing() {
         this.state.drawingEnabled = false;
     }
-    /***
-     Forces the rendering of the next frame, even if disabled
-     ***/ needRender() {
+needRender() {
         this.state.forceRender = true;
     }
-    /***
-     Called at each draw call to render our scene and its content
-     Also execute our nextRender callback queue
-     ***/ render() {
+render() {
         if (!this.gl) return;
         // clear scene first
         this.clear();
@@ -2502,18 +2130,14 @@ class Renderer {
         // draw our scene content
         this.scene.draw();
     }
-    /*** DISPOSING ***/ /***
-     Delete all cached programs
-     ***/ deletePrograms() {
+deletePrograms() {
         // delete all programs from manager
         for(let i = 0; i < this.cache.programs.length; i++){
             const program = this.cache.programs[i];
             this.gl.deleteProgram(program.program);
         }
     }
-    /***
-     Dispose our WebGL context and all its objects
-     ***/ dispose() {
+dispose() {
         if (!this.gl) return;
         this.state.isActive = false;
         // be sure to delete all planes
@@ -2550,30 +2174,7 @@ class Renderer {
 },{"./Scene.js":"8oIyl","../utils/CacheManager.js":"iTm8B","../utils/CallbackQueueManager.js":"lMq0F","../utils/utils.js":"6sdZo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8oIyl":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Here we create our Scene object
- The Scene will stack all the objects that will be drawn (planes and shader passes) in different arrays, and call them in the right order to be drawn.
-
- Based on the concept exposed here https://webgl2fundamentals.org/webgl/lessons/webgl-drawing-multiple-things.html
- The idea is to optimize the order of the rendered object so that the WebGL calls are kept to a strict minimum
-
- Here's the whole draw process order:
- - first we draw the ping pong planes
- - if needed, we bind the first scene pass frame buffer
- - draw all the planes that are rendered onto a render target (render pass)
- - draw the planes from the first render target created, ordered by their renderOrder then indexes (first added first drawn) order
- - draw the planes from the second render target created, etc.
- - draw the render passes content (depth buffer is cleared after each pass)
- - draw the transparent planes ordered by renderOrder, Z positions, geometry IDs and then indexes (first added first drawn)
- - draw the opaque planes ordered by renderOrder, geometry IDs and then indexes (first added first drawn)
- - draw the scene passes content
-
- params:
- @renderer (Renderer class object): our renderer class object
-
- returns :
- @this: our Scene
- ***/ parcelHelpers.export(exports, "Scene", ()=>Scene);
+parcelHelpers.export(exports, "Scene", ()=>Scene);
 var _utilsJs = require("../utils/utils.js");
 class Scene {
     constructor(renderer){
@@ -2602,9 +2203,7 @@ class Scene {
             "scenePasses": []
         };
     }
-    /*** RESET STACKS ***/ /***
-     Reset the plane stacks (used when disposing a plane)
-     ***/ resetPlaneStacks() {
+resetPlaneStacks() {
         // clear the plane stacks
         this.stacks.pingPong = [];
         this.stacks.renderTargets = [];
@@ -2613,9 +2212,7 @@ class Scene {
         // rebuild them with the new plane indexes
         for(let i = 0; i < this.renderer.planes.length; i++)this.addPlane(this.renderer.planes[i]);
     }
-    /***
-     Reset the shader pass stacks (used when disposing a shader pass)
-     ***/ resetShaderPassStacks() {
+resetShaderPassStacks() {
         // now rebuild the drawStacks
         // start by clearing all drawstacks
         this.stacks.scenePasses = [];
@@ -2629,12 +2226,7 @@ class Scene {
         // reset the scenePassIndex if needed
         if (this.stacks.scenePasses.length === 0) this.renderer.state.scenePassIndex = null;
     }
-    /*** ADDING PLANES ***/ /***
-     Add a plane to our renderTargets stack
-
-     params:
-     @plane (Plane object): plane to add to our stack
-     ***/ addToRenderTargetsStack(plane) {
+addToRenderTargetsStack(plane) {
         // find all planes that are rendered onto a render target
         const renderTargetsPlanes = this.renderer.planes.filter((el)=>el.type !== "PingPongPlane" && el.target && el.uuid !== plane.uuid);
         // is there any plane that is already rendered onto that plane's render target?
@@ -2662,15 +2254,7 @@ class Scene {
         renderTargetsPlanes.sort((a, b)=>a.target.index - b.target.index);
         this.stacks.renderTargets = renderTargetsPlanes;
     }
-    /***
-     Rebuilds our regular stack (transparent or opaque) with our plane added, geometry IDs and then indexes (first added first drawn)
-
-     params:
-     @plane (Plane object): plane to add to our stack
-
-     returns:
-     @planeStack (array): our transparent or opaque stack ready to be applied custom sorting filter
-     ***/ addToRegularPlaneStack(plane) {
+addToRegularPlaneStack(plane) {
         // get all planes that have same transparency
         const planeStack = this.renderer.planes.filter((el)=>el.type !== "PingPongPlane" && !el.target && el._transparent === plane._transparent && el.uuid !== plane.uuid);
         // find if there's already a plane with the same geometry with a findLastIndex function
@@ -2687,18 +2271,7 @@ class Scene {
         planeStack.sort((a, b)=>a.index - b.index);
         return planeStack;
     }
-    /***
-     This function will add a plane into one of our 4 stacks : pingPong, renderTargets, transparent and opaque
-     - pingPong is just a simple array (ordered by order of creation)
-     - renderTargets array is ordered by render target creation order, planes renderOrder value and then planes indexes (order of creation)
-     - transparent array is ordered by renderOrder, Z positions, geometry IDs and then indexes (first added first drawn)
-     - opaque array is ordered by renderOrder, geometry IDs and then indexes (first added first drawn)
-
-     This is done to improve speed and reduce GL calls
-
-     params:
-     @plane (Plane object): plane to add to our scene
-     ***/ addPlane(plane) {
+addPlane(plane) {
         if (plane.type === "PingPongPlane") this.stacks.pingPong.push(plane);
         else if (plane.target) this.addToRenderTargetsStack(plane);
         else if (plane._transparent) {
@@ -2717,24 +2290,13 @@ class Scene {
             this.stacks.opaque = planeStack1;
         }
     }
-    /***
-     This function will remove a plane from our scene. This just reset the plane stacks for now.
-     Useful if we'd want to change the way our draw stacks work and keep the logic separated from our renderer
-
-     params:
-     @plane (Plane object): plane to remove from our scene
-     ***/ removePlane(plane) {
+removePlane(plane) {
         if (plane.type === "PingPongPlane") this.stacks.pingPong = this.stacks.pingPong.filter((el)=>el.uuid !== plane.uuid);
         else if (plane.target) this.stacks.renderTargets = this.stacks.renderTargets.filter((el)=>el.uuid !== plane.uuid);
         else if (plane._transparent) this.stacks.transparent = this.stacks.transparent.filter((el)=>el.uuid !== plane.uuid);
         else this.stacks.opaque = this.stacks.opaque.filter((el)=>el.uuid !== plane.uuid);
     }
-    /***
-     Changing the position of a plane inside the correct plane stack to render it on above or behind the other planes
-
-     params:
-     @plane (Plane object): the plane that had its renderOrder property updated
-     ***/ setPlaneRenderOrder(plane) {
+setPlaneRenderOrder(plane) {
         if (plane.type === "ShaderPass") this.sortShaderPassStack(plane._isScenePass ? this.stacks.scenePasses : this.stacks.renderPasses);
         else if (plane.type === "PingPongPlane") // this does not makes any sense for ping pong planes
         return;
@@ -2772,12 +2334,7 @@ class Scene {
             }
         }
     }
-    /*** ADDING POST PROCESSING ***/ /***
-     Add a shader pass to the stack
-
-     params:
-     @shaderPass (ShaderPass object): shaderPass to add to our scene
-     ***/ addShaderPass(shaderPass) {
+addShaderPass(shaderPass) {
         if (!shaderPass._isScenePass) {
             this.stacks.renderPasses.push(shaderPass);
             this.sortShaderPassStack(this.stacks.renderPasses);
@@ -2786,35 +2343,20 @@ class Scene {
             this.sortShaderPassStack(this.stacks.scenePasses);
         }
     }
-    /***
-     This function will remove a shader pass from our scene. This just reset the shaderPass stacks for now.
-     Useful if we'd want to change the way our draw stacks work and keep the logic separated from our renderer
-
-     params:
-     @shaderPass (ShaderPass object): shader pass to remove from our scene
-     ***/ removeShaderPass(shaderPass) {
+removeShaderPass(shaderPass) {
         this.resetShaderPassStacks();
     }
-    /***
-     Sorts the shader pass stack by index then by renderOrder property
-
-     params:
-     @passStack (array): which shader pass stack (scenePasses or renderPasses) to sort
-     ***/ sortShaderPassStack(passStack) {
+sortShaderPassStack(passStack) {
         passStack.sort((a, b)=>a.index - b.index);
         passStack.sort((a, b)=>a.renderOrder - b.renderOrder);
     }
-    /*** DRAWING SCENE ***/ /***
-     Enable the first Shader pass scene pass
-     ***/ enableShaderPass() {
+enableShaderPass() {
         if (this.stacks.scenePasses.length && this.stacks.renderPasses.length === 0 && this.renderer.planes.length) {
             this.renderer.state.scenePassIndex = 0;
             this.renderer.bindFrameBuffer(this.stacks.scenePasses[0].target);
         }
     }
-    /***
-     Draw the render passes
-     ***/ drawRenderPasses() {
+drawRenderPasses() {
         // if we got one or multiple scene passes after the render passes, bind the first scene pass here
         if (this.stacks.scenePasses.length && this.stacks.renderPasses.length && this.renderer.planes.length) {
             this.renderer.state.scenePassIndex = 0;
@@ -2826,15 +2368,11 @@ class Scene {
             this.renderer.clearDepth();
         }
     }
-    /***
-     Draw the scene passes
-     ***/ drawScenePasses() {
+drawScenePasses() {
         // then the scene passes
         for(let i = 0; i < this.stacks.scenePasses.length; i++)this.stacks.scenePasses[i]._startDrawing();
     }
-    /***
-     Loop through the special ping pong planes stack and draw its planes
-     ***/ drawPingPongStack() {
+drawPingPongStack() {
         for(let i = 0; i < this.stacks.pingPong.length; i++){
             const plane = this.stacks.pingPong[i];
             // be sure the plane exists
@@ -2842,9 +2380,7 @@ class Scene {
             plane._startDrawing();
         }
     }
-    /***
-     Loop through one of our stack (renderTargets, opaque or transparent objects) and draw its planes
-     ***/ drawStack(stackType) {
+drawStack(stackType) {
         for(let i = 0; i < this.stacks[stackType].length; i++){
             const plane = this.stacks[stackType][i];
             // be sure the plane exists
@@ -2852,9 +2388,7 @@ class Scene {
             plane._startDrawing();
         }
     }
-    /***
-     Draw our scene content
-     ***/ draw() {
+draw() {
         // always draw our ping pong planes first!
         this.drawPingPongStack();
         // enable first frame buffer for shader passes if needed
@@ -2882,29 +2416,11 @@ class Scene {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "throwWarning", ()=>throwWarning);
-/***
- Throw a console error with the passed arguments
- ***/ parcelHelpers.export(exports, "throwError", ()=>throwError);
-/***
- Generates an universal unique identifier
- ***/ parcelHelpers.export(exports, "generateUUID", ()=>generateUUID);
-/***
- Check whether a number is power of 2
-
- params:
- @value (float): number to check
- ***/ parcelHelpers.export(exports, "isPowerOf2", ()=>isPowerOf2);
-/***
- Linear interpolation between two numbers
-
- params:
- @start (float): value to lerp
- @end (float): end value to use for lerp
- @amount (float): amount of lerp
- ***/ parcelHelpers.export(exports, "lerp", ()=>lerp);
-/***
- Throw a console warning with the passed arguments
- ***/ let warningThrown = 0;
+parcelHelpers.export(exports, "throwError", ()=>throwError);
+parcelHelpers.export(exports, "generateUUID", ()=>generateUUID);
+parcelHelpers.export(exports, "isPowerOf2", ()=>isPowerOf2);
+parcelHelpers.export(exports, "lerp", ()=>lerp);
+let warningThrown = 0;
 function throwWarning() {
     if (warningThrown > 100) return;
     else if (warningThrown === 100) console.warn("Curtains: too many warnings thrown, stop logging.");
@@ -2964,109 +2480,50 @@ exports.export = function(dest, destName, get) {
 },{}],"iTm8B":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Here we create a CacheManager class object
- This will store geometries attributes arrays, textures and WebGL programs in arrays
- This helps speed up slow synchronous CPU operations such as WebGL shaders compilations, images decoding, etc.
-
- returns :
- @this: our CacheManager class object
- ***/ parcelHelpers.export(exports, "CacheManager", ()=>CacheManager);
+parcelHelpers.export(exports, "CacheManager", ()=>CacheManager);
 class CacheManager {
     constructor(){
         // never clear cached geometries
         this.geometries = [];
         this.clear();
     }
-    /***
-     Clear WebGL context depending cache arrays (used on init and context restoration)
-     ***/ clear() {
+clear() {
         // only cache images textures for now
         this.textures = [];
         // cached programs
         this.programs = [];
     }
-    /*** GEOMETRIES ***/ /***
-     Check if this geometry is already in our cached geometries array
-
-     params:
-     @definitionID (integer): the geometry ID
-     ***/ getGeometryFromID(definitionID) {
+getGeometryFromID(definitionID) {
         return this.geometries.find((element)=>element.id === definitionID);
     }
-    /***
-     Add a geometry to our cache if not already in it
-
-     params:
-     @definitionID  (integer): the geometry ID to add to our cache
-     @vertices (array): vertices coordinates array to add to our cache
-     @uvs (array): uvs coordinates array to add to our cache
-     ***/ addGeometry(definitionID, vertices, uvs) {
+addGeometry(definitionID, vertices, uvs) {
         this.geometries.push({
             id: definitionID,
             vertices: vertices,
             uvs: uvs
         });
     }
-    /*** PROGRAMS ***/ /***
-     Compare two shaders strings to detect whether they are equal or not
-
-     params:
-     @firstShader (string): shader code
-     @secondShader (string): shader code
-
-     returns:
-     @isSameShader (bool): whether both shaders are equal or not
-     ***/ isSameShader(firstShader, secondShader) {
+isSameShader(firstShader, secondShader) {
         return firstShader.localeCompare(secondShader) === 0;
     }
-    /***
-     Returns a program from our cache if this program's vertex and fragment shaders code are the same as the one provided
-
-     params:
-     @vsCode (string): vertex shader code
-     @fsCode (string): fragment shader code
-
-     returns:
-     @program (Program class object or null): our program if it has been found
-     ***/ getProgramFromShaders(vsCode, fsCode) {
+getProgramFromShaders(vsCode, fsCode) {
         return this.programs.find((element)=>{
             return this.isSameShader(element.vsCode, vsCode) && this.isSameShader(element.fsCode, fsCode);
         });
     }
-    /***
-     Add a program to our cache
-
-     params :
-     @program (Program class object) : program to add to our cache
-     ***/ addProgram(program) {
+addProgram(program) {
         this.programs.push(program);
     }
-    /*** TEXTURES ***/ /***
-     Check if this source is already in our cached textures array
-
-     params :
-     @source (HTML element) : html image, video or canvas element (only images for now)
-     ***/ getTextureFromSource(source) {
+getTextureFromSource(source) {
         const src = typeof source === "string" ? source : source.src;
         // return the texture if the source is the same and if it's not the same texture
         return this.textures.find((element)=>element.source && element.source.src === src);
     }
-    /***
-     Add a texture to our cache if not already in it
-
-     params :
-     @texture (Texture class object) : texture to add to our cache
-     ***/ addTexture(texture) {
+addTexture(texture) {
         const cachedTexture = this.getTextureFromSource(texture.source);
         if (!cachedTexture) this.textures.push(texture);
     }
-    /***
-     Removes a texture from the cache array
-
-     params :
-     @texture (Texture class object) : texture to remove from our cache
-     ***/ removeTexture(texture) {
+removeTexture(texture) {
         // remove from our textures array
         this.textures = this.textures.filter((element)=>element.uuid !== texture.uuid);
     }
@@ -3075,32 +2532,15 @@ class CacheManager {
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lMq0F":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Here we create a CallbackQueueManager class object
- This allows to store callbacks in a queue array with a timeout of 0 to be executed on next render call
-
- returns:
- @this: our CallbackQueueManager class object
- ***/ parcelHelpers.export(exports, "CallbackQueueManager", ()=>CallbackQueueManager);
+parcelHelpers.export(exports, "CallbackQueueManager", ()=>CallbackQueueManager);
 class CallbackQueueManager {
     constructor(){
         this.clear();
     }
-    /***
-     Clears our queue array (used on init)
-     ***/ clear() {
+clear() {
         this.queue = [];
     }
-    /***
-     Adds a callback to our queue list with a timeout of 0
-
-     params:
-     @callback (function): the callback to execute on next render call
-     @keep (bool): whether to keep calling that callback on each rendering call or not (act as a setInterval). Default to false
-
-     returns:
-     @queueItem: the queue item. Allows to keep a track of it and set its keep property to false when needed
-     ***/ add(callback, keep = false) {
+add(callback, keep = false) {
         const queueItem = {
             callback,
             keep,
@@ -3111,10 +2551,7 @@ class CallbackQueueManager {
         }, 0);
         return queueItem;
     }
-    /***
-     Executes all callbacks in the queue and remove the ones that have their keep property set to false.
-     Called at the beginning of each render call
-     ***/ execute() {
+execute() {
         // execute queue callbacks list
         this.queue.map((entry)=>{
             if (entry.callback) entry.callback();
@@ -3129,24 +2566,7 @@ class CallbackQueueManager {
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7Z9lN":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Here we create a ScrollManager class object
- This keeps track of our scroll position, scroll deltas and triggers an onScroll callback
- Could either listen to the native scroll event or be hooked to any scroll (natural or virtual) scroll event
-
- params:
- @xOffset (float): scroll along X axis
- @yOffset (float): scroll along Y axis
- @lastXDelta (float): last scroll delta along X axis
- @lastYDelta (float): last scroll delta along Y axis
-
- @shouldWatch (bool): if the scroll manager should listen to the scroll event or not. Default to true.
-
- @onScroll (function): callback to execute each time the scroll values changed
-
- returns:
- @this: our ScrollManager class object
- ***/ parcelHelpers.export(exports, "ScrollManager", ()=>ScrollManager);
+parcelHelpers.export(exports, "ScrollManager", ()=>ScrollManager);
 class ScrollManager {
     constructor({ xOffset =0 , yOffset =0 , lastXDelta =0 , lastYDelta =0 , shouldWatch =true , onScroll =()=>{} ,  } = {}){
         this.xOffset = xOffset;
@@ -3166,15 +2586,7 @@ class ScrollManager {
      ***/ scroll() {
         this.updateScrollValues(window.pageXOffset, window.pageYOffset);
     }
-    /***
-     Updates the scroll manager X and Y scroll values as well as last X and Y deltas
-     Internally called by the scroll handler
-     Could be called externally as well if the user wants to handle the scroll by himself
-
-     params:
-     @x (float): scroll value along X axis
-     @y (float): scroll value along Y axis
-     ***/ updateScrollValues(x, y) {
+updateScrollValues(x, y) {
         // get our scroll delta values
         const lastScrollXValue = this.xOffset;
         this.xOffset = x;
@@ -3184,9 +2596,7 @@ class ScrollManager {
         this.lastYDelta = lastScrollYValue - this.yOffset;
         if (this.onScroll) this.onScroll(this.lastXDelta, this.lastYDelta);
     }
-    /***
-     Dispose our scroll manager (just remove our event listner if it had been added previously)
-     ***/ dispose() {
+dispose() {
         if (this.shouldWatch) window.removeEventListener("scroll", this.handler, {
             passive: true
         });
@@ -3204,31 +2614,7 @@ var _vec2Js = require("../math/Vec2.js");
 var _vec3Js = require("../math/Vec3.js");
 var _quatJs = require("../math/Quat.js");
 var _utilsJs = require("../utils/utils.js");
-/***
- Here we create our Plane object
- We will extend our DOMMesh class that handles all the WebGL part and basic HTML sizings
-
- Plane class will add:
- - sizing and positioning and everything that relates to the DOM like draw checks (frustum culling) and reenter/leave events
- - projection (using Camera class object) and view matrices and everything that is related like perspective, scale, rotation...
-
- params :
- @renderer (Curtains renderer or Renderer class object): our curtains object OR our curtains renderer object
- @plane (html element): the html element that we will use for our Plane object
-
- @Meshparams (object): see Mesh class object
-
- @alwaysDraw (boolean, optionnal): if the plane should always be drawn or if it should use frustum culling. Default to false.
- @visible (boolean, optional): if the plane should be drawn or not. Default to true.
- @transparent (boolean, optional): if the plane should handle transparency. Default to false.
- @drawCheckMargins (object, optional): defines the margins in pixels to add to the frustum culling check to determine if the plane should be drawn. Default to 0.
- @autoloadSources (boolean, optional): if the sources should be loaded on init automatically. Default to true
- @watchScroll (boolean, optional): if the plane should auto update its position based on the scroll value. Default to true.
- @fov (float, optional): defines the perspective field of view used by the camera. Default to 50.
-
- returns :
- @this: our Plane
- ***/ // avoid reinstancing those during runtime
+// avoid reinstancing those during runtime
 const tempScale = new (0, _vec2Js.Vec2)();
 // positions
 const tempWorldPos1 = new (0, _vec3Js.Vec3)();
@@ -3309,9 +2695,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             this.renderer.planes.push(this);
         }
     }
-    /*** RESTORING CONTEXT ***/ /***
-     Used internally to handle context restoration after the program has been successfully compiled again
-     ***/ _programRestored() {
+_programRestored() {
         if (this.target) // reset its render target if needed
         this.setRenderTarget(this.renderer.renderTargets[this.target.index]);
         this._initMatrices();
@@ -3328,9 +2712,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
         }
         this._canDraw = true;
     }
-    /***
-     Init our basic plane values (transformations, positions, camera, sources)
-     ***/ _initPlane() {
+_initPlane() {
         // init transformation values
         this._initTransformValues();
         // init its position values
@@ -3340,9 +2722,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
         // load sources
         this._initSources();
     }
-    /*** TRANSFORMATIONS, PROJECTION & MATRICES ***/ /***
-     Set/reset plane's transformation values: rotation, scale, translation, transform origin
-     ***/ _initTransformValues() {
+_initTransformValues() {
         this.rotation = new (0, _vec3Js.Vec3)();
         this.rotation.onChange(()=>this._applyRotation());
         // initial quaternion
@@ -3366,12 +2746,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             this._updateMVMatrix = true;
         });
     }
-    /***
-     Reset our plane transformation values and HTML element if specified (and valid)
-
-     params :
-     @htmlElement (HTML element, optional) : if provided, new HTML element to use as a reference for sizes and position syncing.
-     ***/ resetPlane(htmlElement) {
+resetPlane(htmlElement) {
         this._initTransformValues();
         // reset transformation origin relative to world space as well
         this._setWorldTransformOrigin();
@@ -3380,9 +2755,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             this.resize();
         } else if (!htmlElement && !this.renderer.production) (0, _utilsJs.throwWarning)(this.type + ": You are trying to reset a plane with a HTML element that does not exist. The old HTML element will be kept instead.");
     }
-    /***
-     This function removes the plane current render target
-     ***/ removeRenderTarget() {
+removeRenderTarget() {
         if (this.target) {
             // reset our planes stacks
             this.renderer.scene.removePlane(this);
@@ -3390,18 +2763,14 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             this.renderer.scene.addPlane(this);
         }
     }
-    /***
-     Init our plane position: set its matrices, its position and perspective
-     ***/ _initPositions() {
+_initPositions() {
         // set its matrices
         this._initMatrices();
         // apply our css positions
         this._setWorldSizes();
         this._applyWorldPositions();
     }
-    /***
-     Init our plane model view and projection matrices and set their uniform locations
-     ***/ _initMatrices() {
+_initMatrices() {
         // create our matrices, they will be set after
         const matrix = new (0, _mat4Js.Mat4)();
         this._matrices = {
@@ -3427,10 +2796,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             }
         };
     }
-    /*** PLANES PERSPECTIVES, SCALES AND ROTATIONS ***/ /***
-     This will set our perspective matrix and update our perspective matrix uniform
-     used internally at each draw call if needed
-     ***/ _setPerspectiveMatrix() {
+_setPerspectiveMatrix() {
         // update our matrix uniform if we actually have updated its values
         if (this.camera._shouldUpdate) {
             this.renderer.useProgram(this._program);
@@ -3439,15 +2805,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
         // reset camera shouldUpdate flag
         this.camera.cancelUpdate();
     }
-    /***
-     This will set our perspective matrix new parameters (fov, near plane and far plane)
-     used internally but can be used externally as well to change fov for example
-
-     params :
-     @fov (float): the field of view
-     @near (float): the nearest point where object are displayed
-     @far (float): the farthest point where object are displayed
-     ***/ setPerspective(fov, near, far) {
+setPerspective(fov, near, far) {
         this.camera.setPerspective(fov, near, far, this.renderer._boundingRect.width, this.renderer._boundingRect.height, this.renderer.pixelRatio);
         // force camera update on context restoration
         if (this.renderer.state.isContextLost) this.camera.forceUpdate();
@@ -3463,11 +2821,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
         // if camera settings changed update the mvMatrix as well cause we need to update z translation based on new fov
         this._updateMVMatrix = this.camera._shouldUpdate;
     }
-    /***
-     This will set our model view matrix
-     used internally at each draw call if needed
-     It will calculate our matrix based on its plane translation, rotation and scale
-     ***/ _setMVMatrix() {
+_setMVMatrix() {
         if (this._updateMVMatrix) {
             // compose our world transformation matrix from custom origin
             this._matrices.world.matrix = this._matrices.world.matrix.composeFromOrigin(this._translation, this.quaternion, this.scale, this._boundingRect.world.transformOrigin);
@@ -3494,33 +2848,17 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
         // reset our flag
         this._updateMVMatrix = false;
     }
-    /*** SCREEN TO WORLD CALCS ***/ /***
-     Convert our transform origin point from plane space to world space
-     ***/ _setWorldTransformOrigin() {
+_setWorldTransformOrigin() {
         // set transformation origin relative to world space as well
         this._boundingRect.world.transformOrigin = new (0, _vec3Js.Vec3)((this.transformOrigin.x * 2 - 1 // between -1 and 1
         ) * this._boundingRect.world.width, -(this.transformOrigin.y * 2 - 1 // between -1 and 1
         ) * this._boundingRect.world.height, this.transformOrigin.z);
     }
-    /***
-     This function takes pixel values along X and Y axis and convert them to world space coordinates
-
-     params :
-     @vector (Vec3): position to convert on X, Y and Z axes
-
-     returns :
-     @worldPosition: plane's position in WebGL space
-     ***/ _documentToWorldSpace(vector) {
+_documentToWorldSpace(vector) {
         return tempWorldPos2.set(vector.x * this.renderer.pixelRatio / this.renderer._boundingRect.width * this._boundingRect.world.ratios.width, -(vector.y * this.renderer.pixelRatio / this.renderer._boundingRect.height) * this._boundingRect.world.ratios.height, vector.z);
     }
-    /***
-     Set our plane dimensions relative to clip spaces
-     ***/ _setWorldSizes() {
+_setWorldSizes() {
         const ratios = this.camera.getScreenRatiosFromFov();
-        // our plane world informations
-        // since our vertices values range from -1 to 1, it is supposed to draw a square
-        // we need to scale them under the hood relatively to our canvas
-        // to display an accurately sized plane
         this._boundingRect.world = {
             width: this._boundingRect.document.width / this.renderer._boundingRect.width * ratios.width / 2,
             height: this._boundingRect.document.height / this.renderer._boundingRect.height * ratios.height / 2,
@@ -3529,9 +2867,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
         // set transformation origin relative to world space as well
         this._setWorldTransformOrigin();
     }
-    /***
-     Set our plane position relative to clip spaces
-     ***/ _setWorldPosition() {
+_setWorldPosition() {
         // dimensions and positions of our plane in the document and clip spaces
         // don't forget translations in webgl space are referring to the center of our plane and canvas
         const planeCenter = {
@@ -3545,13 +2881,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
         this._boundingRect.world.top = (containerCenter.y - planeCenter.y) / this.renderer._boundingRect.height * this._boundingRect.world.ratios.height;
         this._boundingRect.world.left = (planeCenter.x - containerCenter.x) / this.renderer._boundingRect.width * this._boundingRect.world.ratios.width;
     }
-    /*** TRANSFORMATIONS ***/ /***
-     This will set our plane scale
-     used internally but can be used externally as well
-
-     params :
-     @scale (Vec2 object): scale to apply on X and Y axes
-     ***/ setScale(scale) {
+setScale(scale) {
         if (!scale.type || scale.type !== "Vec2") {
             if (!this.renderer.production) (0, _utilsJs.throwWarning)(this.type + ": Cannot set scale because the parameter passed is not of Vec2 type:", scale);
             return;
@@ -3563,21 +2893,13 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             this._applyScale();
         }
     }
-    /***
-     This will apply our scale and tells our model view matrix to update
-     ***/ _applyScale() {
+_applyScale() {
         // adjust textures size
         for(let i = 0; i < this.textures.length; i++)this.textures[i].resize();
         // we should update the plane mvMatrix
         this._updateMVMatrix = true;
     }
-    /***
-     This will set our plane rotation
-     used internally but can be used externally as well
-
-     params :
-     @rotation (Vec3 object): rotation to apply on X, Y and Z axes (in radians)
-     ***/ setRotation(rotation) {
+setRotation(rotation) {
         if (!rotation.type || rotation.type !== "Vec3") {
             if (!this.renderer.production) (0, _utilsJs.throwWarning)(this.type + ": Cannot set rotation because the parameter passed is not of Vec3 type:", rotation);
             return;
@@ -3589,22 +2911,12 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             this._applyRotation();
         }
     }
-    /***
-     This will apply our rotation and tells our model view matrix to update
-     ***/ _applyRotation() {
+_applyRotation() {
         this.quaternion.setFromVec3(this.rotation);
         // we should update the plane mvMatrix
         this._updateMVMatrix = true;
     }
-    /***
-     This will set our plane transform origin
-     (0, 0, 0) means plane's top left corner
-     (1, 1, 0) means plane's bottom right corner
-     (0.5, 0.5, -1) means behind plane's center
-
-     params :
-     @origin (Vec3 object): coordinate of transformation origin X, Y and Z axes
-     ***/ setTransformOrigin(origin) {
+setTransformOrigin(origin) {
         if (!origin.type || origin.type !== "Vec3") {
             if (!this.renderer.production) (0, _utilsJs.throwWarning)(this.type + ": Cannot set transform origin because the parameter passed is not of Vec3 type:", origin);
             return;
@@ -3617,9 +2929,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             this._updateMVMatrix = true;
         }
     }
-    /***
-     This will set our plane translation by adding plane computed bounding box values and computed relative position values
-     ***/ _setTranslation() {
+_setTranslation() {
         // avoid unnecessary calculations if we don't have a users set relative position
         let worldPosition = tempWorldPos1.set(0, 0, 0);
         if (!this.relativeTranslation.equals(worldPosition)) worldPosition = this._documentToWorldSpace(this.relativeTranslation);
@@ -3628,12 +2938,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
         // we should update the plane mvMatrix
         this._updateMVMatrix = true;
     }
-    /***
-     This function takes pixel values along X and Y axis and convert them to clip space coordinates, and then apply the corresponding translation
-
-     params :
-     @translation (Vec3): translation to apply on X, Y and Z axes
-     ***/ setRelativeTranslation(translation) {
+setRelativeTranslation(translation) {
         if (!translation.type || translation.type !== "Vec3") {
             if (!this.renderer.production) (0, _utilsJs.throwWarning)(this.type + ": Cannot set translation because the parameter passed is not of Vec3 type:", translation);
             return;
@@ -3645,30 +2950,19 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             this._setTranslation();
         }
     }
-    /***
-     This function uses our plane HTML Element bounding rectangle values and convert them to the world clip space coordinates, and then apply the corresponding translation
-     ***/ _applyWorldPositions() {
+_applyWorldPositions() {
         // set our plane sizes and positions relative to the world clipspace
         this._setWorldPosition();
         // set the translation values
         this._setTranslation();
     }
-    /***
-     This function updates the plane position based on its CSS positions and transformations values.
-     Useful if the HTML element has been moved while the container size has not changed.
-     ***/ updatePosition() {
+updatePosition() {
         // set the new plane sizes and positions relative to document by triggering getBoundingClientRect()
         this._setDocumentSizes();
         // apply them
         this._applyWorldPositions();
     }
-    /***
-     This function updates the plane position based on the Curtains class scroll manager values
-
-     params:
-     @lastXDelta (float): last scroll value along X axis
-     @lastYDelta (float): last scroll value along Y axis
-     ***/ updateScrollPosition(lastXDelta, lastYDelta) {
+updateScrollPosition(lastXDelta, lastYDelta) {
         // actually update the plane position only if last X delta or last Y delta is not equal to 0
         if (lastXDelta || lastYDelta) {
             // set new positions based on our delta without triggering reflow
@@ -3678,16 +2972,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             this._applyWorldPositions();
         }
     }
-    /*** FRUSTUM CULLING (DRAW CHECK) ***/ /***
-     Find the intersection point by adding a vector starting from a corner till we reach the near plane
-
-     params:
-     @refPoint (Vec3 class object): corner of the plane from which we start to iterate from
-     @secondPoint (Vec3 class object): second point near the refPoint to get a direction to use for iteration
-
-     returns:
-     @intersection (Vec3 class object): intersection between our plane and the camera near plane
-     ***/ _getIntersection(refPoint, secondPoint) {
+_getIntersection(refPoint, secondPoint) {
         // direction vector to add
         let direction = secondPoint.clone().sub(refPoint);
         // copy our corner refpoint
@@ -3696,21 +2981,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
         while(intersection.z > -1)intersection.add(direction);
         return intersection;
     }
-    /***
-     Get intersection points between a plane and the camera near plane
-     When a plane gets clipped by the camera near plane, the clipped corner projected coords returned by _applyMat4() are erronate
-     We need to find the intersection points using another approach
-     Here I chose to use non clipped corners projected coords and a really small vector parallel to the plane's side
-     We're adding that vector again and again to our corner projected coords until the Z coordinate matches the near plane: we got our intersection
-
-     params:
-     @corners (array): our original corners vertices coordinates
-     @mvpCorners (array): the projected corners of our plane
-     @clippedCorners (array): index of the corners that are clipped
-
-     returns:
-     @mvpCorners (array): the corrected projected corners of our plane
-     ***/ _getNearPlaneIntersections(corners, mvpCorners, clippedCorners) {
+_getNearPlaneIntersections(corners, mvpCorners, clippedCorners) {
         // rebuild the clipped corners based on non clipped ones
         const mVPMatrix = this._matrices.modelViewProjection.matrix;
         if (clippedCorners.length === 1) {
@@ -3798,14 +3069,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
         }
         return mvpCorners;
     }
-    /***
-     Useful to get our WebGL plane bounding box in the world space
-     Takes all transformations into account
-     Used internally for frustum culling
-
-     returns :
-     @boundingRectangle (obj): an object containing our plane WebGL element 4 corners coordinates: top left corner is [-1, 1] and bottom right corner is [1, -1]
-     ***/ _getWorldCoords() {
+_getWorldCoords() {
         const corners = [
             tempCorner1.set(-1, 1, 0),
             tempCorner2.set(1, 1, 0),
@@ -3825,8 +3089,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
         }
         // near plane is clipping, get intersections between plane and near plane
         if (clippedCorners.length) mvpCorners = this._getNearPlaneIntersections(corners, mvpCorners, clippedCorners);
-        // we need to check for the X and Y min and max values
-        // use arbitrary integers that will be overriden anyway
+
         let minX = Infinity;
         let maxX = -Infinity;
         let minY = Infinity;
@@ -3845,10 +3108,7 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             left: minX
         };
     }
-    /***
-     Transpose our plane corners coordinates from world space to document space
-     Sets an object with the accurate plane WebGL bounding rect relative to document
-     ***/ _computeWebGLBoundingRect() {
+_computeWebGLBoundingRect() {
         // get our world space bouding rect
         const worldBBox = this._getWorldCoords();
         // normalize worldBBox to (0 -> 1) screen coordinates with [0, 0] being the top left corner and [1, 1] being the bottom right
@@ -3872,22 +3132,12 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             bottom: screenBBox.top * this.renderer._boundingRect.height + this.renderer._boundingRect.top + screenBBox.height * this.renderer._boundingRect.height
         };
     }
-    /***
-     Returns our plane WebGL bounding rect relative to document
-
-     returns :
-     @boundingRectangle (obj): an object containing our plane WebGL element bounding rectangle (width, height, top, bottom, right and left properties)
-     ***/ getWebGLBoundingRect() {
+getWebGLBoundingRect() {
         if (!this._matrices.modelViewProjection) return this._boundingRect.document;
         else if (!this._boundingRect.worldToDocument || this.alwaysDraw) this._computeWebGLBoundingRect();
         return this._boundingRect.worldToDocument;
     }
-    /***
-     Returns our plane WebGL bounding rectangle in document coordinates including additional drawCheckMargins
-
-     returns :
-     @boundingRectangle (obj): an object containing our plane WebGL element bounding rectangle including the draw check margins (top, bottom, right and left properties)
-     ***/ _getWebGLDrawRect() {
+_getWebGLDrawRect() {
         this._computeWebGLBoundingRect();
         return {
             top: this._boundingRect.worldToDocument.top - this.drawCheckMargins.top,
@@ -3896,14 +3146,10 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             left: this._boundingRect.worldToDocument.left - this.drawCheckMargins.left
         };
     }
-    /***
-     This function checks if the plane is currently visible in the canvas and sets _shouldDraw property according to this test
-     This is our real frustum culling check
-     ***/ _shouldDrawCheck() {
+_shouldDrawCheck() {
         // get plane bounding rect
         const actualPlaneBounds = this._getWebGLDrawRect();
-        // if we decide to draw the plane only when visible inside the canvas
-        // we got to check if its actually inside the canvas
+
         if (Math.round(actualPlaneBounds.right) <= this.renderer._boundingRect.left || Math.round(actualPlaneBounds.left) >= this.renderer._boundingRect.left + this.renderer._boundingRect.width || Math.round(actualPlaneBounds.bottom) <= this.renderer._boundingRect.top || Math.round(actualPlaneBounds.top) >= this.renderer._boundingRect.top + this.renderer._boundingRect.height) {
             if (this._shouldDraw) {
                 this._shouldDraw = false;
@@ -3916,22 +3162,13 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             this._shouldDraw = true;
         }
     }
-    /***
-     This function returns if the plane is actually drawn (ie fully initiated, visible property set to true and not culled)
-     ***/ isDrawn() {
+isDrawn() {
         return this._canDraw && this.visible && (this._shouldDraw || this.alwaysDraw);
     }
-    /*** DEPTH AND RENDER ORDER ***/ /***
-     This function set/unset the depth test for that plane
-
-     params :
-     @shouldEnableDepthTest (bool): enable/disable depth test for that plane
-     ***/ enableDepthTest(shouldEnableDepthTest) {
+enableDepthTest(shouldEnableDepthTest) {
         this._depthTest = shouldEnableDepthTest;
     }
-    /*** SOURCES ***/ /***
-     Load our initial sources if needed and calls onReady callback
-     ***/ _initSources() {
+_initSources() {
         // finally load every sources already in our plane html element
         // load plane sources
         let loaderSize = 0;
@@ -3950,16 +3187,12 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
         this.loader._setLoaderSize(loaderSize);
         this._canDraw = true;
     }
-    /*** DRAWING ***/ /***
-     Specific instructions for the Plane class to execute before drawing it
-     ***/ _startDrawing() {
+_startDrawing() {
         // check if our plane is ready to draw
         if (this._canDraw) {
             // even if our plane should not be drawn we still execute its onRender callback and update its uniforms
             if (this._onRenderCallback) this._onRenderCallback();
-            // to improve webgl pipeline performace, we might want to update each texture that needs an update here
-            // see https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices#texImagetexSubImage_uploads_particularly_with_videos_can_cause_pipeline_flushes
-            // if we should render to a render target
+
             if (this.target) this.renderer.bindFrameBuffer(this.target);
             else if (this.renderer.state.scenePassIndex === null) this.renderer.bindFrameBuffer(null);
             // update our perspective matrix
@@ -3970,23 +3203,12 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             if ((this.alwaysDraw || this._shouldDraw) && this.visible) this._draw();
         }
     }
-    /*** INTERACTION ***/ /***
-     This function takes the mouse position relative to the document and returns it relative to our plane
-     It ranges from -1 to 1 on both axis
-
-     params :
-     @mouseCoordinates (Vec2 object): coordinates of the mouse
-
-     returns :
-     @mousePosition (Vec2 object): the mouse position relative to our plane in WebGL space coordinates
-     ***/ mouseToPlaneCoords(mouseCoordinates) {
+mouseToPlaneCoords(mouseCoordinates) {
         identityQuat.setAxisOrder(this.quaternion.axisOrder);
         // plane has no rotation and transform origin is set to default, no need for real raycasting
         if (identityQuat.equals(this.quaternion) && defaultTransformOrigin.equals(this.transformOrigin)) return super.mouseToPlaneCoords(mouseCoordinates);
         else {
-            // raycasting
-            // based on https://people.cs.clemson.edu/~dhouse/courses/405/notes/raycast.pdf
-            // convert mouse position to 3d normalised device coordinates (from [-1, -1] to [1, 1])
+
             const worldMouse = {
                 x: 2 * (mouseCoordinates.x / (this.renderer._boundingRect.width / this.renderer.pixelRatio)) - 1,
                 y: 2 * (1 - mouseCoordinates.y / (this.renderer._boundingRect.height / this.renderer.pixelRatio)) - 1
@@ -4022,27 +3244,11 @@ class Plane extends (0, _dommeshJs.DOMMesh) {
             return castedMouseCoords.set(result.x, result.y);
         }
     }
-    /*** EVENTS ***/ /***
-     This is called each time a plane is entering again the view bounding box
-
-     params :
-     @callback (function) : a function to execute
-
-     returns :
-     @this: our plane to handle chaining
-     ***/ onReEnterView(callback) {
+onReEnterView(callback) {
         if (callback) this._onReEnterViewCallback = callback;
         return this;
     }
-    /***
-     This is called each time a plane is leaving the view bounding box
-
-     params :
-     @callback (function) : a function to execute
-
-     returns :
-     @this: our plane to handle chaining
-     ***/ onLeaveView(callback) {
+onLeaveView(callback) {
         if (callback) this._onLeaveViewCallback = callback;
         return this;
     }
@@ -4055,19 +3261,7 @@ parcelHelpers.export(exports, "DOMMesh", ()=>DOMMesh);
 var _meshJs = require("./Mesh.js");
 var _vec2Js = require("../math/Vec2.js");
 var _utilsJs = require("../utils/utils.js");
-/***
- Here we create our DOMGLObject object
- We will extend our Mesh class object by adding HTML sizes helpers (bounding boxes getter/setter and mouse to mesh positioning)
-
- params:
- @renderer (Curtains renderer or Renderer class object): our curtains object OR our curtains renderer object
- @plane (html element): the html element that we will use for our DOMMesh object
- @type (string): Object type (should be either "Plane" or "ShaderPass")
- @Meshparams (object): see Mesh class object
- 
- returns:
- @this: our BasePlane element
- ***/ // avoid reinstancing those during runtime
+// avoid reinstancing those during runtime
 const tempVec2a = new (0, _vec2Js.Vec2)();
 const tempVec2b = new (0, _vec2Js.Vec2)();
 class DOMMesh extends (0, _meshJs.Mesh) {
@@ -4100,10 +3294,7 @@ class DOMMesh extends (0, _meshJs.Mesh) {
         // set plane sizes
         this._setDocumentSizes();
     }
-    /*** PLANE SIZES ***/ /***
-     Set our plane dimensions and positions relative to document
-     Triggers reflow!
-     ***/ _setDocumentSizes() {
+_setDocumentSizes() {
         // set our basic initial infos
         let planeBoundingRect = this.htmlElement.getBoundingClientRect();
         if (!this._boundingRect) this._boundingRect = {};
@@ -4115,12 +3306,7 @@ class DOMMesh extends (0, _meshJs.Mesh) {
             left: planeBoundingRect.left * this.renderer.pixelRatio
         };
     }
-    /*** BOUNDING BOXES GETTERS ***/ /***
-     Useful to get our plane HTML element bounding rectangle without triggering a reflow/layout
-
-     returns :
-     @boundingRectangle (obj): an object containing our plane HTML element bounding rectangle (width, height, top, bottom, right and left properties)
-     ***/ getBoundingRect() {
+getBoundingRect() {
         return {
             width: this._boundingRect.document.width,
             height: this._boundingRect.document.height,
@@ -4131,10 +3317,7 @@ class DOMMesh extends (0, _meshJs.Mesh) {
             bottom: this._boundingRect.document.top + this._boundingRect.document.height
         };
     }
-    /***
-     Handles each plane resizing
-     used internally when our container is resized
-     ***/ resize() {
+resize() {
         // reset plane dimensions
         this._setDocumentSizes();
         // if this is a Plane object we need to update its perspective and positions
@@ -4150,16 +3333,7 @@ class DOMMesh extends (0, _meshJs.Mesh) {
         // handle our after resize event
         this.renderer.nextRender.add(()=>this._onAfterResizeCallback && this._onAfterResizeCallback());
     }
-    /*** INTERACTION ***/ /***
-     This function takes the mouse position relative to the document and returns it relative to our plane
-     It ranges from -1 to 1 on both axis
-
-     params :
-     @mouseCoordinates (Vec2 object): coordinates of the mouse
-
-     returns :
-     @mousePosition (Vec2 object): the mouse position relative to our plane in WebGL space coordinates
-     ***/ mouseToPlaneCoords(mouseCoordinates) {
+mouseToPlaneCoords(mouseCoordinates) {
         // remember our ShaderPass objects don't have a scale property
         const scale = this.scale ? this.scale : tempVec2b.set(1, 1);
         // we need to adjust our plane document bounding rect to it's webgl scale
@@ -4174,15 +3348,7 @@ class DOMMesh extends (0, _meshJs.Mesh) {
         // mouse position conversion from document to plane space
         return tempVec2a.set((mouseCoordinates.x - planeBoundingRect.left) / planeBoundingRect.width * 2 - 1, 1 - (mouseCoordinates.y - planeBoundingRect.top) / planeBoundingRect.height * 2);
     }
-    /*** EVENTS ***/ /***
-     This is called each time a plane has been resized
-
-     params :
-     @callback (function) : a function to execute
-
-     returns :
-     @this: our plane to handle chaining
-     ***/ onAfterResize(callback) {
+onAfterResize(callback) {
         if (callback) this._onAfterResizeCallback = callback;
         return this;
     }
@@ -4191,31 +3357,7 @@ class DOMMesh extends (0, _meshJs.Mesh) {
 },{"./Mesh.js":"d3cEW","../math/Vec2.js":"d6cuD","../utils/utils.js":"6sdZo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d3cEW":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Here we create our Mesh object
- We will create an object containing the program that handles shaders and uniforms, a geometry that handles attributes
- Also handles anything that relates to textures creation and basic drawing operations
-
- params:
- @renderer (Curtains renderer or Renderer class object): our curtains object OR our curtains renderer object
- @type (string): Object type (should be either "Plane" or "ShaderPass")
-
- @vertexShaderID (string, optional): the vertex shader script ID. If not specified, will look for a data attribute data-vs-id on the plane HTML element.
- @fragmentShaderID (string, optional): the fragment shader script ID. If not specified, will look for a data attribute data-fs-id on the plane HTML element.
- @vertexShader (string, optional): the vertex shader as a string. Will look for a vertexShaderID if not specified.
- @fragmentShader (string, optional): the fragment shader as a string. Will look for a fragmentShaderID if not specified.
- @uniforms (object, optional): the uniforms that will be passed to the shaders.
- @widthSegments (int, optional): mesh definition along the X axis (1 by default)
- @heightSegments (int, optional): mesh definition along the Y axis (1 by default)
- @renderOrder (int, optional): mesh render order in the scene draw stacks (0 by default)
- @depthTest (bool, optional): if the mesh should enable or disable the depth test. Default to true.
- @cullFace (string, optional): which face of the mesh should be culled. Could either be "back", "front" or "none". Default to "back".
- @texturesOptions (object, optional): options and parameters to apply to the textures loaded by the mesh's loader. See the Texture class object.
- @crossorigin (string, optional): defines the crossOrigin process to load images if any (default to "anonymous").
-
- returns:
- @this: our Mesh element
- ***/ parcelHelpers.export(exports, "Mesh", ()=>Mesh);
+parcelHelpers.export(exports, "Mesh", ()=>Mesh);
 var _programJs = require("./Program.js");
 var _geometryJs = require("./Geometry.js");
 var _textureJs = require("./Texture.js");
@@ -4318,9 +3460,7 @@ class Mesh {
         this.userData = {};
         this._canDraw = true;
     }
-    /*** RESTORING CONTEXT ***/ /***
-     Used internally to handle context restoration
-     ***/ _restoreContext() {
+_restoreContext() {
         this._canDraw = false;
         if (this._matrices) this._matrices = null;
         // reset the used program based on our previous shaders code strings
@@ -4340,12 +3480,7 @@ class Mesh {
             this._programRestored();
         }
     }
-    /***
-     This function adds a render target to a mesh
-
-     params :
-     @renderTarger (RenderTarget): the render target to add to that mesh
-     ***/ setRenderTarget(renderTarget) {
+setRenderTarget(renderTarget) {
         if (!renderTarget || renderTarget.type !== "RenderTarget") {
             if (!this.renderer.production) (0, _utilsJs.throwWarning)(this.type + ": Could not set the render target because the argument passed is not a RenderTarget class object", renderTarget);
             return;
@@ -4356,62 +3491,31 @@ class Mesh {
         if (this.type === "Plane") // add to scene stacks again
         this.renderer.scene.addPlane(this);
     }
-    /***
-     Set the mesh render order to draw it above or behind other meshes
-
-     params :
-     @renderOrder (int): new render order to apply: higher number means a mesh is drawn on top of others
-     ***/ setRenderOrder(renderOrder = 0) {
+setRenderOrder(renderOrder = 0) {
         renderOrder = isNaN(renderOrder) ? this.renderOrder : parseInt(renderOrder);
         if (renderOrder !== this.renderOrder) {
             this.renderOrder = renderOrder;
             this.renderer.scene.setPlaneRenderOrder(this);
         }
     }
-    /*** IMAGES, VIDEOS AND CANVASES LOADING ***/ /***
-     This method creates a new Texture and adds it to the mesh
-
-     params :
-     @textureOptions (object, optional) : Parameters to apply to that texture (see Texture class). Will be merged with the mesh default textures options
-
-     returns :
-     @texture: our newly created texture
-     ***/ createTexture(textureOptions = {}) {
+createTexture(textureOptions = {}) {
         // create a new texture with the specified options
         const texture = new (0, _textureJs.Texture)(this.renderer, Object.assign(this._texturesOptions, textureOptions));
         // add the texture to the mesh
         texture.addParent(this);
         return texture;
     }
-    /***
-     Shortcut for addParent() Texture class method
-     ***/ addTexture(texture) {
+addTexture(texture) {
         if (!texture || texture.type !== "Texture") {
             if (!this.renderer.production) (0, _utilsJs.throwWarning)(this.type + ": cannot add ", texture, " to this " + this.type + " because it is not a valid texture");
             return;
         }
         texture.addParent(this);
     }
-    /***
-     This method handles the sources loading process
-
-     params :
-     @sourcesArray (array): array of html images, videos or canvases elements
-     @texturesOptions (object, optional) : Parameters to apply to those textures (see Texture class). Will be merged with the mesh default textures options
-     @successCallback (function): callback to execute on source loading success
-     @errorCallback (function): callback to execute on source loading error
-     ***/ loadSources(sourcesArray, texturesOptions = {}, successCallback, errorCallback) {
+loadSources(sourcesArray, texturesOptions = {}, successCallback, errorCallback) {
         for(let i = 0; i < sourcesArray.length; i++)this.loadSource(sourcesArray[i], texturesOptions, successCallback, errorCallback);
     }
-    /***
-     This method loads one source using our mesh loader (see PlaneTextureLoader class)
-
-     params :
-     @source (html element) : html image, video or canvas element
-     @textureOptions (object, optional) : Parameters to apply to that texture (see Texture class). Will be merged with the mesh default textures options
-     @successCallback (function): callback to execute on source loading success
-     @errorCallback (function): callback to execute on source loading error
-     ***/ loadSource(source, textureOptions = {}, successCallback, errorCallback) {
+loadSource(source, textureOptions = {}, successCallback, errorCallback) {
         this.loader.loadSource(source, Object.assign(textureOptions, this._texturesOptions), (texture)=>{
             successCallback && successCallback(texture);
         }, (source, error)=>{
@@ -4419,15 +3523,7 @@ class Mesh {
             errorCallback && errorCallback(source, error);
         });
     }
-    /***
-     This method loads an image using our mesh loader (see PlaneTextureLoader class)
-
-     params :
-     @source (image) : html image element
-     @textureOptions (object, optional) : Parameters to apply to that texture (see Texture class). Will be merged with the mesh default textures options
-     @successCallback (function): callback to execute on source loading success
-     @errorCallback (function): callback to execute on source loading error
-     ***/ loadImage(source, textureOptions = {}, successCallback, errorCallback) {
+loadImage(source, textureOptions = {}, successCallback, errorCallback) {
         this.loader.loadImage(source, Object.assign(textureOptions, this._texturesOptions), (texture)=>{
             successCallback && successCallback(texture);
         }, (source, error)=>{
@@ -4435,15 +3531,7 @@ class Mesh {
             errorCallback && errorCallback(source, error);
         });
     }
-    /***
-     This method loads a video using the mesh loader (see PlaneTextureLoader class)
-
-     params :
-     @source (video) : html video element
-     @textureOptions (object, optional) : Parameters to apply to that texture (see Texture class). Will be merged with the mesh default textures options
-     @successCallback (function): callback to execute on source loading success
-     @errorCallback (function): callback to execute on source loading error
-     ***/ loadVideo(source, textureOptions = {}, successCallback, errorCallback) {
+loadVideo(source, textureOptions = {}, successCallback, errorCallback) {
         this.loader.loadVideo(source, Object.assign(textureOptions, this._texturesOptions), (texture)=>{
             successCallback && successCallback(texture);
         }, (source, error)=>{
@@ -4451,56 +3539,21 @@ class Mesh {
             errorCallback && errorCallback(source, error);
         });
     }
-    /***
-     This method loads a canvas using the mesh loader (see PlaneTextureLoader class)
-
-     params :
-     @source (canvas) : html canvas element
-     @textureOptions (object, optional) : Parameters to apply to that texture (see Texture class). Will be merged with the mesh default textures options
-     @successCallback (function): callback to execute on source loading success
-     ***/ loadCanvas(source, textureOptions = {}, successCallback) {
+loadCanvas(source, textureOptions = {}, successCallback) {
         this.loader.loadCanvas(source, Object.assign(textureOptions, this._texturesOptions), (texture)=>{
             successCallback && successCallback(texture);
         });
     }
-    /*** LOAD ARRAYS ***/ /***
-     Loads an array of images
-
-     params :
-     @imagesArray (array) : array of html image elements
-     @texturesOptions (object, optional) : Parameters to apply to those textures (see Texture class). Will be merged with the mesh default textures options
-     @successCallback (function): callback to execute on source loading success
-     @errorCallback (function): callback to execute on source loading error
-     ***/ loadImages(imagesArray, texturesOptions = {}, successCallback, errorCallback) {
+loadImages(imagesArray, texturesOptions = {}, successCallback, errorCallback) {
         for(let i = 0; i < imagesArray.length; i++)this.loadImage(imagesArray[i], texturesOptions, successCallback, errorCallback);
     }
-    /***
-     Loads an array of videos
-
-     params :
-     @videosArray (array) : array of html video elements
-     @texturesOptions (object, optional) : Parameters to apply to those textures (see Texture class). Will be merged with the mesh default textures options
-     @successCallback (function): callback to execute on source loading success
-     @errorCallback (function): callback to execute on source loading error
-     ***/ loadVideos(videosArray, texturesOptions = {}, successCallback, errorCallback) {
+loadVideos(videosArray, texturesOptions = {}, successCallback, errorCallback) {
         for(let i = 0; i < videosArray.length; i++)this.loadVideo(videosArray[i], texturesOptions, successCallback, errorCallback);
     }
-    /***
-     Loads an array of canvases
-
-     params :
-     @canvasesArray (array) : array of html canvas elements
-     @texturesOptions (object, optional) : Parameters to apply to those textures (see Texture class). Will be merged with the mesh default textures options
-     @successCallback (function): callback to execute on source loading success
-     @errorCallback (function): callback to execute on source loading error
-     ***/ loadCanvases(canvasesArray, texturesOptions = {}, successCallback) {
+loadCanvases(canvasesArray, texturesOptions = {}, successCallback) {
         for(let i = 0; i < canvasesArray.length; i++)this.loadCanvas(canvasesArray[i], texturesOptions, successCallback);
     }
-    /***
-     This has to be called in order to play the planes videos
-     We need this because on mobile devices we can't start playing a video without a user action
-     Once the video has started playing we set an interval and update a new frame to our our texture at a 30FPS rate
-     ***/ playVideos() {
+playVideos() {
         for(let i = 0; i < this.textures.length; i++){
             const texture = this.textures[i];
             if (texture.sourceType === "video") {
@@ -4513,20 +3566,13 @@ class Mesh {
             }
         }
     }
-    /*** DRAW THE PLANE ***/ /***
-     We draw the plane, ie bind the buffers, set the active textures and draw it
-     ***/ _draw() {
+_draw() {
         // enable/disable depth test
         this.renderer.setDepthTest(this._depthTest);
         // face culling
         this.renderer.setFaceCulling(this.cullFace);
         // update all uniforms set up by the user
         this._program.updateUniforms();
-        // bind plane attributes buffers
-        // TODO ideally we should only bind the attributes buffers if the geometry changed
-        // however it is leading to some bugs on macOS & iOS and should therefore be tested extensively
-        // for now we'll disable this feature even tho it is ready to be used
-        //if(this.renderer.state.currentGeometryID !== this._geometry.definition.id || this.renderer.state.forceBufferUpdate) {
         this._geometry.bindBuffers();
         this.renderer.state.forceBufferUpdate = false;
         //}
@@ -4544,69 +3590,27 @@ class Mesh {
         // callback after draw
         this._onAfterRenderCallback && this._onAfterRenderCallback();
     }
-    /*** EVENTS ***/ /***
-     This is called each time a mesh can't be instanciated
-
-     params :
-     @callback (function) : a function to execute
-
-     returns :
-     @this: our plane to handle chaining
-     ***/ onError(callback) {
+onError(callback) {
         if (callback) this._onErrorCallback = callback;
         return this;
     }
-    /***
-     This is called each time a mesh's image has been loaded. Useful to handle a loader
-
-     params :
-     @callback (function) : a function to execute
-
-     returns :
-     @this: our plane to handle chaining
-     ***/ onLoading(callback) {
+onLoading(callback) {
         if (callback) this._onLoadingCallback = callback;
         return this;
     }
-    /***
-     This is called when a mesh is ready to be drawn
-
-     params :
-     @callback (function) : a function to execute
-
-     returns :
-     @this: our plane to handle chaining
-     ***/ onReady(callback) {
+onReady(callback) {
         if (callback) this._onReadyCallback = callback;
         return this;
     }
-    /***
-     This is called at each requestAnimationFrame call
-
-     params :
-     @callback (function) : a function to execute
-
-     returns :
-     @this: our plane to handle chaining
-     ***/ onRender(callback) {
+onRender(callback) {
         if (callback) this._onRenderCallback = callback;
         return this;
     }
-    /***
-     This is called at each requestAnimationFrame call for each mesh after the draw call
-
-     params :
-     @callback (function) : a function to execute
-
-     returns :
-     @this: our plane to handle chaining
-     ***/ onAfterRender(callback) {
+onAfterRender(callback) {
         if (callback) this._onAfterRenderCallback = callback;
         return this;
     }
-    /*** DESTROYING ***/ /***
-     Remove an element by calling the appropriate renderer method
-     ***/ remove() {
+remove() {
         // first we want to stop drawing it
         this._canDraw = false;
         // force unbinding frame buffer
@@ -4624,9 +3628,7 @@ class Mesh {
             this.renderer.removeShaderPass(this);
         }
     }
-    /***
-     This deletes all our mesh webgl bindings and its textures
-     ***/ _dispose() {
+_dispose() {
         if (this.gl) {
             // dispose our geometry
             this._geometry && this._geometry.dispose();
@@ -4657,21 +3659,7 @@ var _shaderpassVertexGlslJs = require("../shaders/shaderpass.vertex.glsl.js");
 var _shaderpassVertexGlslJsDefault = parcelHelpers.interopDefault(_shaderpassVertexGlslJs);
 var _shaderpassFragmentGlslJs = require("../shaders/shaderpass.fragment.glsl.js");
 var _shaderpassFragmentGlslJsDefault = parcelHelpers.interopDefault(_shaderpassFragmentGlslJs);
-/***
- Program class that creates, compiles and links the shaders
- Use a cache system to get already compiled shaders and save some CPU
- Also responsible for the creation, setting and updating of the uniforms (see Uniforms class object)
-
- params:
- @renderer (Renderer class object): our renderer class object
-
- @parent (Plane/ShaderPass class object): the mesh that will use that program
- @vertexShader (string): vertex shader as a string
- @fragmentShader (string): fragment shader as a string
-
- returns:
- @this: our newly created Program
- ***/ // store programs id
+// store programs id
 let id = 0;
 class Program {
     constructor(renderer, { parent , vertexShader , fragmentShader ,  } = {}){
@@ -4700,16 +3688,7 @@ class Program {
         this.compiled = true;
         this.setupProgram();
     }
-    /***
-     Compile our WebGL shaders based on our written shaders
-
-     params:
-     @shaderCode (string): shader code
-     @shaderType (shaderType): WebGL shader type (vertex or fragment)
-
-     returns:
-     @shader (compiled shader): our compiled shader
-     ***/ createShader(shaderCode, shaderType) {
+createShader(shaderCode, shaderType) {
         const shader = this.gl.createShader(shaderType);
         this.gl.shaderSource(shader, shaderCode);
         this.gl.compileShader(shader);
@@ -4731,20 +3710,14 @@ class Program {
         }
         return shader;
     }
-    /***
-     Compiles and creates new shaders
-     ***/ useNewShaders() {
+useNewShaders() {
         this.vertexShader = this.createShader(this.vsCode, this.gl.VERTEX_SHADER);
         this.fragmentShader = this.createShader(this.fsCode, this.gl.FRAGMENT_SHADER);
         if (!this.vertexShader || !this.fragmentShader) {
             if (!this.renderer.production) (0, _utilsJs.throwWarning)(this.type + ": Unable to find or compile the vertex or fragment shader");
         }
     }
-    /***
-     Checks whether the program has already been registered before creating it
-     If yes, use the compiled shaders to create a new one with createProgram()
-     If not, compile the shaders and call createProgram()
-     ***/ setupProgram() {
+setupProgram() {
         let existingProgram = this.renderer.cache.getProgramFromShaders(this.vsCode, this.fsCode);
         // we found an existing program
         if (existingProgram) {
@@ -4765,11 +3738,7 @@ class Program {
             }
         }
     }
-    /***
-     Used internally to set up program based on the created shaders and attach them to the program
-     Sets a list of active textures that are actually used by the shaders to avoid binding unused textures during draw calls
-     Add the program to the cache
-     ***/ createProgram() {
+createProgram() {
         // set program id and type
         id++;
         this.id = id;
@@ -4779,8 +3748,7 @@ class Program {
         this.gl.attachShader(this.program, this.vertexShader);
         this.gl.attachShader(this.program, this.fragmentShader);
         this.gl.linkProgram(this.program);
-        // TODO getProgramParameter even in production to avoid errors?
-        // check the shader program creation status only when not in production mode
+
         if (!this.renderer.production) {
             if (!this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS)) {
                 (0, _utilsJs.throwWarning)(this.type + ": Unable to initialize the shader program: " + this.gl.getProgramInfoLog(this.program));
@@ -4820,26 +3788,17 @@ class Program {
             }
         }
     }
-    /*** UNIFORMS ***/ /***
-     Creates and attach the uniform handlers to our program
-
-     params:
-     @uniforms (object): an object describing our uniforms (see Uniforms class object)
-     ***/ createUniforms(uniforms) {
+createUniforms(uniforms) {
         this.uniformsManager = new (0, _uniformsJs.Uniforms)(this.renderer, this.program, uniforms);
         // set them right away
         this.setUniforms();
     }
-    /***
-     Sets our uniforms (used on init and on context restoration)
-     ***/ setUniforms() {
+setUniforms() {
         // use this program
         this.renderer.useProgram(this);
         this.uniformsManager.setUniforms();
     }
-    /***
-     Updates our uniforms at each draw calls
-     ***/ updateUniforms() {
+updateUniforms() {
         // use this program
         this.renderer.useProgram(this);
         this.uniformsManager.updateUniforms();
@@ -4849,21 +3808,7 @@ class Program {
 },{"./Uniforms.js":"eX15m","../utils/utils.js":"6sdZo","../shaders/plane.vertex.glsl.js":"7MubV","../shaders/plane.fragment.glsl.js":"7Rkk7","../shaders/shaderpass.vertex.glsl.js":"4mun1","../shaders/shaderpass.fragment.glsl.js":"6BI6V","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eX15m":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Uniforms class manages uniforms setting and updating
-
- params:
- @renderer (Renderer class object): our renderer class object
- @program (object): our mesh's Program (see Program class object)
-
- @uniforms (object): our uniforms object:
- - name (string): uniform name to use in your shaders
- - type (uniform type): uniform type. Will try to detect it if not set (see https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/uniform)
- - value (float / int / Vec2 / Vec3 / Mat4 / array): initial value of the uniform
-
- returns:
- @this: our Uniforms manager
- ***/ parcelHelpers.export(exports, "Uniforms", ()=>Uniforms);
+parcelHelpers.export(exports, "Uniforms", ()=>Uniforms);
 var _utilsJs = require("../utils/utils.js");
 class Uniforms {
     constructor(renderer, program, uniforms){
@@ -4890,12 +3835,7 @@ class Uniforms {
             };
         }
     }
-    /***
-     Set uniforms WebGL function based on their types
-
-     params :
-     @uniform (object): the uniform
-     ***/ handleUniformSetting(uniform) {
+handleUniformSetting(uniform) {
         switch(uniform.type){
             case "1i":
                 uniform.update = this.setUniform1i.bind(this);
@@ -4958,13 +3898,7 @@ class Uniforms {
                 if (!this.renderer.production) (0, _utilsJs.throwWarning)(this.type + ": This uniform type is not handled : ", uniform.type);
         }
     }
-    /***
-     Auto detect the format of the uniform (check if its a float, an integer, a Vector, a Matrix, an array...)
-     Also set a lastValue property that we'll use to compare to our value property and update the uniform if it changed
-
-     params :
-     @uniform (object): the uniform
-     ***/ setInternalFormat(uniform) {
+setInternalFormat(uniform) {
         if (uniform.value.type === "Vec2") {
             uniform._internalFormat = "Vec2";
             uniform.lastValue = uniform.value.clone();
@@ -4988,10 +3922,7 @@ class Uniforms {
             uniform.lastValue = uniform.value;
         }
     }
-    /***
-     This inits our uniforms
-     Sets its internal format and type if not provided then upload the uniform
-     ***/ setUniforms() {
+setUniforms() {
         // set our uniforms if we got some
         if (this.uniforms) for(const key in this.uniforms){
             let uniform = this.uniforms[key];
@@ -5036,10 +3967,7 @@ class Uniforms {
             uniform.update && uniform.update(uniform);
         }
     }
-    /***
-     This updates all uniforms of an object that were set by the user
-     It is called at each draw call
-     ***/ updateUniforms() {
+ updateUniforms() {
         if (this.uniforms) for(const key in this.uniforms){
             const uniform = this.uniforms[key];
             let shouldUpdate = false;
@@ -5072,12 +4000,7 @@ class Uniforms {
             uniform.update && uniform.update(uniform);
         }
     }
-    /***
-     Use appropriate WebGL uniform setting function based on the uniform type
-
-     params :
-     @uniform (object): the uniform
-     ***/ setUniform1i(uniform) {
+setUniform1i(uniform) {
         this.gl.uniform1i(uniform.location, uniform.value);
     }
     setUniform1iv(uniform) {
@@ -5260,20 +4183,7 @@ exports.default = shaderPassFS.replace(/\n/g, "");
 },{"./chunks/precision.medium.glsl.js":"ak3L9","./chunks/default.varyings.glsl.js":"1BLK5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gZHD9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Geometry class handles attributes, VertexArrayObjects (if available) and vertices/UVs set up
-
- params:
- @renderer (Renderer class object): our renderer class object
-
- @program (object): our mesh's Program (see Program class object)
- @width (int): number of vertices along width
- @height (int): number of vertices along height
- @id (int): an integer based on geometry's width and height and used to avoid redundant buffer binding calls
-
- returns:
- @this: our newly created Geometry
- ***/ parcelHelpers.export(exports, "Geometry", ()=>Geometry);
+parcelHelpers.export(exports, "Geometry", ()=>Geometry);
 var _utilsJs = require("../utils/utils.js");
 class Geometry {
     constructor(renderer, { program =null , width =1 , height =1 ,  } = {}){
@@ -5286,8 +4196,7 @@ class Geometry {
         }
         this.renderer = renderer;
         this.gl = this.renderer.gl;
-        // unique plane buffers id based on width and height
-        // used to get a geometry from cache
+
         this.definition = {
             id: width * height + width,
             width: width,
@@ -5296,21 +4205,14 @@ class Geometry {
         this.setDefaultAttributes();
         this.setVerticesUVs();
     }
-    /*** CONTEXT RESTORATION ***/ /***
-     Used internally to handle context restoration after the program has been successfully compiled again
-     Reset the default attributes, the vertices and UVs and the program
-     ***/ restoreContext(program) {
+restoreContext(program) {
         this.program = null;
         this.setDefaultAttributes();
         this.setVerticesUVs();
         this.setProgram(program);
     }
-    /*** SET DEFAULT ATTRIBUTES ***/ /***
-     Our geometry default attributes that will handle the buffers
-     We're just using vertices positions and texture coordinates
-     ***/ setDefaultAttributes() {
-        // our plane default attributes
-        // if we'd want to introduce custom attributes we'd merge them with those
+setDefaultAttributes() {
+
         this.attributes = {
             vertexPosition: {
                 name: "aVertexPosition",
@@ -5324,10 +4226,7 @@ class Geometry {
             }
         };
     }
-    /***
-     Set our vertices and texture coordinates array
-     Get them from the cache if possible
-     ***/ setVerticesUVs() {
+setVerticesUVs() {
         // we need to create our geometry and material objects
         const cachedGeometry = this.renderer.cache.getGeometryFromID(this.definition.id);
         if (cachedGeometry) {
@@ -5339,10 +4238,7 @@ class Geometry {
             this.renderer.cache.addGeometry(this.definition.id, this.attributes.vertexPosition.array, this.attributes.textureCoord.array);
         }
     }
-    /***
-     Called on init and on context restoration to set up the attribute buffers
-     Use VertexArrayObjects whenever possible
-     ***/ setProgram(program) {
+setProgram(program) {
         this.program = program;
         this.initAttributes();
         // use vertex array objects if available
@@ -5355,9 +4251,7 @@ class Geometry {
         }
         this.initializeBuffers();
     }
-    /***
-     This creates our mesh attributes and buffers by looping over it
-     ***/ initAttributes() {
+initAttributes() {
         // loop through our attributes and create buffers and attributes locations
         for(const key in this.attributes){
             // is this attribute active in our program?
@@ -5369,11 +4263,7 @@ class Geometry {
             this.attributes[key].numberOfItems = this.definition.width * this.definition.height * this.attributes[key].size * 2;
         }
     }
-    /***
-     This method is used internally to create our vertices coordinates and texture UVs
-     we first create our UVs on a grid from [0, 0, 0] to [1, 1, 0]
-     then we use the UVs to create our vertices coords
-     ***/ computeVerticesUVs() {
+computeVerticesUVs() {
         // geometry vertices and UVs
         this.attributes.vertexPosition.array = [];
         this.attributes.textureCoord.array = [];
@@ -5383,9 +4273,7 @@ class Geometry {
             const v = y / this.definition.height;
             for(let x = 0; x < this.definition.width; x++){
                 const u = x / this.definition.width;
-                // uvs and vertices
-                // our uvs are ranging from 0 to 1, our vertices range from -1 to 1
-                // first triangle
+
                 uvs.push(u);
                 uvs.push(v);
                 uvs.push(0);
@@ -5426,9 +4314,7 @@ class Geometry {
             }
         }
     }
-    /***
-     This method enables and binds our attributes buffers
-     ***/ initializeBuffers() {
+initializeBuffers() {
         if (!this.attributes) return;
         // loop through our attributes
         for(const key in this.attributes){
@@ -5443,9 +4329,7 @@ class Geometry {
         // update current buffers ID
         this.renderer.state.currentGeometryID = this.definition.id;
     }
-    /***
-     Used inside our draw call to set the correct plane buffers before drawing it
-     ***/ bindBuffers() {
+bindBuffers() {
         if (this._vao) {
             if (this.renderer._isWebGL2) this.gl.bindVertexArray(this._vao);
             else this.renderer.extensions["OES_vertex_array_object"].bindVertexArrayOES(this._vao);
@@ -5459,14 +4343,10 @@ class Geometry {
         // update current buffers ID
         this.renderer.state.currentGeometryID = this.definition.id;
     }
-    /***
-     Draw a geometry
-     ***/ draw() {
+draw() {
         this.gl.drawArrays(this.gl.TRIANGLES, 0, this.attributes.vertexPosition.numberOfItems);
     }
-    /***
-     Dispose a geometry (ie delete its vertex array objects and buffers)
-     ***/ dispose() {
+dispose() {
         // delete buffers
         // each time we check for existing properties to avoid errors
         if (this._vao) {
@@ -5493,33 +4373,7 @@ var _mat4Js = require("../math/Mat4.js");
 var _vec2Js = require("../math/Vec2.js");
 var _vec3Js = require("../math/Vec3.js");
 var _utilsJs = require("../utils/utils.js");
-/***
- Texture class objects used by render targets, shader passes and planes.
-
- params:
- @renderer (Curtains renderer or Renderer class object): our curtains object OR our curtains renderer object
-
- @isFBOTexture (bool): Whether this texture is used by a render target/frame buffer object. Default to false
- @fromTexture (bool): Whether this texture should copy another texture right from init (and avoid creating a new webgl texture). Default to false
- @loader (TextureLoader class object): loader used to create that texture and load its source. Default to null
-
- @sampler (string): the texture sampler's name that will be used in the shaders
-
- @floatingPoint (string): texture floating point to apply. Could be "float", "half-float" or "none". Default to "none"
-
- @premultiplyAlpha (bool): Whether this texture should handle premultiplied alpha. Default to false
- @anisotropy (int): Texture anisotropy (see https://developer.mozilla.org/en-US/docs/Web/API/EXT_texture_filter_anisotropic). Default to 1
- @generateMipmap (bool): Whether to generate texture mipmaps (see https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/generateMipmap). Default to true except for frame buffer objects textures.
-
- see https://developer.mozilla.org/en-US/docs/Web/API/WebGL2RenderingContext/samplerParameter
- @wrapS (GLenum): WebGL constant specifying the texture wrapping function for the texture coordinate S
- @wrapT (GLenum): WebGL constant specifying the texture wrapping function for the texture coordinate T
- @minFilter (GLenum): WebGL constant specifying the texture minification filter
- @magFilter (GLenum): WebGL constant specifying the texture magnification filter
-
- returns:
- @this: our newly created Texture class object
- ***/ // avoid reinstancing those during runtime
+// avoid reinstancing those during runtime
 const tempVec2 = new (0, _vec2Js.Vec2)();
 const tempVec3 = new (0, _vec3Js.Vec3)();
 const textureTranslation = new (0, _mat4Js.Mat4)();
@@ -5616,10 +4470,7 @@ class Texture {
         // init our texture
         this._initTexture();
     }
-    /***
-     Init per-texture parameters state
-     Called on init and on context restoration to force parameters settings
-     ***/ _initState() {
+_initState() {
         this._state = {
             anisotropy: 1,
             generateMipmap: false,
@@ -5629,9 +4480,7 @@ class Texture {
             magFilter: this.gl.LINEAR
         };
     }
-    /***
-     Init our texture object
-     ***/ _initTexture() {
+_initTexture() {
         // bind the texture the target (TEXTURE_2D) of the active texture unit.
         this.gl.bindTexture(this.gl.TEXTURE_2D, this._sampler.texture);
         if (this.sourceType === "empty") {
@@ -5649,15 +4498,10 @@ class Texture {
             this._canDraw = true;
         }
     }
-    /*** RESTORING CONTEXT ***/ /***
-     Restore a WebGL texture that is a copy
-     Depending on whether it's a copy from start or not, just reset its uniforms or run the full init
-     And finally copy our original texture back again
-     ***/ _restoreFromTexture() {
+_restoreFromTexture() {
         // init again if needed
         if (!this._copyOnInit) this._initTexture();
-        // a texture shouldn't be restored if it does not have a parent
-        // since it's always the parent that calls the _restoreContext() method
+
         if (this._parent) {
             // set uniforms again
             this._setTextureUniforms();
@@ -5668,11 +4512,7 @@ class Texture {
         this.copy(this._copiedFrom);
         this._canDraw = true;
     }
-    /***
-     Restore our WebGL texture
-     If it is an original texture, just re run the init function and eventually reset its source
-     If it is a texture set from another texture, wait for the original texture to be ready first
-     ***/ _restoreContext() {
+_restoreContext() {
         // avoid binding that texture before reseting it
         this._canDraw = false;
         // reinit sampler and texture matrix
@@ -5708,11 +4548,7 @@ class Texture {
             }, true);
         }
     }
-    /*** ADD PARENT ***/ /***
-     Adds a parent to a texture
-     Sets its index, its parent and add it to the parent textures array as well
-     Then runs _setParent() to set the size and uniforms if needed
-     ***/ addParent(parent) {
+addParent(parent) {
         if (!parent || parent.type !== "Plane" && parent.type !== "PingPongPlane" && parent.type !== "ShaderPass" && parent.type !== "RenderTarget") {
             if (!this.renderer.production) (0, _utilsJs.throwWarning)(this.type + ": cannot add texture as a child of ", parent, " because it is not a valid parent");
             return;
@@ -5725,10 +4561,7 @@ class Texture {
         // now set its parent for real
         this._setParent();
     }
-    /***
-     Sets the parent
-     Basically sets the uniforms names and locations and sizes
-     ***/ _setParent() {
+_setParent() {
         // prepare texture sampler
         this._sampler.name = this._samplerName || "uSampler" + this.index;
         // we will always declare a texture matrix
@@ -5775,18 +4608,10 @@ class Texture {
             this._canDraw = true;
         }
     }
-    /***
-     Checks if this texture has a parent
-
-     return:
-     @hasParent (bool): whether this texture has a parent or not
-     ***/ hasParent() {
+hasParent() {
         return !!this._parent;
     }
-    /*** SEND DATA TO THE GPU ***/ /***
-     Check if our textures is effectively used in our shaders
-     If so, set it to active, get its uniform locations and bind it to our texture unit
-     ***/ _setTextureUniforms() {
+_setTextureUniforms() {
         // check if our texture is used in our program shaders
         // if so, get its uniform locations and bind it to our program
         const activeUniforms = this._parent._program.activeUniforms;
@@ -5807,12 +4632,7 @@ class Texture {
             this.gl.uniform1i(this._sampler.location, this.index);
         }
     }
-    /***
-     This copies an already existing Texture object to our texture
-
-     params:
-     @texture (Texture): texture to set from
-     ***/ copy(texture) {
+copy(texture) {
         if (!texture || texture.type !== "Texture") {
             if (!this.renderer.production) (0, _utilsJs.throwWarning)(this.type + ": Unable to set the texture from texture:", texture);
             return;
@@ -5847,12 +4667,7 @@ class Texture {
         // force rendering
         this.renderer.needRender();
     }
-    /*** LOADING SOURCES ***/ /***
-     This uses our source as texture
-
-     params:
-     @source (images/video/canvas): either an image, a video or a canvas
-     ***/ setSource(source) {
+setSource(source) {
         // fire callback during load (useful for a loader)
         if (!this._sourceLoaded) // texture source loaded callback
         this.renderer.nextRender.add(()=>this._onSourceLoadedCallback && this._onSourceLoadedCallback());
@@ -5908,9 +4723,7 @@ class Texture {
         this.resize();
         this._globalParameters.flipY = true;
         this._globalParameters.premultiplyAlpha = this._globalParameters.shouldPremultiplyAlpha;
-        // upload our webgl texture only if it is an image
-        // canvas and video textures will be updated anyway in the rendering loop
-        // thanks to the shouldUpdate and _willUpdate flags
+
         if (this.sourceType === "image") {
             // generate mip maps if they have not been explicitly disabled
             this.parameters.generateMipmap = this.parameters.generateMipmap || this.parameters.generateMipmap === null;
@@ -5921,11 +4734,7 @@ class Texture {
         // update scene
         this.renderer.needRender();
     }
-    /*** TEXTURE PARAMETERS ***/ /***
-     Updates textures parameters that depends on global WebGL context state
-     Typically unpacking, flipY and premultiplied alpha
-     Usually called before uploading a texture to the GPU
-     ***/ _updateGlobalTexParameters() {
+_updateGlobalTexParameters() {
         // unpack alignment
         if (this.renderer.state.unpackAlignment !== this._globalParameters.unpackAlignment) {
             this.gl.pixelStorei(this.gl.UNPACK_ALIGNMENT, this._globalParameters.unpackAlignment);
@@ -5956,11 +4765,7 @@ class Texture {
             else if (!this.renderer.production) (0, _utilsJs.throwWarning)(this.type + ": could not use float textures because the extension is not available");
         }
     }
-    /***
-     Updates per-textures parameters
-     Wrapping, filters, anisotropy and mipmaps generation
-     Usually called after uploading a texture to the GPU
-     ***/ _updateTexParameters() {
+_updateTexParameters() {
         // be sure we're updating the right texture
         if (this.index && this.renderer.state.activeTexture !== this.index) this._bindTexture();
         // wrapS
@@ -6025,78 +4830,45 @@ class Texture {
             this._state.anisotropy = this.parameters.anisotropy;
         }
     }
-    /***
-     Sets the texture wrapping for the texture coordinate S
-
-     params:
-     @wrapS (GLenum): WebGL constant specifying the texture wrapping function for the texture coordinate S
-     ***/ setWrapS(wrapS) {
+setWrapS(wrapS) {
         if (this.parameters.wrapS !== wrapS) {
             this.parameters.wrapS = wrapS;
             this.parameters._shouldUpdate = true;
         }
     }
-    /***
-     Sets the texture wrapping for the texture coordinate T
-
-     params:
-     @wrapT (GLenum): WebGL constant specifying the texture wrapping function for the texture coordinate T
-     ***/ setWrapT(wrapT) {
+setWrapT(wrapT) {
         if (this.parameters.wrapT !== wrapT) {
             this.parameters.wrapT = wrapT;
             this.parameters._shouldUpdate = true;
         }
     }
-    /***
-     Sets the texture minifaction filter value
-
-     params:
-     @minFilter (GLenum): WebGL constant specifying the texture minification filter
-     ***/ setMinFilter(minFilter) {
+setMinFilter(minFilter) {
         if (this.parameters.minFilter !== minFilter) {
             this.parameters.minFilter = minFilter;
             this.parameters._shouldUpdate = true;
         }
     }
-    /***
-     Sets the texture magnifaction filter value
-
-     params:
-     @magFilter (GLenum): WebGL constant specifying the texture magnifaction filter
-     ***/ setMagFilter(magFilter) {
+setMagFilter(magFilter) {
         if (this.parameters.magFilter !== magFilter) {
             this.parameters.magFilter = magFilter;
             this.parameters._shouldUpdate = true;
         }
     }
-    /***
-     Sets the texture anisotropy
-
-     params:
-     @anisotropy (int): Texture anisotropy value
-     ***/ setAnisotropy(anisotropy) {
+setAnisotropy(anisotropy) {
         anisotropy = isNaN(anisotropy) ? this.parameters.anisotropy : anisotropy;
         if (this.parameters.anisotropy !== anisotropy) {
             this.parameters.anisotropy = anisotropy;
             this.parameters._shouldUpdate = true;
         }
     }
-    /***
-     This forces a texture to be updated on the next draw call
-     ***/ needUpdate() {
+needUpdate() {
         this._forceUpdate = true;
     }
-    /***
-     This uses the requestVideoFrameCallback API to update the texture each time a new frame is displayed
-     ***/ _videoFrameCallback() {
+_videoFrameCallback() {
         this._willUpdate = true;
         this.source.requestVideoFrameCallback(()=>this._videoFrameCallback());
     }
-    /***
-     This updloads our texture to the GPU
-     Called on init or inside our drawing loop if shouldUpdate property is set to true
-     Typically used by videos or canvas
-     ***/ _upload() {
+_upload() {
         // set parameters that need to be set before texture uploading
         this._updateGlobalTexParameters();
         if (this.source) this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this._globalParameters.internalFormat, this._globalParameters.format, this._globalParameters.type, this.source);
@@ -6108,12 +4880,7 @@ class Texture {
             this._uploaded = true;
         }
     }
-    /*** TEXTURE SIZINGS ***/ /***
-     This is used to calculate how to crop/center an texture
-
-     returns:
-     @sizes (obj): an object containing plane sizes, source sizes and x and y offset to center the source in the plane
-     ***/ _getSizes() {
+_getSizes() {
         // if this is a fbo texture, its size is the same as its parent
         if (this.sourceType === "fbo") return {
             parentWidth: this._parent._boundingRect.document.width,
@@ -6145,12 +4912,7 @@ class Texture {
             yOffset: yOffset
         };
     }
-    /***
-     Set the texture scale and then update its matrix
-
-     params:
-     @scale (Vec2 object): scale to apply on X and Y axes
-     ***/ setScale(scale1) {
+setScale(scale1) {
         if (!scale1.type || scale1.type !== "Vec2") {
             if (!this.renderer.production) (0, _utilsJs.throwWarning)(this.type + ": Cannot set scale because the parameter passed is not of Vec2 type:", scale1);
             return;
@@ -6172,9 +4934,7 @@ class Texture {
             this.resize();
         }
     }
-    /***
-     Gets our texture and parent sizes and tells our texture matrix to update based on those values
-     ***/ _setSize() {
+_setSize() {
         // if we need to update the texture matrix uniform
         if (this._parent && this._parent._program) {
             const sizes = this._getSizes();
@@ -6182,11 +4942,7 @@ class Texture {
             this._updateTextureMatrix(sizes);
         }
     }
-    /***
-     This is used to crop/center a texture
-     If the texture is using texture matrix then we just have to update its matrix
-     If it is a render pass texture we also upload the texture with its new size on the GPU
-     ***/ resize() {
+resize() {
         if (this.sourceType === "fbo") {
             // update size based on parent sizes (RenderTarget or ShaderPass)
             this._size = {
@@ -6205,21 +4961,13 @@ class Texture {
         };
         this._setSize();
     }
-    /***
-     This updates our textures matrix uniform based on plane and sources sizes
-
-     params:
-     @sizes (object): object containing plane sizes, source sizes and x and y offset to center the source in the plane
-     ***/ _updateTextureMatrix(sizes) {
+_updateTextureMatrix(sizes) {
         // calculate scale to apply to the matrix
         const textureScale = tempVec3.set(sizes.parentWidth / (sizes.parentWidth - sizes.xOffset), sizes.parentHeight / (sizes.parentHeight - sizes.yOffset), 1);
         // apply texture scale
         textureScale.x /= this.scale.x;
         textureScale.y /= this.scale.y;
-        // translate and scale texture to center it
-        // equivalent (but faster) than applying those steps to an identity matrix:
-        // translate from [(1 - textureScale.x) / 2 + this.offset.x, (1 - textureScale.y) / 2 + this.offset.y, 0]
-        // then apply a scale of [textureScale.x, textureScale.y, 1]
+
         this._textureMatrix.matrix = textureTranslation.setFromArray([
             textureScale.x,
             0,
@@ -6241,28 +4989,19 @@ class Texture {
         // update the texture matrix uniform
         this._updateMatrixUniform();
     }
-    /***
-     This updates our textures matrix GL uniform
-     ***/ _updateMatrixUniform() {
+_updateMatrixUniform() {
         if (this._textureMatrix.isActive) {
             this.renderer.useProgram(this._parent._program);
             this.gl.uniformMatrix4fv(this._textureMatrix.location, false, this._textureMatrix.matrix.elements);
         }
     }
-    /***
-     This calls our loading callback and set our media as texture source
-     ***/ _onSourceLoaded(source) {
+_onSourceLoaded(source) {
         // set the media as our texture source
         this.setSource(source);
         // add to the cache if needed
         if (this.sourceType === "image") this.renderer.cache.addTexture(this);
     }
-    /*** DRAWING ***/ /***
-     This is used to set the WebGL context active texture and bind it
-
-     params:
-     @texture (texture object): Our texture object containing our WebGL texture and its index
-     ***/ _bindTexture() {
+_bindTexture() {
         if (this._canDraw) {
             if (this.renderer.state.activeTexture !== this.index) {
                 // tell WebGL we want to affect the texture at the plane's index unit
@@ -6279,9 +5018,7 @@ class Texture {
             }
         }
     }
-    /***
-     This is called to draw the texture
-     ***/ _draw() {
+_draw() {
         // only draw if the texture is active (used in the shader)
         if (this._sampler.isActive) {
             // bind the texture
@@ -6303,38 +5040,15 @@ class Texture {
             this.parameters._shouldUpdate = false;
         }
     }
-    /*** EVENTS ***/ /***
-     This is called each time a source has been loaded for the first time
-     TODO useless?
-
-     params :
-     @callback (function) : a function to execute
-
-     returns :
-     @this: our texture to handle chaining
-     ***/ onSourceLoaded(callback) {
+onSourceLoaded(callback) {
         if (callback) this._onSourceLoadedCallback = callback;
         return this;
     }
-    /***
-     This is called each time a texture has been uploaded to the GPU for the first time
-
-     params :
-     @callback (function) : a function to execute
-
-     returns :
-     @this: our texture to handle chaining
-     ***/ onSourceUploaded(callback) {
+onSourceUploaded(callback) {
         if (callback) this._onSourceUploadedCallback = callback;
         return this;
     }
-    /*** DESTROYING ***/ /***
-     This is used to destroy a texture and free the memory space
-     Usually used on a plane/shader pass/render target removal
-
-     params:
-     @force (bool, optional): force the texture to be deleted even if cached
-     ***/ _dispose(force = false) {
+_dispose(force = false) {
         if (this.sourceType === "video" || this.sourceType === "image" && !this.renderer.state.isActive) {
             // remove event listeners
             if (this._loader) this._loader._removeSource(this);
@@ -6364,17 +5078,7 @@ class Texture {
 },{"../math/Mat4.js":"8VQeF","../math/Vec2.js":"d6cuD","../math/Vec3.js":"3k5OT","../utils/utils.js":"6sdZo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8VQeF":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Here we create a Mat4 class object
- This is a really basic Matrix4 class used for matrix calculations
- Highly based on https://github.com/mrdoob/three.js/blob/dev/src/math/Matrix4.js and http://glmatrix.net/docs/mat4.js.html
-
- params :
- @elements (Float32Array of length 16): our matrix array. Default to identity matrix.
-
- returns :
- @this: our Mat4 class object
- ***/ // TODO lot of (unused at the time) methods are missing
+// TODO lot of (unused at the time) methods are missing
 parcelHelpers.export(exports, "Mat4", ()=>Mat4);
 class Mat4 {
     constructor(elements = new Float32Array([
@@ -6398,27 +5102,11 @@ class Mat4 {
         this.type = "Mat4";
         this.elements = elements;
     }
-    /***
-     Sets the matrix values from an array
-
-     params:
-     @array (array): an array of at least 16 elements
-
-     returns:
-     @this (Mat4 class object): this matrix after being set
-     ***/ setFromArray(array) {
+setFromArray(array) {
         for(let i = 0; i < this.elements.length; i++)this.elements[i] = array[i];
         return this;
     }
-    /***
-     Copy another Mat4
-
-     params:
-     @matrix (Mat4 class object): matrix to copy
-
-     returns:
-     @this (Mat4 class object): this matrix after copy
-     ***/ copy(matrix) {
+copy(matrix) {
         const array = matrix.elements;
         this.elements[0] = array[0];
         this.elements[1] = array[1];
@@ -6438,23 +5126,7 @@ class Mat4 {
         this.elements[15] = array[15];
         return this;
     }
-    /***
-     Clone a matrix
-
-     returns:
-     @clonedMatrix (Mat4 object): cloned matrix
-     ***/ clone() {
-        return new Mat4().copy(this);
-    }
-    /***
-     Simple matrix multiplication helper
-
-     params:
-     @matrix (Mat4 class object): Mat4 to multiply with
-
-     returns:
-     @result (Mat4 class object): Mat4 after multiplication
-     ***/ multiply(matrix) {
+multiply(matrix) {
         const a = this.elements;
         const b = matrix.elements;
         let result = new Mat4();
@@ -6476,12 +5148,7 @@ class Mat4 {
         result.elements[15] = b[12] * a[3] + b[13] * a[7] + b[14] * a[11] + b[15] * a[15];
         return result;
     }
-    /***
-     Get matrix inverse
-
-     returns:
-     @result (Mat4 class object): inverted Mat4
-     ***/ getInverse() {
+getInverse() {
         const te = this.elements;
         const out = new Mat4();
         const oe = out.elements;
@@ -6523,15 +5190,7 @@ class Mat4 {
         oe[15] = (a20 * b03 - a21 * b01 + a22 * b00) * det;
         return out;
     }
-    /***
-     Simple Mat4 scaling helper
-
-     params :
-     @vector (Vec3 class object): Vec3 representing scale along X, Y and Z axis
-
-     returns :
-     @result (Mat4 class object): Mat4 after scaling
-     ***/ scale(vector) {
+scale(vector) {
         let a = this.elements;
         a[0] *= vector.x;
         a[1] *= vector.x;
@@ -6547,19 +5206,7 @@ class Mat4 {
         a[11] *= vector.z;
         return this;
     }
-    /***
-     Creates a matrix from a quaternion rotation, vector translation and vector scale
-     Equivalent for applying translation, rotation and scale matrices but much faster
-     Source code from: http://glmatrix.net/docs/mat4.js.html
-
-     params :
-     @translation (Vec3 class object): translation vector
-     @quaternion (Quat class object): rotation quaternion
-     @scale (Vec3 class object): scale vector
-
-     returns :
-     @this (Mat4 class object): matrix after transformations
-     ***/ compose(translation, quaternion, scale) {
+compose(translation, quaternion, scale) {
         let matrix = this.elements;
         // Quaternion math
         const x = quaternion.elements[0], y = quaternion.elements[1], z = quaternion.elements[2], w = quaternion.elements[3];
@@ -6596,20 +5243,7 @@ class Mat4 {
         matrix[15] = 1;
         return this;
     }
-    /***
-     Creates a matrix from a quaternion rotation, vector translation and vector scale, rotating and scaling around the given origin
-     Equivalent for applying translation, rotation and scale matrices but much faster
-     Source code from: http://glmatrix.net/docs/mat4.js.html
-
-     params :
-     @translation (Vec3 class object): translation vector
-     @quaternion (Quat class object): rotation quaternion
-     @scale (Vec3 class object): scale vector
-     @origin (Vec3 class object): origin vector around which to scale and rotate
-
-     returns :
-     @this (Mat4 class object): matrix after transformations
-     ***/ composeFromOrigin(translation, quaternion, scale, origin) {
+composeFromOrigin(translation, quaternion, scale, origin) {
         let matrix = this.elements;
         // Quaternion math
         const x = quaternion.elements[0], y = quaternion.elements[1], z = quaternion.elements[2], w = quaternion.elements[3];
@@ -6663,18 +5297,7 @@ class Mat4 {
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d6cuD":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Here we create a Vec2 class object
- This is a really basic Vector2 class used for vector calculations
- Highly based on https://github.com/mrdoob/three.js/blob/dev/src/math/Vector2.js and http://glmatrix.net/docs/vec2.js.html
-
- params :
- @x (float): X component of our vector
- @y (float): Y component of our vector
-
- returns :
- @this: our Vec2 class object
- ***/ // TODO lot of (unused at the time) methods are missing
+// TODO lot of (unused at the time) methods are missing
 parcelHelpers.export(exports, "Vec2", ()=>Vec2);
 class Vec2 {
     constructor(x = 0, y = x){
@@ -6682,9 +5305,7 @@ class Vec2 {
         this._x = x;
         this._y = y;
     }
-    /***
-     Getters and setters (with onChange callback)
-     ***/ get x() {
+get x() {
         return this._x;
     }
     get y() {
@@ -6704,107 +5325,42 @@ class Vec2 {
         if (callback) this._onChangeCallback = callback;
         return this;
     }
-    /***
-     Sets the vector from values
-
-     params:
-     @x (float): X component of our vector
-     @y (float): Y component of our vector
-
-     returns:
-     @this (Vec2): this vector after being set
-     ***/ set(x, y) {
+set(x, y) {
         this._x = x;
         this._y = y;
         return this;
     }
-    /***
-     Adds a vector to this vector
-
-     params:
-     @vector (Vec2): vector to add
-
-     returns:
-     @this (Vec2): this vector after addition
-     ***/ add(vector) {
+add(vector) {
         this._x += vector.x;
         this._y += vector.y;
         return this;
     }
-    /***
-     Adds a scalar to this vector
-
-     params:
-     @value (float): number to add
-
-     returns:
-     @this (Vec2): this vector after addition
-     ***/ addScalar(value) {
+addScalar(value) {
         this._x += value;
         this._y += value;
         return this;
     }
-    /***
-     Subtracts a vector from this vector
-
-     params:
-     @vector (Vec2): vector to use for subtraction
-
-     returns:
-     @this (Vec2): this vector after subtraction
-     ***/ sub(vector) {
+sub(vector) {
         this._x -= vector.x;
         this._y -= vector.y;
         return this;
     }
-    /***
-     Subtracts a scalar to this vector
-
-     params:
-     @value (float): number to use for subtraction
-
-     returns:
-     @this (Vec2): this vector after subtraction
-     ***/ subScalar(value) {
+subScalar(value) {
         this._x -= value;
         this._y -= value;
         return this;
     }
-    /***
-     Multiplies a vector with this vector
-
-     params:
-     @vector (Vec2): vector to use for multiplication
-
-     returns:
-     @this (Vec2): this vector after multiplication
-     ***/ multiply(vector) {
+multiply(vector) {
         this._x *= vector.x;
         this._y *= vector.y;
         return this;
     }
-    /***
-     Multiplies a scalar with this vector
-
-     params:
-     @value (float): number to use for multiplication
-
-     returns:
-     @this (Vec2): this vector after multiplication
-     ***/ multiplyScalar(value) {
+multiplyScalar(value) {
         this._x *= value;
         this._y *= value;
         return this;
     }
-    /***
-     Copy a vector into this vector
-
-     params:
-     @vector (Vec2): vector to copy
-
-     returns:
-     @this (Vec2): this vector after copy
-     ***/ copy(vector) {
+copy(vector) {
         this._x = vector.x;
         this._y = vector.y;
         return this;
@@ -6817,62 +5373,25 @@ class Vec2 {
      ***/ clone() {
         return new Vec2(this._x, this._y);
     }
-    /***
-     Merges this vector with a vector when values are NaN. Mostly used internally.
-
-     params:
-     @vector (Vec2): vector to use for sanitization
-
-     returns:
-     @vector (Vec2): sanitized vector
-     ***/ sanitizeNaNValuesWith(vector) {
+sanitizeNaNValuesWith(vector) {
         this._x = isNaN(this._x) ? vector.x : parseFloat(this._x);
         this._y = isNaN(this._y) ? vector.y : parseFloat(this._y);
         return this;
     }
-    /***
-     Apply max values to this vector
-
-     params:
-     @vector (Vec2): vector representing max values
-
-     returns:
-     @vector (Vec2): vector with max values applied
-     ***/ max(vector) {
+max(vector) {
         this._x = Math.max(this._x, vector.x);
         this._y = Math.max(this._y, vector.y);
         return this;
     }
-    /***
-     Apply min values to this vector
-
-     params:
-     @vector (Vec2): vector representing min values
-
-     returns:
-     @vector (Vec2): vector with min values applied
-     ***/ min(vector) {
+min(vector) {
         this._x = Math.min(this._x, vector.x);
         this._y = Math.min(this._y, vector.y);
         return this;
     }
-    /***
-     Checks if 2 vectors are equal
-
-     params:
-     @vector (Vec2): vector to compare
-
-     returns:
-     @isEqual (bool): whether the vectors are equals or not
-     ***/ equals(vector) {
+equals(vector) {
         return this._x === vector.x && this._y === vector.y;
     }
-    /***
-     Normalize this vector
-
-     returns:
-     @this (Vec2): normalized vector
-     ***/ normalize() {
+normalize() {
         // normalize
         let len = this._x * this._x + this._y * this._y;
         if (len > 0) len = 1 / Math.sqrt(len);
@@ -6880,15 +5399,7 @@ class Vec2 {
         this._y *= len;
         return this;
     }
-    /***
-     Calculates the dot product of 2 vectors
-
-     params:
-     @vector (Vec2): vector to use for dot product
-
-     returns:
-     @dotProduct (float): dot product of the 2 vectors
-     ***/ dot(vector) {
+dot(vector) {
         return this._x * vector.x + this._y * vector.y;
     }
 }
@@ -6896,19 +5407,7 @@ class Vec2 {
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3k5OT":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Here we create a Vec3 class object
- This is a really basic Vector3 class used for vector calculations
- Highly based on https://github.com/mrdoob/three.js/blob/dev/src/math/Vector3.js and http://glmatrix.net/docs/vec3.js.html
 
- params :
- @x (float): X component of our vector
- @y (float): Y component of our vector
- @z (float): Z component of our vector
-
- returns :
- @this: our Vec3 class object
- ***/ // TODO lot of (unused at the time) methods are missing
 parcelHelpers.export(exports, "Vec3", ()=>Vec3);
 class Vec3 {
     constructor(x = 0, y = x, z = x){
@@ -6917,9 +5416,7 @@ class Vec3 {
         this._y = y;
         this._z = z;
     }
-    /***
-     Getters and setters (with onChange callback)
-     ***/ get x() {
+    get x() {
         return this._x;
     }
     get y() {
@@ -6947,184 +5444,79 @@ class Vec3 {
         if (callback) this._onChangeCallback = callback;
         return this;
     }
-    /***
-     Sets the vector from values
-
-     params:
-     @x (float): X component of our vector
-     @y (float): Y component of our vector
-     @z (float): Z component of our vector
-
-     returns:
-     @this (Vec2): this vector after being set
-     ***/ set(x, y, z) {
+set(x, y, z) {
         this._x = x;
         this._y = y;
         this._z = z;
         return this;
     }
-    /***
-     Adds a vector to this vector
-
-     params:
-     @vector (Vec3): vector to add
-
-     returns:
-     @this (Vec3): this vector after addition
-     ***/ add(vector) {
+add(vector) {
         this._x += vector.x;
         this._y += vector.y;
         this._z += vector.z;
         return this;
     }
-    /***
-     Adds a scalar to this vector
-
-     params:
-     @value (float): number to add
-
-     returns:
-     @this (Vec3): this vector after addition
-     ***/ addScalar(value) {
+addScalar(value) {
         this._x += value;
         this._y += value;
         this._z += value;
         return this;
     }
-    /***
-     Subtracts a vector from this vector
-
-     params:
-     @vector (Vec3): vector to use for subtraction
-
-     returns:
-     @this (Vec3): this vector after subtraction
-     ***/ sub(vector) {
+sub(vector) {
         this._x -= vector.x;
         this._y -= vector.y;
         this._z -= vector.z;
         return this;
     }
-    /***
-     Subtracts a scalar to this vector
-
-     params:
-     @value (float): number to use for subtraction
-
-     returns:
-     @this (Vec3): this vector after subtraction
-     ***/ subScalar(value) {
+subScalar(value) {
         this._x -= value;
         this._y -= value;
         this._z -= value;
         return this;
     }
-    /***
-     Multiplies a vector with this vector
-
-     params:
-     @vector (Vec3): vector to use for multiplication
-
-     returns:
-     @this (Vec3): this vector after multiplication
-     ***/ multiply(vector) {
+multiply(vector) {
         this._x *= vector.x;
         this._y *= vector.y;
         this._z *= vector.z;
         return this;
     }
-    /***
-     Multiplies a scalar with this vector
-
-     params:
-     @value (float): number to use for multiplication
-
-     returns:
-     @this (Vec3): this vector after multiplication
-     ***/ multiplyScalar(value) {
+multiplyScalar(value) {
         this._x *= value;
         this._y *= value;
         this._z *= value;
         return this;
     }
-    /***
-     Copy a vector into this vector
-
-     params:
-     @vector (Vec3): vector to copy
-
-     returns:
-     @this (Vec3): this vector after copy
-     ***/ copy(vector) {
+copy(vector) {
         this._x = vector.x;
         this._y = vector.y;
         this._z = vector.z;
         return this;
     }
-    /***
-     Clone this vector
-
-     returns:
-     @vector (Vec3): cloned vector
-     ***/ clone() {
+clone() {
         return new Vec3(this._x, this._y, this._z);
     }
-    /***
-     Merges this vector with a vector when values are NaN. Mostly used internally.
-
-     params:
-     @vector (Vec3): vector to use for sanitization
-
-     returns:
-     @vector (Vec3): sanitized vector
-     ***/ sanitizeNaNValuesWith(vector) {
+sanitizeNaNValuesWith(vector) {
         this._x = isNaN(this._x) ? vector.x : parseFloat(this._x);
         this._y = isNaN(this._y) ? vector.y : parseFloat(this._y);
         this._z = isNaN(this._z) ? vector.z : parseFloat(this._z);
         return this;
     }
-    /***
-     Apply max values to this vector
-
-     params:
-     @vector (Vec3): vector representing max values
-
-     returns:
-     @vector (Vec3): vector with max values applied
-     ***/ max(vector) {
+max(vector) {
         this._x = Math.max(this._x, vector.x);
         this._y = Math.max(this._y, vector.y);
         this._z = Math.max(this._z, vector.z);
         return this;
     }
-    /***
-     Apply min values to this vector
-
-     params:
-     @vector (Vec3): vector representing min values
-
-     returns:
-     @vector (Vec3): vector with min values applied
-     ***/ min(vector) {
+min(vector) {
         this._x = Math.min(this._x, vector.x);
         this._y = Math.min(this._y, vector.y);
         this._z = Math.min(this._z, vector.z);
         return this;
     }
-    /***
-     Checks if 2 vectors are equal
-
-     returns:
-     @isEqual (bool): whether the vectors are equals or not
-     ***/ equals(vector) {
+equals(vector) {
         return this._x === vector.x && this._y === vector.y && this._z === vector.z;
     }
-    /***
-     Normalize this vector
-
-     returns:
-     @this (Vec3): normalized vector
-     ***/ normalize() {
+normalize() {
         // normalize
         let len = this._x * this._x + this._y * this._y + this._z * this._z;
         if (len > 0) len = 1 / Math.sqrt(len);
@@ -7133,25 +5525,10 @@ class Vec3 {
         this._z *= len;
         return this;
     }
-    /***
-     Calculates the dot product of 2 vectors
-
-     returns:
-     @dotProduct (float): dot product of the 2 vectors
-     ***/ dot(vector) {
+dot(vector) {
         return this._x * vector.x + this._y * vector.y + this._z * vector.z;
     }
-    /***
-     Apply a matrix 4 to a point (vec3)
-     Useful to convert a point position from plane local world to webgl space using projection view matrix for example
-     Source code from: http://glmatrix.net/docs/vec3.js.html
-
-     params :
-     @matrix (array): 4x4 matrix used
-
-     returns :
-     @this (Vec3): this vector after matrix application
-     ***/ applyMat4(matrix) {
+applyMat4(matrix) {
         const x = this._x, y = this._y, z = this._z;
         const mArray = matrix.elements;
         let w = mArray[3] * x + mArray[7] * y + mArray[11] * z + mArray[15];
@@ -7161,15 +5538,7 @@ class Vec3 {
         this._z = (mArray[2] * x + mArray[6] * y + mArray[10] * z + mArray[14]) / w;
         return this;
     }
-    /***
-     Apply a quaternion (rotation in 3D space) to this vector
-
-     params :
-     @quaternion (Quat): quaternion to use
-
-     returns :
-     @this (Vec3): this vector after applying the transformation
-     ***/ applyQuat(quaternion) {
+applyQuat(quaternion) {
         const x = this._x, y = this._y, z = this._z;
         const qx = quaternion.elements[0], qy = quaternion.elements[1], qz = quaternion.elements[2], qw = quaternion.elements[3];
         // calculate quat * vector
@@ -7183,21 +5552,11 @@ class Vec3 {
         this._z = iz * qw + iw * -qz + ix * -qy - iy * -qx;
         return this;
     }
-    /***
-     Project 3D coordinate to 2D point
-
-     params:
-     @camera (Camera): camera to use for projection
-     ***/ project(camera) {
+project(camera) {
         this.applyMat4(camera.viewMatrix).applyMat4(camera.projectionMatrix);
         return this;
     }
-    /***
-     Unproject 2D point to 3D coordinate
-
-     params:
-     @camera (Camera): camera to use for projection
-     ***/ unproject(camera) {
+unproject(camera) {
         this.applyMat4(camera.projectionMatrix.getInverse()).applyMat4(camera.worldMatrix);
         return this;
     }
@@ -7206,22 +5565,7 @@ class Vec3 {
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6kijv":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/*** PLANE TEXTURE LOADER CLASS ***/ /***
- Extends our TextureLoader class to add sources loaded count, handle onComplete event
- Also adds the sources and textures to its defined parent
-
- params:
- @renderer (Curtains renderer or Renderer class object): our curtains object OR our curtains renderer object
- @parent (Plane or ShaderPass class object): The plane or shader pass that will use this loader
-
- @sourcesLoaded (int): Number of sources loaded
- @sourcesToLoad (int): Number of initial sources to load
- @complete (bool): Whether the loader has loaded all the initial sources
- @onComplete (function): Callback to execute when all the initial sources have been loaded
-
- returns :
- @this: our PlaneTextureLoader element
- ***/ parcelHelpers.export(exports, "PlaneTextureLoader", ()=>PlaneTextureLoader);
+parcelHelpers.export(exports, "PlaneTextureLoader", ()=>PlaneTextureLoader);
 var _textureLoaderJs = require("./TextureLoader.js");
 var _utilsJs = require("../utils/utils.js");
 class PlaneTextureLoader extends (0, _textureLoaderJs.TextureLoader) {
@@ -7238,34 +5582,21 @@ class PlaneTextureLoader extends (0, _textureLoaderJs.TextureLoader) {
         this.complete = complete;
         this.onComplete = onComplete;
     }
-    /*** TRACK LOADING ***/ /***
-     Sets the total number of assets to load before firing the onComplete event
-
-     params:
-     @size (int): our curtains object OR our curtains renderer object
-     ***/ _setLoaderSize(size) {
+_setLoaderSize(size) {
         this.sourcesToLoad = size;
         if (this.sourcesToLoad === 0) {
             this.complete = true;
             this.renderer.nextRender.add(()=>this.onComplete && this.onComplete());
         }
     }
-    /***
-     Increment the number of sources loaded
-     ***/ _increment() {
+_increment() {
         this.sourcesLoaded++;
         if (this.sourcesLoaded >= this.sourcesToLoad && !this.complete) {
             this.complete = true;
             this.renderer.nextRender.add(()=>this.onComplete && this.onComplete());
         }
     }
-    /*** UPDATE PARENT SOURCES AND TEXTURES ARAYS ***/ /***
-     Adds the source to the correct parent assets array
-
-     params:
-     @source (html element): html image, video or canvas element that has been loaded
-     @sourceType (string): either "image", "video" or "canvas"
-     ***/ _addSourceToParent(source, sourceType) {
+_addSourceToParent(source, sourceType) {
         // add the source if it is not already in the correct parent assets array
         if (sourceType === "image") {
             const parentAssetArray = this._parent["images"];
@@ -7281,15 +5612,7 @@ class PlaneTextureLoader extends (0, _textureLoaderJs.TextureLoader) {
             !isInParent2 && parentAssetArray2.push(source);
         }
     }
-    /***
-     Adds the loader parent to the newly created texture
-     Also adds the source to the correct parent assets array
-
-     params:
-     @texture (Texture class object): our newly created texture
-     @source (html element): html image, video or canvas element that has been loaded
-     @sourceType (string): either "image", "video" or "canvas"
-     ***/ _addToParent(texture, source, sourceType) {
+_addToParent(texture, source, sourceType) {
         this._addSourceToParent(source, sourceType);
         // add the texture to the parent
         this._parent && texture.addParent(this._parent);
@@ -7299,17 +5622,7 @@ class PlaneTextureLoader extends (0, _textureLoaderJs.TextureLoader) {
 },{"./TextureLoader.js":"6VoSy","../utils/utils.js":"6sdZo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6VoSy":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/*** TEXTURE LOADER CLASS ***/ /***
- An asset loader that handles images, videos and canvas loading
- Load the assets and create a Texture class object that will use those assets as sources
-
- params:
- @renderer (Curtains or Renderer class object): our curtains object OR our curtains renderer object
- @crossOrigin (string, optional): crossorigin policy to use
-
- returns :
- @this: our TextureLoader element
- ***/ // TODO load assets with a web worker?
+// TODO load assets with a web worker?
 parcelHelpers.export(exports, "TextureLoader", ()=>TextureLoader);
 var _textureJs = require("../core/Texture.js");
 var _utilsJs = require("../utils/utils.js");
@@ -7333,16 +5646,7 @@ class TextureLoader {
         // keep a track of all sources loaded via this loader
         this.elements = [];
     }
-    /***
-     Keep a track of all sources loaded via this loader with an els array
-     This allows to get clean refs to the event listeners to be able to remove them later
-
-     params:
-     @source (html element): html image, video or canvas element that has been loaded
-     @texture (Texture class object): our newly created texture that will use that source
-     @successCallback (function): reference to our success callback
-     @errorCallback (function): reference to our error callback
-     ***/ _addElement(source, texture, successCallback, errorCallback) {
+_addElement(source, texture, successCallback, errorCallback) {
         const el = {
             source,
             texture,
@@ -7352,25 +5656,11 @@ class TextureLoader {
         this.elements.push(el);
         return el;
     }
-    /***
-     Handles media loading errors
-
-     params:
-     @source (html element): html image or video element that has failed to load
-     @callback (function): function to execute
-     @error (object): loading error
-     ***/ _sourceLoadError(source, callback, error) {
+_sourceLoadError(source, callback, error) {
         // execute callback
         if (callback) callback(source, error);
     }
-    /***
-     Handles media loading success
-
-     params:
-     @source (html element): html image, video or canvas element that has been loaded
-     @texture (Texture class object): our newly created texture that will use that source
-     @callback (function): function to execute
-     ***/ _sourceLoaded(source, texture, callback) {
+_sourceLoaded(source, texture, callback) {
         // execute only once
         if (!texture._sourceLoaded) {
             texture._onSourceLoaded(source);
@@ -7384,15 +5674,7 @@ class TextureLoader {
             if (callback) callback(texture);
         }
     }
-    /***
-     Get the source type based on its file extension if it's a string or it's tag name if its a HTML element
-
-     params:
-     @source (html element or string): html image, video, canvas element or source url
-
-     returns :
-     @sourceType (string): either "image", "video", "canvas" or null if source type cannot be determined
-     ***/ _getSourceType(source) {
+_getSourceType(source) {
         let sourceType;
         if (typeof source === "string") {
             // from https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#Supported_image_formats
@@ -7405,15 +5687,7 @@ class TextureLoader {
         }
         return sourceType;
     }
-    /***
-     Create an image HTML element based on an image source url
-
-     params:
-     @source (string): source url
-
-     returns :
-     @image (HTML image element): an HTML image element
-     ***/ _createImage(source) {
+_createImage(source) {
         // create a new image element if the source specified is a string
         // or if the crossorigin attribute is not specified (avoid potential CORS errors)
         if (typeof source === "string" || !source.hasAttribute("crossOrigin")) {
@@ -7428,15 +5702,7 @@ class TextureLoader {
         } else // else return source directly to avoid reloading the image
         return source;
     }
-    /***
-     Create a video HTML element based on a video source url
-
-     params:
-     @source (string): source url
-
-     returns :
-     @video (HTML video element): an HTML video element
-     ***/ _createVideo(source) {
+_createVideo(source) {
         // create a new video element if the source specified is a string
         // or if the crossorigin attribute is not specified (avoid potential CORS errors)
         if (typeof source === "string" || source.getAttribute("crossOrigin") === null) {
@@ -7451,16 +5717,7 @@ class TextureLoader {
         } else // else return source directly to avoid reloading the video
         return source;
     }
-    /***
-     This method loads one source
-     It checks what type of source it is then use the right loader
-
-     params:
-     @source (html element): html image, video or canvas element
-     @textureOptions (object): parameters to apply to the textures, such as sampler name, repeat wrapping, filters, anisotropy...
-     @successCallback (function): function to execute when the source has been loaded
-     @errorCallback (function): function to execute if the source fails to load
-     ***/ loadSource(source, textureOptions, successCallback, errorCallback) {
+loadSource(source, textureOptions, successCallback, errorCallback) {
         // get source type to use the right loader
         const sourceType = this._getSourceType(source);
         switch(sourceType){
@@ -7478,27 +5735,10 @@ class TextureLoader {
                 break;
         }
     }
-    /***
-     This method loads an array of sources by calling loadSource() for each one of them
-
-     params:
-     @sources (array of html elements / sources url): array of html images, videos, canvases element or sources url
-     @texturesOptions (object): parameters to apply to the textures, such as sampler name, repeat wrapping, filters, anisotropy...
-     @successCallback (function): function to execute when each source has been loaded
-     @errorCallback (function): function to execute if a source fails to load
-     ***/ loadSources(sources, texturesOptions, successCallback, errorCallback) {
+loadSources(sources, texturesOptions, successCallback, errorCallback) {
         for(let i = 0; i < sources.length; i++)this.loadSource(sources[i], texturesOptions, successCallback, errorCallback);
     }
-    /***
-     This method loads an image
-     Creates a new texture object right away and once the image is loaded it uses it as our WebGL texture
-
-     params:
-     @source (image): html image element
-     @textureOptions (object): parameters to apply to the textures, such as sampler name, repeat wrapping, filters, anisotropy...
-     @successCallback (function): function to execute when the source has been loaded
-     @errorCallback (function): function to execute if the source fails to load
-     ***/ loadImage(source, textureOptions = {}, successCallback, errorCallback) {
+loadImage(source, textureOptions = {}, successCallback, errorCallback) {
         // check for cache
         const cachedTexture = this.renderer.cache.getTextureFromSource(source);
         let options = Object.assign({}, textureOptions);
@@ -7538,27 +5778,10 @@ class TextureLoader {
         // if there's a parent (PlaneTextureLoader) add texture and source to it
         this._parent && this._addToParent(texture1, image, "image");
     }
-    /***
-     This method loads an array of images by calling loadImage() for each one of them
-
-     params:
-     @sources (array of images / images url): array of html images elements or images url
-     @texturesOptions (object): parameters to apply to the textures, such as sampler name, repeat wrapping, filters, anisotropy...
-     @successCallback (function): function to execute when each source has been loaded
-     @errorCallback (function): function to execute if a source fails to load
-     ***/ loadImages(sources, texturesOptions, successCallback, errorCallback) {
+loadImages(sources, texturesOptions, successCallback, errorCallback) {
         for(let i = 0; i < sources.length; i++)this.loadImage(sources[i], texturesOptions, successCallback, errorCallback);
     }
-    /***
-     This method loads a video
-     Creates a new texture object right away and once the video has enough data it uses it as our WebGL texture
-
-     params:
-     @source (video): html video element
-     @textureOptions (object): parameters to apply to the textures, such as sampler name, repeat wrapping, filters, anisotropy...
-     @successCallback (function): function to execute when the source has been loaded
-     @errorCallback (function): function to execute if the source fails to load
-     ***/ loadVideo(source, textureOptions = {}, successCallback, errorCallback) {
+loadVideo(source, textureOptions = {}, successCallback, errorCallback) {
         const video = this._createVideo(source);
         video.preload = true;
         video.muted = true;
@@ -7591,26 +5814,10 @@ class TextureLoader {
             texture._videoFrameCallbackID = video.requestVideoFrameCallback(el.videoFrameCallback);
         }
     }
-    /***
-     This method loads an array of images by calling loadVideo() for each one of them
-
-     params:
-     @sources (array of videos / videos url): array of html videos elements or videos url
-     @texturesOptions (object): parameters to apply to the textures, such as sampler name, repeat wrapping, filters, anisotropy...
-     @successCallback (function): function to execute when each source has been loaded
-     @errorCallback (function): function to execute if a source fails to load
-     ***/ loadVideos(sources, texturesOptions, successCallback, errorCallback) {
+loadVideos(sources, texturesOptions, successCallback, errorCallback) {
         for(let i = 0; i < sources.length; i++)this.loadVideo(sources[i], texturesOptions, successCallback, errorCallback);
     }
-    /***
-     This method loads a canvas
-     Creates a new texture object right away and uses the canvas as our WebGL texture
-
-     params:
-     @source (canvas): html canvas element
-     @textureOptions (object): parameters to apply to the textures, such as sampler name, repeat wrapping, filters, anisotropy...
-     @successCallback (function): function to execute when the source has been loaded
-     ***/ loadCanvas(source, textureOptions = {}, successCallback) {
+loadCanvas(source, textureOptions = {}, successCallback) {
         let options = Object.assign({}, textureOptions);
         // merge texture options with its parent textures options if needed
         if (this._parent) options = Object.assign(textureOptions, this._parent._texturesOptions);
@@ -7625,22 +5832,10 @@ class TextureLoader {
         // if there's a parent (PlaneTextureLoader) add texture and source to it
         this._parent && this._addToParent(texture, source, "canvas");
     }
-    /***
-     This method loads an array of images by calling loadCanvas() for each one of them
-
-     params:
-     @sources (array of canvas): array of html canvases elements
-     @texturesOptions (object): parameters to apply to the textures, such as sampler name, repeat wrapping, filters, anisotropy...
-     @successCallback (function): function to execute when each source has been loaded
-     ***/ loadCanvases(sources, texturesOptions, successCallback) {
+loadCanvases(sources, texturesOptions, successCallback) {
         for(let i = 0; i < sources.length; i++)this.loadCanvas(sources[i], texturesOptions, successCallback);
     }
-    /*** REMOVING EVENT LISTENERS ***/ /***
-     Cleanly removes a texture source by removing its associated event listeners
-
-     params:
-     @texture (Texture class object): The texture that contains our source
-     ***/ _removeSource(texture) {
+_removeSource(texture) {
         // find our reference el in our els array
         const el = this.elements.find((element)=>element.texture.uuid === texture.uuid);
         // if we have an element, remove its associated event listeners
@@ -7663,22 +5858,7 @@ class TextureLoader {
 },{"../core/Texture.js":"fuCjC","../utils/utils.js":"6sdZo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kSVBq":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Here we create our Camera object
- Creates a perspective camera and its projection matrix (which is used by Plane's class objects)
- Uses a dirty _shouldUpdate flag used to determine if we should update the matrix
-
- params:
- @fov (float, optional): the perspective field of view. Should be greater than 0 and lower than 180. Default to 50.
- @near (float, optional): near plane, the closest point where a mesh vertex is drawn. Default to 0.1.
- @far (float, optional): far plane, farthest point where a mesh vertex is drawn. Default to 150.
- @width (float, optional): width used to calculate the camera aspect ratio. Default to the renderer container's width.
- @height (float, optional): height used to calculate the camera aspect ratio. Default to the renderer container's height.
- @pixelRatio (float, optional): pixel ratio used to calculate the camera aspect ratio. Default to the renderer's pixel ratio.
-
- returns:
- @this: our Mesh element
- ***/ parcelHelpers.export(exports, "Camera", ()=>Camera);
+parcelHelpers.export(exports, "Camera", ()=>Camera);
 var _vec3Js = require("../math/Vec3.js");
 var _mat4Js = require("../math/Mat4.js");
 class Camera {
@@ -7691,13 +5871,7 @@ class Camera {
         this.setSize();
         this.setPerspective(fov, near, far, width, height, pixelRatio);
     }
-    /***
-     Sets the camera field of view
-     Update the camera projection matrix only if the fov actually changed
-
-     params:
-     @fov (float, optional): field of view to use
-     ***/ setFov(fov) {
+setFov(fov) {
         fov = isNaN(fov) ? this.fov : parseFloat(fov);
         // clamp between 1 and 179
         fov = Math.max(1, Math.min(fov, 179));
@@ -7708,13 +5882,7 @@ class Camera {
         }
         this.setCSSPerspective();
     }
-    /***
-     Sets the camera near plane value
-     Update the camera projection matrix only if the near plane actually changed
-
-     params:
-     @near (float, optional): near plane value to use
-     ***/ setNear(near) {
+setNear(near) {
         near = isNaN(near) ? this.near : parseFloat(near);
         near = Math.max(near, 0.01);
         if (near !== this.near) {
@@ -7722,13 +5890,7 @@ class Camera {
             this._shouldUpdate = true;
         }
     }
-    /***
-     Sets the camera far plane value
-     Update the camera projection matrix only if the far plane actually changed
-
-     params:
-     @far (float, optional): far plane value to use
-     ***/ setFar(far) {
+setFar(far) {
         far = isNaN(far) ? this.far : parseFloat(far);
         far = Math.max(far, 50);
         if (far !== this.far) {
@@ -7736,40 +5898,16 @@ class Camera {
             this._shouldUpdate = true;
         }
     }
-    /***
-     Sets the camera pixel ratio value
-     Update the camera projection matrix only if the pixel ratio actually changed
-
-     params:
-     @pixelRatio (float, optional): pixelRatio value to use
-     ***/ setPixelRatio(pixelRatio) {
+setPixelRatio(pixelRatio) {
         if (pixelRatio !== this.pixelRatio) this._shouldUpdate = true;
         this.pixelRatio = pixelRatio;
     }
-    /***
-     Sets the camera width and height
-     Update the camera projection matrix only if the width or height actually changed
-
-     params:
-     @width (float, optional): width value to use
-     @height (float, optional): height value to use
-     ***/ setSize(width, height) {
+setSize(width, height) {
         if (width !== this.width || height !== this.height) this._shouldUpdate = true;
         this.width = width;
         this.height = height;
     }
-    /***
-     Sets the camera perspective
-     Update the camera projection matrix if our _shouldUpdate flag is true
-
-     params:
-     @fov (float, optional): field of view to use
-     @near (float, optional): near plane value to use
-     @far (float, optional): far plane value to use
-     @width (float, optional): width value to use
-     @height (float, optional): height value to use
-     @pixelRatio (float, optional): pixelRatio value to use
-     ***/ setPerspective(fov, near, far, width, height, pixelRatio) {
+setPerspective(fov, near, far, width, height, pixelRatio) {
         this.setPixelRatio(pixelRatio);
         this.setSize(width, height);
         this.setFov(fov);
@@ -7777,10 +5915,7 @@ class Camera {
         this.setFar(far);
         if (this._shouldUpdate) this.updateProjectionMatrix();
     }
-    /***
-     Sets the camera position based on its fov
-     Used by the Plane class objects to scale the planes with the right amount
-     ***/ setPosition() {
+setPosition() {
         this.position.set(0, 0, 1);
         // update matrices
         this.worldMatrix.setFromArray([
@@ -7803,18 +5938,10 @@ class Camera {
         ]);
         this.viewMatrix = this.viewMatrix.copy(this.worldMatrix).getInverse();
     }
-    /***
-     Sets a CSSPerspective property based on width, height, pixelRatio and fov
-     Used to translate planes along the Z axis using pixel units as CSS would do
-     Taken from: https://stackoverflow.com/questions/22421439/convert-field-of-view-value-to-css3d-perspective-value
-     ***/ setCSSPerspective() {
+setCSSPerspective() {
         this.CSSPerspective = Math.pow(Math.pow(this.width / (2 * this.pixelRatio), 2) + Math.pow(this.height / (2 * this.pixelRatio), 2), 0.5) / Math.tan(this.fov * 0.5 * Math.PI / 180);
     }
-    /***
-     Returns visible width / height at a given z-depth from our camera parameters
-
-     Taken from: https://discourse.threejs.org/t/functions-to-calculate-the-visible-width-height-at-a-given-z-depth-from-a-perspective-camera/269
-     ***/ getScreenRatiosFromFov(depth = 0) {
+getScreenRatiosFromFov(depth = 0) {
         // compensate for cameras not positioned at z=0
         const cameraOffset = this.position.z;
         if (depth < cameraOffset) depth -= cameraOffset;
@@ -7828,9 +5955,7 @@ class Camera {
             height: height
         };
     }
-    /***
-     Updates the camera projection matrix
-     ***/ updateProjectionMatrix() {
+updateProjectionMatrix() {
         const aspect = this.width / this.height;
         const top = this.near * Math.tan(Math.PI / 180 * 0.5 * this.fov);
         const height = 2 * top;
@@ -7863,14 +5988,10 @@ class Camera {
             0
         ]);
     }
-    /***
-     Force the projection matrix to update (used in Plane class objects context restoration)
-     ***/ forceUpdate() {
+forceUpdate() {
         this._shouldUpdate = true;
     }
-    /***
-     Cancel the projection matrix update (used in Plane class objects after the projection matrix has been updated)
-     ***/ cancelUpdate() {
+cancelUpdate() {
         this._shouldUpdate = false;
     }
 }
@@ -7878,17 +5999,7 @@ class Camera {
 },{"../math/Vec3.js":"3k5OT","../math/Mat4.js":"8VQeF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8I282":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Here we create a Quat class object
- This is a really basic Quaternion class used for rotation calculations
- Highly based on https://github.com/mrdoob/three.js/blob/dev/src/math/Quaternion.js
 
- params :
- @elements (Float32Array of length 4): our quaternion array. Default to identity quaternion.
-
- returns :
- @this: our Quat class object
- ***/ // TODO lot of (unused at the time) methods are missing
 parcelHelpers.export(exports, "Quat", ()=>Quat);
 class Quat {
     constructor(elements = new Float32Array([
@@ -7902,30 +6013,14 @@ class Quat {
         // rotation axis order
         this.axisOrder = axisOrder;
     }
-    /***
-     Sets the quaternion values from an array
-
-     params:
-     @array (array): an array of at least 4 elements
-
-     returns:
-     @this (Quat class object): this quaternion after being set
-     ***/ setFromArray(array) {
+setFromArray(array) {
         this.elements[0] = array[0];
         this.elements[1] = array[1];
         this.elements[2] = array[2];
         this.elements[3] = array[3];
         return this;
     }
-    /***
-     Sets the quaternion axis order
-
-     params:
-     @axisOrder (string): an array of at least 4 elements
-
-     returns:
-     @this (Quat class object): this quaternion after axis order has been set
-     ***/ setAxisOrder(axisOrder) {
+setAxisOrder(axisOrder) {
         // force uppercase for strict equality tests
         axisOrder = axisOrder.toUpperCase();
         switch(axisOrder){
@@ -7943,44 +6038,18 @@ class Quat {
         }
         return this;
     }
-    /***
-     Copy a quaternion into this quaternion
-
-     params:
-     @vector (Quat): quaternion to copy
-
-     returns:
-     @this (Quat): this quaternion after copy
-     ***/ copy(quaternion) {
+copy(quaternion) {
         this.elements = quaternion.elements;
         this.axisOrder = quaternion.axisOrder;
         return this;
     }
-    /***
-     Clone a quaternion
-
-     returns:
-     @clonedQuaternion (Quat): cloned quaternion
-     ***/ clone() {
+clone() {
         return new Quat().copy(this);
     }
-    /***
-     Checks if 2 quaternions are equal
-
-     returns:
-     @isEqual (bool): whether the quaternions are equals or not
-     ***/ equals(quaternion) {
+equals(quaternion) {
         return this.elements[0] === quaternion.elements[0] && this.elements[1] === quaternion.elements[1] && this.elements[2] === quaternion.elements[2] && this.elements[3] === quaternion.elements[3] && this.axisOrder === quaternion.axisOrder;
     }
-    /***
-     Sets a rotation quaternion using Euler angles and its axis order
-
-     params:
-     @vector (Vec3 class object): rotation vector to set our quaternion from
-
-     returns :
-     @this (Quat class object): quaternion after having applied the rotation
-     ***/ setFromVec3(vector) {
+setFromVec3(vector) {
         const ax = vector.x * 0.5;
         const ay = vector.y * 0.5;
         const az = vector.z * 0.5;
@@ -8029,24 +6098,7 @@ class Quat {
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7FPO3":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/***
- Here we create a RenderTarget class object
-
- params :
- @renderer (Curtains renderer or Renderer class object): our curtains object OR our curtains renderer object
-
- @shaderPass (ShaderPass class object): shader pass that will use that render target. Default to null
- @depth (bool, optional): whether to create a depth buffer (handle depth inside your render target). Default to false.
- @clear (bool, optional): whether the content of the render target should be cleared before being drawn. Should be set to false to handle ping-pong shading. Default to true.
-
- @minWidth (float, optional): minimum width of the render target
- @minHeight (float, optional): minimum height of the render target
-
- @texturesOptions (object, optional): options and parameters to apply to the render target texture. See the Texture class object.
-
- returns :
- @this: our RenderTarget class object
- ***/ parcelHelpers.export(exports, "RenderTarget", ()=>RenderTarget);
+parcelHelpers.export(exports, "RenderTarget", ()=>RenderTarget);
 var _textureJs = require("../core/Texture.js");
 var _utilsJs = require("../utils/utils.js");
 class RenderTarget {
@@ -8097,27 +6149,20 @@ class RenderTarget {
         this.renderer.onSceneChange();
         this._initRenderTarget();
     }
-    /***
-     Init our RenderTarget by setting its size, creating a textures array and then calling _createFrameBuffer()
-     ***/ _initRenderTarget() {
+_initRenderTarget() {
         this._setSize();
         // create our render texture
         this.textures = [];
         // create our frame buffer
         this._createFrameBuffer();
     }
-    /*** RESTORING CONTEXT ***/ /***
-     Restore a render target
-     Basically just re init it
-     ***/ _restoreContext() {
+_restoreContext() {
         // reset size
         this._setSize();
         // re create our frame buffer and restore its texture
         this._createFrameBuffer();
     }
-    /***
-     Sets our RenderTarget size based on its parent plane size
-     ***/ _setSize() {
+_setSize() {
         if (this._shaderPass && this._shaderPass._isScenePass) this._size = {
             width: this.renderer._boundingRect.width,
             height: this.renderer._boundingRect.height
@@ -8127,9 +6172,7 @@ class RenderTarget {
             height: Math.min(this._maxSize.height, Math.max(this._minSize.height, this.renderer._boundingRect.height))
         };
     }
-    /***
-     Resizes our RenderTarget (only resize it if it's a ShaderPass scene pass FBO)
-     ***/ resize() {
+resize() {
         // resize render target only if its a child of a shader pass
         if (this._shaderPass) {
             this._setSize();
@@ -8140,9 +6183,7 @@ class RenderTarget {
             this.renderer.bindFrameBuffer(null);
         }
     }
-    /***
-     Binds our depth buffer
-     ***/ _bindDepthBuffer() {
+_bindDepthBuffer() {
         // render to our target texture by binding the framebuffer
         if (this._depthBuffer) {
             this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, this._depthBuffer);
@@ -8152,10 +6193,7 @@ class RenderTarget {
             this.gl.framebufferRenderbuffer(this.gl.FRAMEBUFFER, this.gl.DEPTH_ATTACHMENT, this.gl.RENDERBUFFER, this._depthBuffer);
         }
     }
-    /***
-     Here we create our frame buffer object
-     We're also adding a render buffer object to handle depth if needed
-     ***/ _createFrameBuffer() {
+_createFrameBuffer() {
         this._frameBuffer = this.gl.createFramebuffer();
         // cancel clear on init
         this.renderer.bindFrameBuffer(this, true);
@@ -8179,17 +6217,10 @@ class RenderTarget {
         }
         this.renderer.bindFrameBuffer(null);
     }
-    /*** GET THE RENDER TARGET TEXTURE ***/ /***
-     Returns the render target's texture
-
-     returns :
-     @texture (Texture class object): our RenderTarget's texture
-     ***/ getTexture() {
+getTexture() {
         return this.textures[0];
     }
-    /*** DESTROYING ***/ /***
-     Remove an element by calling the appropriate renderer method
-     ***/ remove() {
+remove() {
         // check if it is attached to a shader pass
         if (this._shaderPass) {
             if (!this.renderer.production) (0, _utilsJs.throwWarning)(this.type + ": You're trying to remove a RenderTarget attached to a ShaderPass. You should remove that ShaderPass instead:", this._shaderPass);
@@ -8198,9 +6229,7 @@ class RenderTarget {
         this._dispose();
         this.renderer.removeRenderTarget(this);
     }
-    /***
-     Delete a RenderTarget buffers and its associated texture
-     ***/ _dispose() {
+_dispose() {
         if (this._frameBuffer) {
             this.gl.deleteFramebuffer(this._frameBuffer);
             this._frameBuffer = null;
@@ -8217,23 +6246,7 @@ class RenderTarget {
 },{"../core/Texture.js":"fuCjC","../utils/utils.js":"6sdZo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ax2D8":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/*** SHADERPASS CLASS ***/ /***
- Here we create our ShaderPass object
- We will extend our DOMMesh class that handles all the WebGL part and basic HTML sizings
- ShaderPass class will add the frame buffer by creating a new RenderTarget class object
-
- params :
- @renderer (Curtains renderer or Renderer class object): our curtains object OR our curtains renderer object
-
- @Meshparams (object): see Mesh class object
-
- @depth (boolean, optionnal): whether the shader pass render target should use a depth buffer (see RenderTarget class object). Default to false.
- @clear (boolean, optional): whether the shader pass render target content should be cleared before being drawn (see RenderTarget class object). Default to true.
- @renderTarget (RenderTarget class object, optional): an already existing render target to use. Default to null.
-
- returns :
- @this: our ShaderPass element
- ***/ parcelHelpers.export(exports, "ShaderPass", ()=>ShaderPass);
+parcelHelpers.export(exports, "ShaderPass", ()=>ShaderPass);
 var _dommeshJs = require("../core/DOMMesh.js");
 var _renderTargetJs = require("./RenderTarget.js");
 var _textureJs = require("../core/Texture.js");
@@ -8286,9 +6299,7 @@ class ShaderPass extends (0, _dommeshJs.DOMMesh) {
             });
         }
     }
-    /*** RESTORING CONTEXT ***/ /***
-     Used internally to handle context restoration after the program has been successfully compiled again
-     ***/ _programRestored() {
+_programRestored() {
         // add the shader pass to our draw stack again as it have been emptied
         this.renderer.scene.addShaderPass(this);
         // restore the textures
@@ -8298,10 +6309,7 @@ class ShaderPass extends (0, _dommeshJs.DOMMesh) {
         }
         this._canDraw = true;
     }
-    /***
-     Here we init additionnal shader pass planes properties
-     This mainly consists in creating our render texture and add a frame buffer object
-     ***/ _initShaderPass() {
+_initShaderPass() {
         // create our frame buffer
         if (!this.target) this._createFrameBuffer();
         else {
@@ -8322,10 +6330,7 @@ class ShaderPass extends (0, _dommeshJs.DOMMesh) {
         // be sure we'll update the scene even if drawing is disabled
         this.renderer.needRender();
     }
-    /***
-     Here we create our frame buffer object
-     We're also adding a render buffer object to handle depth inside our shader pass
-     ***/ _createFrameBuffer() {
+_createFrameBuffer() {
         const target = new (0, _renderTargetJs.RenderTarget)(this.renderer, {
             shaderPass: this,
             clear: this._shouldClear,
@@ -8334,9 +6339,7 @@ class ShaderPass extends (0, _dommeshJs.DOMMesh) {
         });
         this.setRenderTarget(target);
     }
-    /*** DRAWING ***/ /***
-     Specific instructions for the Shader pass class to execute before drawing it
-     ***/ _startDrawing() {
+_startDrawing() {
         // check if our plane is ready to draw
         if (this._canDraw) {
             // even if our plane should not be drawn we still execute its onRender callback and update its uniforms
@@ -8362,21 +6365,7 @@ class ShaderPass extends (0, _dommeshJs.DOMMesh) {
 },{"../core/DOMMesh.js":"5xzSx","./RenderTarget.js":"7FPO3","../core/Texture.js":"fuCjC","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"64j5G":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/*** FBO PING PONG PLANE CLASS ***/ /***
- A little helper to create a plane that will perform FBO ping pong
- This plane will use FBOs swapping, using these following steps:
- - create two render targets (read and write)
- - create a texture onto which we'll draw
- - before drawing our plane (onRender callback), apply the write pass as our plane render target
- - after drawing our plane (onAfterRender callback), swap the read and write pass and copy the read pass texture again
-
- params:
- @sampler (string): sampler name used to create our texture and that will be used inside your shader
- @planeParams: see Plane class object
-
- returns :
- @this: our PingPongPlane element
- ***/ parcelHelpers.export(exports, "PingPongPlane", ()=>PingPongPlane);
+parcelHelpers.export(exports, "PingPongPlane", ()=>PingPongPlane);
 var _planeJs = require("../core/Plane.js");
 var _renderTargetJs = require("../framebuffers/RenderTarget.js");
 class PingPongPlane extends (0, _planeJs.Plane) {
@@ -8454,10 +6443,7 @@ class PingPongPlane extends (0, _planeJs.Plane) {
             this._onPingPongAfterRenderCallback && this._onPingPongAfterRenderCallback();
         };
     }
-    /***
-     Copy the current target texture once both render targets textures have been uploaded
-     Wait for next tick to be sure our texture is correctly initiated
-     ***/ _checkIfReady(loadedTextures) {
+_checkIfReady(loadedTextures) {
         if (loadedTextures === 2) this.renderer.nextRender.add(()=>{
             this.textures[0].copy(this.target.getTexture());
         });
@@ -8523,15 +6509,7 @@ class PingPongPlane extends (0, _planeJs.Plane) {
 },{"../core/Plane.js":"7VSYC","../framebuffers/RenderTarget.js":"7FPO3","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3zUbz":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-/*** FXAAPASS CLASS ***/ /***
- Here we create our FXAAPass object
- This is just a regular ShaderPass with preset shaders and a resolution uniform
-
- params: see ShaderPas class object
-
- returns :
- @this: our FXAAPass element
- ***/ parcelHelpers.export(exports, "FXAAPass", ()=>FXAAPass);
+parcelHelpers.export(exports, "FXAAPass", ()=>FXAAPass);
 var _shaderPassJs = require("../framebuffers/ShaderPass.js");
 class FXAAPass extends (0, _shaderPassJs.ShaderPass) {
     constructor(curtains, { // Mesh params
@@ -8635,15 +6613,7 @@ class FXAAPass extends (0, _shaderPassJs.ShaderPass) {
             this._onFXAAPassAfterResizeCallback && this._onFXAAPassAfterResizeCallback();
         };
     }
-    /***
-     This is called each time the FXAAPass has been resized
-
-     params :
-     @callback (function) : a function to execute
-
-     returns :
-     @this: our FXAAPass to handle chaining
-     ***/ onAfterResize(callback) {
+onAfterResize(callback) {
         if (callback) this._onFXAAPassAfterResizeCallback = callback;
         return this;
     }
@@ -10396,46 +8366,21 @@ var global = arguments[3];
         }
         return array;
     }
-    /**
-   * A specialized version of `_.forEachRight` for arrays without support for
-   * iteratee shorthands.
-   *
-   * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @returns {Array} Returns `array`.
-   */ function arrayEachRight(array, iteratee) {
+function arrayEachRight(array, iteratee) {
         var length = array == null ? 0 : array.length;
         while(length--){
             if (iteratee(array[length], length, array) === false) break;
         }
         return array;
     }
-    /**
-   * A specialized version of `_.every` for arrays without support for
-   * iteratee shorthands.
-   *
-   * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} predicate The function invoked per iteration.
-   * @returns {boolean} Returns `true` if all elements pass the predicate check,
-   *  else `false`.
-   */ function arrayEvery(array, predicate) {
+function arrayEvery(array, predicate) {
         var index = -1, length = array == null ? 0 : array.length;
         while(++index < length){
             if (!predicate(array[index], index, array)) return false;
         }
         return true;
     }
-    /**
-   * A specialized version of `_.filter` for arrays without support for
-   * iteratee shorthands.
-   *
-   * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} predicate The function invoked per iteration.
-   * @returns {Array} Returns the new filtered array.
-   */ function arrayFilter(array, predicate) {
+function arrayFilter(array, predicate) {
         var index = -1, length = array == null ? 0 : array.length, resIndex = 0, result = [];
         while(++index < length){
             var value = array[index];
@@ -10443,144 +8388,53 @@ var global = arguments[3];
         }
         return result;
     }
-    /**
-   * A specialized version of `_.includes` for arrays without support for
-   * specifying an index to search from.
-   *
-   * @private
-   * @param {Array} [array] The array to inspect.
-   * @param {*} target The value to search for.
-   * @returns {boolean} Returns `true` if `target` is found, else `false`.
-   */ function arrayIncludes(array, value) {
+function arrayIncludes(array, value) {
         var length = array == null ? 0 : array.length;
         return !!length && baseIndexOf(array, value, 0) > -1;
     }
-    /**
-   * This function is like `arrayIncludes` except that it accepts a comparator.
-   *
-   * @private
-   * @param {Array} [array] The array to inspect.
-   * @param {*} target The value to search for.
-   * @param {Function} comparator The comparator invoked per element.
-   * @returns {boolean} Returns `true` if `target` is found, else `false`.
-   */ function arrayIncludesWith(array, value, comparator) {
+function arrayIncludesWith(array, value, comparator) {
         var index = -1, length = array == null ? 0 : array.length;
         while(++index < length){
             if (comparator(value, array[index])) return true;
         }
         return false;
     }
-    /**
-   * A specialized version of `_.map` for arrays without support for iteratee
-   * shorthands.
-   *
-   * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @returns {Array} Returns the new mapped array.
-   */ function arrayMap(array, iteratee) {
+function arrayMap(array, iteratee) {
         var index = -1, length = array == null ? 0 : array.length, result = Array(length);
         while(++index < length)result[index] = iteratee(array[index], index, array);
         return result;
     }
-    /**
-   * Appends the elements of `values` to `array`.
-   *
-   * @private
-   * @param {Array} array The array to modify.
-   * @param {Array} values The values to append.
-   * @returns {Array} Returns `array`.
-   */ function arrayPush(array, values) {
+function arrayPush(array, values) {
         var index = -1, length = values.length, offset = array.length;
         while(++index < length)array[offset + index] = values[index];
         return array;
     }
-    /**
-   * A specialized version of `_.reduce` for arrays without support for
-   * iteratee shorthands.
-   *
-   * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @param {*} [accumulator] The initial value.
-   * @param {boolean} [initAccum] Specify using the first element of `array` as
-   *  the initial value.
-   * @returns {*} Returns the accumulated value.
-   */ function arrayReduce(array, iteratee, accumulator, initAccum) {
+function arrayReduce(array, iteratee, accumulator, initAccum) {
         var index = -1, length = array == null ? 0 : array.length;
         if (initAccum && length) accumulator = array[++index];
         while(++index < length)accumulator = iteratee(accumulator, array[index], index, array);
         return accumulator;
     }
-    /**
-   * A specialized version of `_.reduceRight` for arrays without support for
-   * iteratee shorthands.
-   *
-   * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @param {*} [accumulator] The initial value.
-   * @param {boolean} [initAccum] Specify using the last element of `array` as
-   *  the initial value.
-   * @returns {*} Returns the accumulated value.
-   */ function arrayReduceRight(array, iteratee, accumulator, initAccum) {
+function arrayReduceRight(array, iteratee, accumulator, initAccum) {
         var length = array == null ? 0 : array.length;
         if (initAccum && length) accumulator = array[--length];
         while(length--)accumulator = iteratee(accumulator, array[length], length, array);
         return accumulator;
     }
-    /**
-   * A specialized version of `_.some` for arrays without support for iteratee
-   * shorthands.
-   *
-   * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} predicate The function invoked per iteration.
-   * @returns {boolean} Returns `true` if any element passes the predicate check,
-   *  else `false`.
-   */ function arraySome(array, predicate) {
+function arraySome(array, predicate) {
         var index = -1, length = array == null ? 0 : array.length;
         while(++index < length){
             if (predicate(array[index], index, array)) return true;
         }
         return false;
     }
-    /**
-   * Gets the size of an ASCII `string`.
-   *
-   * @private
-   * @param {string} string The string inspect.
-   * @returns {number} Returns the string size.
-   */ var asciiSize = baseProperty("length");
-    /**
-   * Converts an ASCII `string` to an array.
-   *
-   * @private
-   * @param {string} string The string to convert.
-   * @returns {Array} Returns the converted array.
-   */ function asciiToArray(string) {
+function asciiToArray(string) {
         return string.split("");
     }
-    /**
-   * Splits an ASCII `string` into an array of its words.
-   *
-   * @private
-   * @param {string} The string to inspect.
-   * @returns {Array} Returns the words of `string`.
-   */ function asciiWords(string) {
+function asciiWords(string) {
         return string.match(reAsciiWord) || [];
     }
-    /**
-   * The base implementation of methods like `_.findKey` and `_.findLastKey`,
-   * without support for iteratee shorthands, which iterates over `collection`
-   * using `eachFunc`.
-   *
-   * @private
-   * @param {Array|Object} collection The collection to inspect.
-   * @param {Function} predicate The function invoked per iteration.
-   * @param {Function} eachFunc The function to iterate over `collection`.
-   * @returns {*} Returns the found element or its key, else `undefined`.
-   */ function baseFindKey(collection, predicate, eachFunc) {
+function baseFindKey(collection, predicate, eachFunc) {
         var result;
         eachFunc(collection, function(value, key, collection) {
             if (predicate(value, key, collection)) {
@@ -10590,135 +8444,53 @@ var global = arguments[3];
         });
         return result;
     }
-    /**
-   * The base implementation of `_.findIndex` and `_.findLastIndex` without
-   * support for iteratee shorthands.
-   *
-   * @private
-   * @param {Array} array The array to inspect.
-   * @param {Function} predicate The function invoked per iteration.
-   * @param {number} fromIndex The index to search from.
-   * @param {boolean} [fromRight] Specify iterating from right to left.
-   * @returns {number} Returns the index of the matched value, else `-1`.
-   */ function baseFindIndex(array, predicate, fromIndex, fromRight) {
+function baseFindIndex(array, predicate, fromIndex, fromRight) {
         var length = array.length, index = fromIndex + (fromRight ? 1 : -1);
         while(fromRight ? index-- : ++index < length){
             if (predicate(array[index], index, array)) return index;
         }
         return -1;
     }
-    /**
-   * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
-   *
-   * @private
-   * @param {Array} array The array to inspect.
-   * @param {*} value The value to search for.
-   * @param {number} fromIndex The index to search from.
-   * @returns {number} Returns the index of the matched value, else `-1`.
-   */ function baseIndexOf(array, value, fromIndex) {
+function baseIndexOf(array, value, fromIndex) {
         return value === value ? strictIndexOf(array, value, fromIndex) : baseFindIndex(array, baseIsNaN, fromIndex);
     }
-    /**
-   * This function is like `baseIndexOf` except that it accepts a comparator.
-   *
-   * @private
-   * @param {Array} array The array to inspect.
-   * @param {*} value The value to search for.
-   * @param {number} fromIndex The index to search from.
-   * @param {Function} comparator The comparator invoked per element.
-   * @returns {number} Returns the index of the matched value, else `-1`.
-   */ function baseIndexOfWith(array, value, fromIndex, comparator) {
+function baseIndexOfWith(array, value, fromIndex, comparator) {
         var index = fromIndex - 1, length = array.length;
         while(++index < length){
             if (comparator(array[index], value)) return index;
         }
         return -1;
     }
-    /**
-   * The base implementation of `_.isNaN` without support for number objects.
-   *
-   * @private
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
-   */ function baseIsNaN(value) {
+function baseIsNaN(value) {
         return value !== value;
     }
-    /**
-   * The base implementation of `_.mean` and `_.meanBy` without support for
-   * iteratee shorthands.
-   *
-   * @private
-   * @param {Array} array The array to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @returns {number} Returns the mean.
-   */ function baseMean(array, iteratee) {
+function baseMean(array, iteratee) {
         var length = array == null ? 0 : array.length;
         return length ? baseSum(array, iteratee) / length : NAN;
     }
-    /**
-   * The base implementation of `_.property` without support for deep paths.
-   *
-   * @private
-   * @param {string} key The key of the property to get.
-   * @returns {Function} Returns the new accessor function.
-   */ function baseProperty(key) {
+function baseProperty(key) {
         return function(object) {
             return object == null ? undefined : object[key];
         };
     }
-    /**
-   * The base implementation of `_.propertyOf` without support for deep paths.
-   *
-   * @private
-   * @param {Object} object The object to query.
-   * @returns {Function} Returns the new accessor function.
-   */ function basePropertyOf(object) {
+function basePropertyOf(object) {
         return function(key) {
             return object == null ? undefined : object[key];
         };
     }
-    /**
-   * The base implementation of `_.reduce` and `_.reduceRight`, without support
-   * for iteratee shorthands, which iterates over `collection` using `eachFunc`.
-   *
-   * @private
-   * @param {Array|Object} collection The collection to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @param {*} accumulator The initial value.
-   * @param {boolean} initAccum Specify using the first or last element of
-   *  `collection` as the initial value.
-   * @param {Function} eachFunc The function to iterate over `collection`.
-   * @returns {*} Returns the accumulated value.
-   */ function baseReduce(collection, iteratee, accumulator, initAccum, eachFunc) {
+function baseReduce(collection, iteratee, accumulator, initAccum, eachFunc) {
         eachFunc(collection, function(value, index, collection) {
             accumulator = initAccum ? (initAccum = false, value) : iteratee(accumulator, value, index, collection);
         });
         return accumulator;
     }
-    /**
-   * The base implementation of `_.sortBy` which uses `comparer` to define the
-   * sort order of `array` and replaces criteria objects with their corresponding
-   * values.
-   *
-   * @private
-   * @param {Array} array The array to sort.
-   * @param {Function} comparer The function to define sort order.
-   * @returns {Array} Returns `array`.
-   */ function baseSortBy(array, comparer) {
+function baseSortBy(array, comparer) {
         var length = array.length;
         array.sort(comparer);
         while(length--)array[length] = array[length].value;
         return array;
     }
-    /**
-   * The base implementation of `_.sum` and `_.sumBy` without support for
-   * iteratee shorthands.
-   *
-   * @private
-   * @param {Array} array The array to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @returns {number} Returns the sum.
-   */ function baseSum(array, iteratee) {
+function baseSum(array, iteratee) {
         var result, index = -1, length = array.length;
         while(++index < length){
             var current = iteratee(array[index]);
@@ -10726,28 +8498,12 @@ var global = arguments[3];
         }
         return result;
     }
-    /**
-   * The base implementation of `_.times` without support for iteratee shorthands
-   * or max array length checks.
-   *
-   * @private
-   * @param {number} n The number of times to invoke `iteratee`.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @returns {Array} Returns the array of results.
-   */ function baseTimes(n, iteratee) {
+function baseTimes(n, iteratee) {
         var index = -1, result = Array(n);
         while(++index < n)result[index] = iteratee(index);
         return result;
     }
-    /**
-   * The base implementation of `_.toPairs` and `_.toPairsIn` which creates an array
-   * of key-value pairs for `object` corresponding to the property names of `props`.
-   *
-   * @private
-   * @param {Object} object The object to query.
-   * @param {Array} props The property names to get values for.
-   * @returns {Object} Returns the key-value pairs.
-   */ function baseToPairs(object, props) {
+function baseToPairs(object, props) {
         return arrayMap(props, function(key) {
             return [
                 key,
@@ -10755,158 +8511,57 @@ var global = arguments[3];
             ];
         });
     }
-    /**
-   * The base implementation of `_.trim`.
-   *
-   * @private
-   * @param {string} string The string to trim.
-   * @returns {string} Returns the trimmed string.
-   */ function baseTrim(string) {
+function baseTrim(string) {
         return string ? string.slice(0, trimmedEndIndex(string) + 1).replace(reTrimStart, "") : string;
     }
-    /**
-   * The base implementation of `_.unary` without support for storing metadata.
-   *
-   * @private
-   * @param {Function} func The function to cap arguments for.
-   * @returns {Function} Returns the new capped function.
-   */ function baseUnary(func) {
+function baseUnary(func) {
         return function(value) {
             return func(value);
         };
     }
-    /**
-   * The base implementation of `_.values` and `_.valuesIn` which creates an
-   * array of `object` property values corresponding to the property names
-   * of `props`.
-   *
-   * @private
-   * @param {Object} object The object to query.
-   * @param {Array} props The property names to get values for.
-   * @returns {Object} Returns the array of property values.
-   */ function baseValues(object, props) {
+function baseValues(object, props) {
         return arrayMap(props, function(key) {
             return object[key];
         });
     }
-    /**
-   * Checks if a `cache` value for `key` exists.
-   *
-   * @private
-   * @param {Object} cache The cache to query.
-   * @param {string} key The key of the entry to check.
-   * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
-   */ function cacheHas(cache, key) {
+function cacheHas(cache, key) {
         return cache.has(key);
     }
-    /**
-   * Used by `_.trim` and `_.trimStart` to get the index of the first string symbol
-   * that is not found in the character symbols.
-   *
-   * @private
-   * @param {Array} strSymbols The string symbols to inspect.
-   * @param {Array} chrSymbols The character symbols to find.
-   * @returns {number} Returns the index of the first unmatched string symbol.
-   */ function charsStartIndex(strSymbols, chrSymbols) {
+function charsStartIndex(strSymbols, chrSymbols) {
         var index = -1, length = strSymbols.length;
         while(++index < length && baseIndexOf(chrSymbols, strSymbols[index], 0) > -1);
         return index;
     }
-    /**
-   * Used by `_.trim` and `_.trimEnd` to get the index of the last string symbol
-   * that is not found in the character symbols.
-   *
-   * @private
-   * @param {Array} strSymbols The string symbols to inspect.
-   * @param {Array} chrSymbols The character symbols to find.
-   * @returns {number} Returns the index of the last unmatched string symbol.
-   */ function charsEndIndex(strSymbols, chrSymbols) {
+function charsEndIndex(strSymbols, chrSymbols) {
         var index = strSymbols.length;
         while((index--) && baseIndexOf(chrSymbols, strSymbols[index], 0) > -1);
         return index;
     }
-    /**
-   * Gets the number of `placeholder` occurrences in `array`.
-   *
-   * @private
-   * @param {Array} array The array to inspect.
-   * @param {*} placeholder The placeholder to search for.
-   * @returns {number} Returns the placeholder count.
-   */ function countHolders(array, placeholder) {
+function countHolders(array, placeholder) {
         var length = array.length, result = 0;
         while(length--)if (array[length] === placeholder) ++result;
         return result;
     }
-    /**
-   * Used by `_.deburr` to convert Latin-1 Supplement and Latin Extended-A
-   * letters to basic Latin letters.
-   *
-   * @private
-   * @param {string} letter The matched letter to deburr.
-   * @returns {string} Returns the deburred letter.
-   */ var deburrLetter = basePropertyOf(deburredLetters);
-    /**
-   * Used by `_.escape` to convert characters to HTML entities.
-   *
-   * @private
-   * @param {string} chr The matched character to escape.
-   * @returns {string} Returns the escaped character.
-   */ var escapeHtmlChar = basePropertyOf(htmlEscapes);
-    /**
-   * Used by `_.template` to escape characters for inclusion in compiled string literals.
-   *
-   * @private
-   * @param {string} chr The matched character to escape.
-   * @returns {string} Returns the escaped character.
-   */ function escapeStringChar(chr) {
+var deburrLetter = basePropertyOf(deburredLetters);
+var escapeHtmlChar = basePropertyOf(htmlEscapes);
+function escapeStringChar(chr) {
         return "\\" + stringEscapes[chr];
     }
-    /**
-   * Gets the value at `key` of `object`.
-   *
-   * @private
-   * @param {Object} [object] The object to query.
-   * @param {string} key The key of the property to get.
-   * @returns {*} Returns the property value.
-   */ function getValue(object, key) {
+function getValue(object, key) {
         return object == null ? undefined : object[key];
     }
-    /**
-   * Checks if `string` contains Unicode symbols.
-   *
-   * @private
-   * @param {string} string The string to inspect.
-   * @returns {boolean} Returns `true` if a symbol is found, else `false`.
-   */ function hasUnicode(string) {
+function hasUnicode(string) {
         return reHasUnicode.test(string);
     }
-    /**
-   * Checks if `string` contains a word composed of Unicode symbols.
-   *
-   * @private
-   * @param {string} string The string to inspect.
-   * @returns {boolean} Returns `true` if a word is found, else `false`.
-   */ function hasUnicodeWord(string) {
+function hasUnicodeWord(string) {
         return reHasUnicodeWord.test(string);
     }
-    /**
-   * Converts `iterator` to an array.
-   *
-   * @private
-   * @param {Object} iterator The iterator to convert.
-   * @returns {Array} Returns the converted array.
-   */ function iteratorToArray(iterator) {
+function iteratorToArray(iterator) {
         var data, result = [];
         while(!(data = iterator.next()).done)result.push(data.value);
         return result;
     }
-    /**
-   * Converts `map` to its key-value pairs.
-   *
-   * @private
-   * @param {Object} map The map to convert.
-   * @returns {Array} Returns the key-value pairs.
-   */ function mapToArray(map) {
+function mapToArray(map) {
         var index = -1, result = Array(map.size);
         map.forEach(function(value, key) {
             result[++index] = [
@@ -10916,27 +8571,12 @@ var global = arguments[3];
         });
         return result;
     }
-    /**
-   * Creates a unary function that invokes `func` with its argument transformed.
-   *
-   * @private
-   * @param {Function} func The function to wrap.
-   * @param {Function} transform The argument transform.
-   * @returns {Function} Returns the new function.
-   */ function overArg(func, transform) {
+function overArg(func, transform) {
         return function(arg) {
             return func(transform(arg));
         };
     }
-    /**
-   * Replaces all `placeholder` elements in `array` with an internal placeholder
-   * and returns an array of their indexes.
-   *
-   * @private
-   * @param {Array} array The array to modify.
-   * @param {*} placeholder The placeholder to replace.
-   * @returns {Array} Returns the new array of placeholder indexes.
-   */ function replaceHolders(array, placeholder) {
+function replaceHolders(array, placeholder) {
         var index = -1, length = array.length, resIndex = 0, result = [];
         while(++index < length){
             var value = array[index];
@@ -10947,26 +8587,14 @@ var global = arguments[3];
         }
         return result;
     }
-    /**
-   * Converts `set` to an array of its values.
-   *
-   * @private
-   * @param {Object} set The set to convert.
-   * @returns {Array} Returns the values.
-   */ function setToArray(set) {
+function setToArray(set) {
         var index = -1, result = Array(set.size);
         set.forEach(function(value) {
             result[++index] = value;
         });
         return result;
     }
-    /**
-   * Converts `set` to its value-value pairs.
-   *
-   * @private
-   * @param {Object} set The set to convert.
-   * @returns {Array} Returns the value-value pairs.
-   */ function setToPairs(set) {
+function setToPairs(set) {
         var index = -1, result = Array(set.size);
         set.forEach(function(value) {
             result[++index] = [
@@ -10976,133 +8604,44 @@ var global = arguments[3];
         });
         return result;
     }
-    /**
-   * A specialized version of `_.indexOf` which performs strict equality
-   * comparisons of values, i.e. `===`.
-   *
-   * @private
-   * @param {Array} array The array to inspect.
-   * @param {*} value The value to search for.
-   * @param {number} fromIndex The index to search from.
-   * @returns {number} Returns the index of the matched value, else `-1`.
-   */ function strictIndexOf(array, value, fromIndex) {
+function strictIndexOf(array, value, fromIndex) {
         var index = fromIndex - 1, length = array.length;
         while(++index < length){
             if (array[index] === value) return index;
         }
         return -1;
     }
-    /**
-   * A specialized version of `_.lastIndexOf` which performs strict equality
-   * comparisons of values, i.e. `===`.
-   *
-   * @private
-   * @param {Array} array The array to inspect.
-   * @param {*} value The value to search for.
-   * @param {number} fromIndex The index to search from.
-   * @returns {number} Returns the index of the matched value, else `-1`.
-   */ function strictLastIndexOf(array, value, fromIndex) {
+function strictLastIndexOf(array, value, fromIndex) {
         var index = fromIndex + 1;
         while(index--){
             if (array[index] === value) return index;
         }
         return index;
     }
-    /**
-   * Gets the number of symbols in `string`.
-   *
-   * @private
-   * @param {string} string The string to inspect.
-   * @returns {number} Returns the string size.
-   */ function stringSize(string) {
+function stringSize(string) {
         return hasUnicode(string) ? unicodeSize(string) : asciiSize(string);
     }
-    /**
-   * Converts `string` to an array.
-   *
-   * @private
-   * @param {string} string The string to convert.
-   * @returns {Array} Returns the converted array.
-   */ function stringToArray(string) {
+function stringToArray(string) {
         return hasUnicode(string) ? unicodeToArray(string) : asciiToArray(string);
     }
-    /**
-   * Used by `_.trim` and `_.trimEnd` to get the index of the last non-whitespace
-   * character of `string`.
-   *
-   * @private
-   * @param {string} string The string to inspect.
-   * @returns {number} Returns the index of the last non-whitespace character.
-   */ function trimmedEndIndex(string) {
+function trimmedEndIndex(string) {
         var index = string.length;
         while(index-- && reWhitespace.test(string.charAt(index)));
         return index;
     }
-    /**
-   * Used by `_.unescape` to convert HTML entities to characters.
-   *
-   * @private
-   * @param {string} chr The matched character to unescape.
-   * @returns {string} Returns the unescaped character.
-   */ var unescapeHtmlChar = basePropertyOf(htmlUnescapes);
-    /**
-   * Gets the size of a Unicode `string`.
-   *
-   * @private
-   * @param {string} string The string inspect.
-   * @returns {number} Returns the string size.
-   */ function unicodeSize(string) {
+var unescapeHtmlChar = basePropertyOf(htmlUnescapes);
+function unicodeSize(string) {
         var result = reUnicode.lastIndex = 0;
         while(reUnicode.test(string))++result;
         return result;
     }
-    /**
-   * Converts a Unicode `string` to an array.
-   *
-   * @private
-   * @param {string} string The string to convert.
-   * @returns {Array} Returns the converted array.
-   */ function unicodeToArray(string) {
+function unicodeToArray(string) {
         return string.match(reUnicode) || [];
     }
-    /**
-   * Splits a Unicode `string` into an array of its words.
-   *
-   * @private
-   * @param {string} The string to inspect.
-   * @returns {Array} Returns the words of `string`.
-   */ function unicodeWords(string) {
+function unicodeWords(string) {
         return string.match(reUnicodeWord) || [];
     }
-    /*--------------------------------------------------------------------------*/ /**
-   * Create a new pristine `lodash` function using the `context` object.
-   *
-   * @static
-   * @memberOf _
-   * @since 1.1.0
-   * @category Util
-   * @param {Object} [context=root] The context object.
-   * @returns {Function} Returns a new `lodash` function.
-   * @example
-   *
-   * _.mixin({ 'foo': _.constant('foo') });
-   *
-   * var lodash = _.runInContext();
-   * lodash.mixin({ 'bar': lodash.constant('bar') });
-   *
-   * _.isFunction(_.foo);
-   * // => true
-   * _.isFunction(_.bar);
-   * // => false
-   *
-   * lodash.isFunction(lodash.foo);
-   * // => false
-   * lodash.isFunction(lodash.bar);
-   * // => true
-   *
-   * // Create a suped-up `defer` in Node.js.
-   * var defer = _.runInContext({ 'setTimeout': setImmediate }).defer;
-   */ var runInContext = function runInContext(context) {
+var runInContext = function runInContext(context) {
         context = context == null ? root : _.defaults(root.Object(), context, _.pick(root, contextProps));
         /** Built-in constructor references. */ var Array1 = context.Array, Date = context.Date, Error = context.Error, Function1 = context.Function, Math = context.Math, Object1 = context.Object, RegExp1 = context.RegExp, String = context.String, TypeError = context.TypeError;
         /** Used for built-in method references. */ var arrayProto = Array1.prototype, funcProto = Function1.prototype, objectProto = Object1.prototype;
@@ -11114,11 +8653,7 @@ var global = arguments[3];
             var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || "");
             return uid ? "Symbol(src)_1." + uid : "";
         }();
-        /**
-     * Used to resolve the
-     * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-     * of values.
-     */ var nativeObjectToString = objectProto.toString;
+var nativeObjectToString = objectProto.toString;
         /** Used to infer the `Object` constructor. */ var objectCtorString = funcToString.call(Object1);
         /** Used to restore the original `_` reference in `_.noConflict`. */ var oldDash = root._;
         /** Used to detect if a method is native. */ var reIsNative = RegExp1("^" + funcToString.call(hasOwnProperty).replace(reRegExpChar, "\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, "$1.*?") + "$");
@@ -11137,137 +8672,14 @@ var global = arguments[3];
         /** Used to lookup unminified function names. */ var realNames = {};
         /** Used to detect maps, sets, and weakmaps. */ var dataViewCtorString = toSource(DataView), mapCtorString = toSource(Map), promiseCtorString = toSource(Promise), setCtorString = toSource(Set), weakMapCtorString = toSource(WeakMap);
         /** Used to convert symbols to primitives and strings. */ var symbolProto = Symbol ? Symbol.prototype : undefined, symbolValueOf = symbolProto ? symbolProto.valueOf : undefined, symbolToString = symbolProto ? symbolProto.toString : undefined;
-        /*------------------------------------------------------------------------*/ /**
-     * Creates a `lodash` object which wraps `value` to enable implicit method
-     * chain sequences. Methods that operate on and return arrays, collections,
-     * and functions can be chained together. Methods that retrieve a single value
-     * or may return a primitive value will automatically end the chain sequence
-     * and return the unwrapped value. Otherwise, the value must be unwrapped
-     * with `_#value`.
-     *
-     * Explicit chain sequences, which must be unwrapped with `_#value`, may be
-     * enabled using `_.chain`.
-     *
-     * The execution of chained methods is lazy, that is, it's deferred until
-     * `_#value` is implicitly or explicitly called.
-     *
-     * Lazy evaluation allows several methods to support shortcut fusion.
-     * Shortcut fusion is an optimization to merge iteratee calls; this avoids
-     * the creation of intermediate arrays and can greatly reduce the number of
-     * iteratee executions. Sections of a chain sequence qualify for shortcut
-     * fusion if the section is applied to an array and iteratees accept only
-     * one argument. The heuristic for whether a section qualifies for shortcut
-     * fusion is subject to change.
-     *
-     * Chaining is supported in custom builds as long as the `_#value` method is
-     * directly or indirectly included in the build.
-     *
-     * In addition to lodash methods, wrappers have `Array` and `String` methods.
-     *
-     * The wrapper `Array` methods are:
-     * `concat`, `join`, `pop`, `push`, `shift`, `sort`, `splice`, and `unshift`
-     *
-     * The wrapper `String` methods are:
-     * `replace` and `split`
-     *
-     * The wrapper methods that support shortcut fusion are:
-     * `at`, `compact`, `drop`, `dropRight`, `dropWhile`, `filter`, `find`,
-     * `findLast`, `head`, `initial`, `last`, `map`, `reject`, `reverse`, `slice`,
-     * `tail`, `take`, `takeRight`, `takeRightWhile`, `takeWhile`, and `toArray`
-     *
-     * The chainable wrapper methods are:
-     * `after`, `ary`, `assign`, `assignIn`, `assignInWith`, `assignWith`, `at`,
-     * `before`, `bind`, `bindAll`, `bindKey`, `castArray`, `chain`, `chunk`,
-     * `commit`, `compact`, `concat`, `conforms`, `constant`, `countBy`, `create`,
-     * `curry`, `debounce`, `defaults`, `defaultsDeep`, `defer`, `delay`,
-     * `difference`, `differenceBy`, `differenceWith`, `drop`, `dropRight`,
-     * `dropRightWhile`, `dropWhile`, `extend`, `extendWith`, `fill`, `filter`,
-     * `flatMap`, `flatMapDeep`, `flatMapDepth`, `flatten`, `flattenDeep`,
-     * `flattenDepth`, `flip`, `flow`, `flowRight`, `fromPairs`, `functions`,
-     * `functionsIn`, `groupBy`, `initial`, `intersection`, `intersectionBy`,
-     * `intersectionWith`, `invert`, `invertBy`, `invokeMap`, `iteratee`, `keyBy`,
-     * `keys`, `keysIn`, `map`, `mapKeys`, `mapValues`, `matches`, `matchesProperty`,
-     * `memoize`, `merge`, `mergeWith`, `method`, `methodOf`, `mixin`, `negate`,
-     * `nthArg`, `omit`, `omitBy`, `once`, `orderBy`, `over`, `overArgs`,
-     * `overEvery`, `overSome`, `partial`, `partialRight`, `partition`, `pick`,
-     * `pickBy`, `plant`, `property`, `propertyOf`, `pull`, `pullAll`, `pullAllBy`,
-     * `pullAllWith`, `pullAt`, `push`, `range`, `rangeRight`, `rearg`, `reject`,
-     * `remove`, `rest`, `reverse`, `sampleSize`, `set`, `setWith`, `shuffle`,
-     * `slice`, `sort`, `sortBy`, `splice`, `spread`, `tail`, `take`, `takeRight`,
-     * `takeRightWhile`, `takeWhile`, `tap`, `throttle`, `thru`, `toArray`,
-     * `toPairs`, `toPairsIn`, `toPath`, `toPlainObject`, `transform`, `unary`,
-     * `union`, `unionBy`, `unionWith`, `uniq`, `uniqBy`, `uniqWith`, `unset`,
-     * `unshift`, `unzip`, `unzipWith`, `update`, `updateWith`, `values`,
-     * `valuesIn`, `without`, `wrap`, `xor`, `xorBy`, `xorWith`, `zip`,
-     * `zipObject`, `zipObjectDeep`, and `zipWith`
-     *
-     * The wrapper methods that are **not** chainable by default are:
-     * `add`, `attempt`, `camelCase`, `capitalize`, `ceil`, `clamp`, `clone`,
-     * `cloneDeep`, `cloneDeepWith`, `cloneWith`, `conformsTo`, `deburr`,
-     * `defaultTo`, `divide`, `each`, `eachRight`, `endsWith`, `eq`, `escape`,
-     * `escapeRegExp`, `every`, `find`, `findIndex`, `findKey`, `findLast`,
-     * `findLastIndex`, `findLastKey`, `first`, `floor`, `forEach`, `forEachRight`,
-     * `forIn`, `forInRight`, `forOwn`, `forOwnRight`, `get`, `gt`, `gte`, `has`,
-     * `hasIn`, `head`, `identity`, `includes`, `indexOf`, `inRange`, `invoke`,
-     * `isArguments`, `isArray`, `isArrayBuffer`, `isArrayLike`, `isArrayLikeObject`,
-     * `isBoolean`, `isBuffer`, `isDate`, `isElement`, `isEmpty`, `isEqual`,
-     * `isEqualWith`, `isError`, `isFinite`, `isFunction`, `isInteger`, `isLength`,
-     * `isMap`, `isMatch`, `isMatchWith`, `isNaN`, `isNative`, `isNil`, `isNull`,
-     * `isNumber`, `isObject`, `isObjectLike`, `isPlainObject`, `isRegExp`,
-     * `isSafeInteger`, `isSet`, `isString`, `isUndefined`, `isTypedArray`,
-     * `isWeakMap`, `isWeakSet`, `join`, `kebabCase`, `last`, `lastIndexOf`,
-     * `lowerCase`, `lowerFirst`, `lt`, `lte`, `max`, `maxBy`, `mean`, `meanBy`,
-     * `min`, `minBy`, `multiply`, `noConflict`, `noop`, `now`, `nth`, `pad`,
-     * `padEnd`, `padStart`, `parseInt`, `pop`, `random`, `reduce`, `reduceRight`,
-     * `repeat`, `result`, `round`, `runInContext`, `sample`, `shift`, `size`,
-     * `snakeCase`, `some`, `sortedIndex`, `sortedIndexBy`, `sortedLastIndex`,
-     * `sortedLastIndexBy`, `startCase`, `startsWith`, `stubArray`, `stubFalse`,
-     * `stubObject`, `stubString`, `stubTrue`, `subtract`, `sum`, `sumBy`,
-     * `template`, `times`, `toFinite`, `toInteger`, `toJSON`, `toLength`,
-     * `toLower`, `toNumber`, `toSafeInteger`, `toString`, `toUpper`, `trim`,
-     * `trimEnd`, `trimStart`, `truncate`, `unescape`, `uniqueId`, `upperCase`,
-     * `upperFirst`, `value`, and `words`
-     *
-     * @name _
-     * @constructor
-     * @category Seq
-     * @param {*} value The value to wrap in a `lodash` instance.
-     * @returns {Object} Returns the new `lodash` wrapper instance.
-     * @example
-     *
-     * function square(n) {
-     *   return n * n;
-     * }
-     *
-     * var wrapped = _([1, 2, 3]);
-     *
-     * // Returns an unwrapped value.
-     * wrapped.reduce(_.add);
-     * // => 6
-     *
-     * // Returns a wrapped value.
-     * var squares = wrapped.map(square);
-     *
-     * _.isArray(squares);
-     * // => false
-     *
-     * _.isArray(squares.value());
-     * // => true
-     */ function lodash(value) {
+function lodash(value) {
             if (isObjectLike(value) && !isArray(value) && !(value instanceof LazyWrapper)) {
                 if (value instanceof LodashWrapper) return value;
                 if (hasOwnProperty.call(value, "__wrapped__")) return wrapperClone(value);
             }
             return new LodashWrapper(value);
         }
-        /**
-     * The base implementation of `_.create` without support for assigning
-     * properties to the created object.
-     *
-     * @private
-     * @param {Object} proto The object to inherit from.
-     * @returns {Object} Returns the new object.
-     */ var baseCreate = function() {
+var baseCreate = function() {
             function object() {}
             return function(proto) {
                 if (!isObject(proto)) return {};
@@ -11278,71 +8690,23 @@ var global = arguments[3];
                 return result;
             };
         }();
-        /**
-     * The function whose prototype chain sequence wrappers inherit from.
-     *
-     * @private
-     */ function baseLodash() {
+function baseLodash() {
         // No operation performed.
         }
-        /**
-     * The base constructor for creating `lodash` wrapper objects.
-     *
-     * @private
-     * @param {*} value The value to wrap.
-     * @param {boolean} [chainAll] Enable explicit method chain sequences.
-     */ function LodashWrapper(value, chainAll) {
+function LodashWrapper(value, chainAll) {
             this.__wrapped__ = value;
             this.__actions__ = [];
             this.__chain__ = !!chainAll;
             this.__index__ = 0;
             this.__values__ = undefined;
         }
-        /**
-     * By default, the template delimiters used by lodash are like those in
-     * embedded Ruby (ERB) as well as ES2015 template strings. Change the
-     * following template settings to use alternative delimiters.
-     *
-     * @static
-     * @memberOf _
-     * @type {Object}
-     */ lodash.templateSettings = {
-            /**
-       * Used to detect `data` property values to be HTML-escaped.
-       *
-       * @memberOf _.templateSettings
-       * @type {RegExp}
-       */ "escape": reEscape,
-            /**
-       * Used to detect code to be evaluated.
-       *
-       * @memberOf _.templateSettings
-       * @type {RegExp}
-       */ "evaluate": reEvaluate,
-            /**
-       * Used to detect `data` property values to inject.
-       *
-       * @memberOf _.templateSettings
-       * @type {RegExp}
-       */ "interpolate": reInterpolate,
-            /**
-       * Used to reference the data object in the template text.
-       *
-       * @memberOf _.templateSettings
-       * @type {string}
-       */ "variable": "",
-            /**
-       * Used to import variables into the compiled template.
-       *
-       * @memberOf _.templateSettings
-       * @type {Object}
-       */ "imports": {
-                /**
-         * A reference to the `lodash` function.
-         *
-         * @memberOf _.templateSettings.imports
-         * @type {Function}
-         */ "_": lodash
+lodash.templateSettings = {
+"escape": reEscape,
+"evaluate": reEvaluate,
+"interpolate": reInterpolate,
+"variable": "",
+"imports": {
+"_": lodash
             }
         };
         // Ensure wrappers are instances of `baseLodash`.
@@ -11350,13 +8714,7 @@ var global = arguments[3];
         lodash.prototype.constructor = lodash;
         LodashWrapper.prototype = baseCreate(baseLodash.prototype);
         LodashWrapper.prototype.constructor = LodashWrapper;
-        /*------------------------------------------------------------------------*/ /**
-     * Creates a lazy wrapper object which wraps `value` to enable lazy evaluation.
-     *
-     * @private
-     * @constructor
-     * @param {*} value The value to wrap.
-     */ function LazyWrapper(value) {
+function LazyWrapper(value) {
             this.__wrapped__ = value;
             this.__actions__ = [];
             this.__dir__ = 1;
@@ -11365,14 +8723,7 @@ var global = arguments[3];
             this.__takeCount__ = MAX_ARRAY_LENGTH;
             this.__views__ = [];
         }
-        /**
-     * Creates a clone of the lazy wrapper object.
-     *
-     * @private
-     * @name clone
-     * @memberOf LazyWrapper
-     * @returns {Object} Returns the cloned `LazyWrapper` object.
-     */ function lazyClone() {
+function lazyClone() {
             var result = new LazyWrapper(this.__wrapped__);
             result.__actions__ = copyArray(this.__actions__);
             result.__dir__ = this.__dir__;
@@ -11382,14 +8733,7 @@ var global = arguments[3];
             result.__views__ = copyArray(this.__views__);
             return result;
         }
-        /**
-     * Reverses the direction of lazy iteration.
-     *
-     * @private
-     * @name reverse
-     * @memberOf LazyWrapper
-     * @returns {Object} Returns the new reversed `LazyWrapper` object.
-     */ function lazyReverse() {
+function lazyReverse() {
             if (this.__filtered__) {
                 var result = new LazyWrapper(this);
                 result.__dir__ = -1;
@@ -11400,14 +8744,7 @@ var global = arguments[3];
             }
             return result;
         }
-        /**
-     * Extracts the unwrapped value from its lazy wrapper.
-     *
-     * @private
-     * @name value
-     * @memberOf LazyWrapper
-     * @returns {*} Returns the unwrapped value.
-     */ function lazyValue() {
+function lazyValue() {
             var array = this.__wrapped__.value(), dir = this.__dir__, isArr = isArray(array), isRight = dir < 0, arrLength = isArr ? array.length : 0, view = getView(0, arrLength, this.__views__), start = view.start, end = view.end, length = end - start, index = isRight ? end : start - 1, iteratees = this.__iteratees__, iterLength = iteratees.length, resIndex = 0, takeCount = nativeMin(length, this.__takeCount__);
             if (!isArr || !isRight && arrLength == length && takeCount == length) return baseWrapperValue(array, this.__actions__);
             var result = [];
@@ -11429,13 +8766,7 @@ var global = arguments[3];
         // Ensure `LazyWrapper` is an instance of `baseLodash`.
         LazyWrapper.prototype = baseCreate(baseLodash.prototype);
         LazyWrapper.prototype.constructor = LazyWrapper;
-        /*------------------------------------------------------------------------*/ /**
-     * Creates a hash object.
-     *
-     * @private
-     * @constructor
-     * @param {Array} [entries] The key-value pairs to cache.
-     */ function Hash(entries) {
+function Hash(entries) {
             var index = -1, length = entries == null ? 0 : entries.length;
             this.clear();
             while(++index < length){
@@ -64485,46 +61816,7 @@ function _typeof(obj) {
 function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
 }
-/* eslint-disable no-bitwise -- used for calculations */ /* eslint-disable unicorn/prefer-query-selector -- aiming at
-  backward-compatibility */ /**
-* StackBlur - a fast almost Gaussian Blur For Canvas
-*
-* In case you find this class useful - especially in commercial projects -
-* I am not totally unhappy for a small donation to my PayPal account
-* mario@quasimondo.de
-*
-* Or support me on flattr:
-* {@link https://flattr.com/thing/72791/StackBlur-a-fast-almost-Gaussian-Blur-Effect-for-CanvasJavascript}.
-*
-* @module StackBlur
-* @author Mario Klingemann
-* Contact: mario@quasimondo.com
-* Website: {@link http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html}
-* Twitter: @quasimondo
-*
-* @copyright (c) 2010 Mario Klingemann
-*
-* Permission is hereby granted, free of charge, to any person
-* obtaining a copy of this software and associated documentation
-* files (the "Software"), to deal in the Software without
-* restriction, including without limitation the rights to use,
-* copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the
-* Software is furnished to do so, subject to the following
-* conditions:
-*
-* The above copyright notice and this permission notice shall be
-* included in all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-* OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-* NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-* HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-* WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-* OTHER DEALINGS IN THE SOFTWARE.
-*/ var mulTable = [
+var mulTable = [
     512,
     512,
     456,
@@ -67021,26 +64313,7 @@ module.exports.codes = codes;
 
 },{"../assert":"f3tT4","util/":"cxohQ"}],"cxohQ":[function(require,module,exports) {
 var process = require("process");
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function getOwnPropertyDescriptors(obj) {
     var keys = Object.keys(obj);
     var descriptors = {};
@@ -67079,9 +64352,7 @@ exports.format = function(f) {
     else str += " " + inspect(x);
     return str;
 };
-// Mark that a method should not be used.
-// Returns a modified function which warns once by default.
-// If --no-deprecation is set, then it is a no-op.
+
 exports.deprecate = function(fn, msg) {
     if (typeof process !== "undefined" && process.noDeprecation === true) return fn;
     // Allow for deprecating things in the process of starting up.
@@ -67116,13 +64387,7 @@ exports.debuglog = function(set) {
     }
     return debugs[set];
 };
-/**
- * Echos the value of a value. Trys to print the value out
- * in the best way possible given the different types.
- *
- * @param {Object} obj The object to print out.
- * @param {Object} opts Optional options object that alters the output.
- */ /* legacy: obj, showHidden, depth, colors*/ function inspect(obj, opts) {
+function inspect(obj, opts) {
     // default options
     var ctx = {
         seen: [],
@@ -68989,22 +66254,13 @@ function createErrDiff(actual, expected, operator) {
             // a trailing comma. In that case it is actually identical and we should
             // mark it as such.
             var divergingLines = actualLine !== expectedLine && (!endsWith(actualLine, ",") || actualLine.slice(0, -1) !== expectedLine); // If the expected line has a trailing comma but is otherwise identical,
-            // add a comma at the end of the actual line. Otherwise the output could
-            // look weird as in:
-            //
-            //   [
-            //     1         // No comma at the end!
-            // +   2
-            //   ]
-            //
+
             if (divergingLines && endsWith(expectedLine, ",") && expectedLine.slice(0, -1) === actualLine) {
                 divergingLines = false;
                 actualLine += ",";
             }
             if (divergingLines) {
-                // If the last diverging line is more than one line above and the
-                // current line is at least line three, add some of the former lines and
-                // also add dots to indicate skipped entries.
+
                 if (cur > 1 && i > 2) {
                     if (cur > 4) {
                         res += "\n".concat(blue, "...").concat(white);
@@ -69131,10 +66387,7 @@ var AssertionError = /*#__PURE__*/ function(_Error) {
         {
             key: inspect.custom,
             value: function value(recurseTimes, ctx) {
-                // This limits the `actual` and `expected` property default inspection to
-                // the minimum depth. Otherwise those values would be too verbose compared
-                // to the actual error message which contains a combined view of these two
-                // input values.
+
                 return inspect(this, _objectSpread({}, ctx, {
                     customInspect: false,
                     depth: 0
@@ -76047,8 +73300,7 @@ typeof navigator !== "undefined" && function(global, factory) {
                 this.fonts.push(fontArr[i]);
             }
             if (_pendingFonts === 0) this.isLoaded = true;
-            else // On some cases even if the font is loaded, it won't load correctly when measuring text on canvas.
-            // Adding this timeout seems to fix it
+            else
             setTimeout(this.checkLoadedFonts.bind(this), 100);
         }
         function addChars(chars) {
@@ -76383,17 +73635,10 @@ typeof navigator !== "undefined" && function(global, factory) {
         },
         sourceRectAtTime: function sourceRectAtTime() {}
     };
-    /**
-   * @file
-   * Handles element's layer frame update.
-   * Checks layer in point and out point
-   *
-   */ function FrameElement() {}
+function FrameElement() {}
     FrameElement.prototype = {
         /**
        * @function
-       * Initializes frame related properties.
-       *
        */ initFrame: function initFrame() {
             // set to true when inpoint is rendered
             this._isFirstFrame = false; // list of animated properties
@@ -77331,8 +74576,6 @@ typeof navigator !== "undefined" && function(global, factory) {
         this.lStr = "";
         this.sh = shape;
         this.lvl = level; // TODO find if there are some cases where _isAnimated can be false.
-        // For now, since shapes add up with other shapes. They have to be calculated every time.
-        // One way of finding out is checking if all styles associated to this shape depend only of this shape
         this._isAnimated = !!shape.k; // TODO: commenting this for now since all shapes are animated
         var i = 0;
         var len = transformers.length;
@@ -78585,16 +75828,7 @@ typeof navigator !== "undefined" && function(global, factory) {
                         else mult = max(0, min(e - ind, 1));
                     }
                     mult = easer(mult);
-                } // Smoothness implementation.
-                // The smoothness represents a reduced range of the original [0; 1] range.
-                // if smoothness is 25%, the new range will be [0.375; 0.625]
-                // Steps are:
-                // - find the lower value of the new range (threshold)
-                // - if multiplier is smaller than that value, floor it to 0
-                // - if it is larger,
-                //     - subtract the threshold
-                //     - divide it by the smoothness (this will return the range to [0; 1])
-                // Note: If it doesn't work on some scenarios, consider applying it before the easer.
+                } 
                 if (this.sm.v !== 100) {
                     var smoothness = this.sm.v * 0.01;
                     if (smoothness === 0) smoothness = 0.00000001;
@@ -79260,10 +76494,6 @@ typeof navigator !== "undefined" && function(global, factory) {
         return textContents;
     };
     SVGTextLottieElement.prototype.buildShapeData = function(data, scale) {
-        // data should probably be cloned to apply scale separately to each instance of a text on different layers
-        // but since text internal content gets only rendered once and then it's never rerendered,
-        // it's probably safe not to clone data and reuse always the same instance even if the object is mutated.
-        // Avoiding cloning is preferred since cloning each character shape data is expensive
         if (data.shapes && data.shapes.length) {
             var shape = data.shapes[0];
             if (shape.it) {
@@ -79688,17 +76918,7 @@ typeof navigator !== "undefined" && function(global, factory) {
         if (this.data.xt || !globalData.progressiveLoad) this.buildAllItems();
         this.hide();
     };
-    /* ICompElement.prototype.hide = function(){
-      if(!this.hidden){
-          this.hideElement();
-          var i,len = this.elements.length;
-          for( i = 0; i < len; i+=1 ){
-              if(this.elements[i]){
-                  this.elements[i].hide();
-              }
-          }
-      }
-  }; */ ICompElement.prototype.prepareFrame = function(num) {
+ICompElement.prototype.prepareFrame = function(num) {
         this._mdf = false;
         this.prepareRenderableFrame(num);
         this.prepareProperties(num, this.isInRange);
@@ -82700,9 +79920,6 @@ typeof navigator !== "undefined" && function(global, factory) {
                     case "Contents":
                     case 2:
                         return interfaceFunction.content;
-                    // Not necessary for now. Keeping them here in case a new case appears
-                    // case 'ADBE Vector Transform Group':
-                    // case 3:
                     default:
                         return interfaceFunction.transform;
                 }
@@ -83202,41 +80419,12 @@ typeof navigator !== "undefined" && function(global, factory) {
         };
         return _typeof$1(obj);
     }
-    /* eslint-disable */ /*
-   Copyright 2014 David Bau.
-
-   Permission is hereby granted, free of charge, to any person obtaining
-   a copy of this software and associated documentation files (the
-   "Software"), to deal in the Software without restriction, including
-   without limitation the rights to use, copy, modify, merge, publish,
-   distribute, sublicense, and/or sell copies of the Software, and to
-   permit persons to whom the Software is furnished to do so, subject to
-   the following conditions:
-
-   The above copyright notice and this permission notice shall be
-   included in all copies or substantial portions of the Software.
-
-   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-   IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-   CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-   */ function seedRandom(pool, math) {
-        //
-        // The following constants are related to IEEE 754 limits.
-        //
+function seedRandom(pool, math) {
         var global = this, width = 256, // each RC4 output is 0 <= x < 256
         chunks = 6, // at least six RC4 outputs for each double
         digits = 52, // there are 52 significant digits in a double
         rngname = "random", // rngname: name for Math.random and Math.seedrandom
         startdenom = math.pow(width, chunks), significance = math.pow(2, digits), overflow = significance * 2, mask = width - 1, nodecrypto; // node.js crypto module, initialized at the bottom.
-        //
-        // seedrandom()
-        // This is the seedrandom function described above.
-        //
         function seedrandom(seed, options, callback) {
             var key = [];
             options = options === true ? {
@@ -83278,12 +80466,11 @@ typeof navigator !== "undefined" && function(global, factory) {
                 if (state) {
                     // Load the arc4 state from the given state if it has an S array.
                     if (state.S) copy(state, arc4);
-                     // Only provide the .state method if requested via options.state.
                     prng.state = function() {
                         return copy(arc4, {});
                     };
                 } // If called as a method of Math (Math.seedrandom()), mutate
-                // Math.random because that is how seedrandom.js has worked since v1.0.
+
                 if (is_math_call) {
                     math[rngname] = prng;
                     return seed;
@@ -83291,15 +80478,7 @@ typeof navigator !== "undefined" && function(global, factory) {
             })(prng, shortseed, "global" in options ? options.global : this == math, options.state);
         }
         math["seed" + rngname] = seedrandom; //
-        // ARC4
-        //
-        // An ARC4 implementation.  The constructor takes a key in the form of
-        // an array of at most (width) integers that should be 0 <= x < (width).
-        //
-        // The g(count) method returns a pseudorandom integer that concatenates
-        // the next (count) outputs from ARC4.  Its return value is a number x
-        // that is in the range 0 <= x < (width ^ count).
-        //
+
         function ARC4(key) {
             var t, keylen = key.length, me = this, i = 0, j = me.i = me.j = 0, s = me.S = []; // The empty key [] is treated as [0].
             if (!keylen) key = [
@@ -83321,22 +80500,15 @@ typeof navigator !== "undefined" && function(global, factory) {
                 me.i = i;
                 me.j = j;
                 return r; // For robust unpredictability, the function call below automatically
-            // discards an initial batch of values.  This is called RC4-drop[256].
-            // See http://google.com/search?q=rsa+fluhrer+response&btnI
             };
         } //
-        // copy()
-        // Copies internal state of ARC4 to or from a plain object.
-        //
+
         function copy(f, t) {
             t.i = f.i;
             t.j = f.j;
             t.S = f.S.slice();
             return t;
         } //
-        // flatten()
-        // Converts an object tree to nested arrays of strings.
-        //
         function flatten(obj, depth) {
             var result = [], typ = _typeof$1(obj), prop;
             if (depth && typ == "object") {
@@ -83346,19 +80518,13 @@ typeof navigator !== "undefined" && function(global, factory) {
             }
             return result.length ? result : typ == "string" ? obj : obj + "\0";
         } //
-        // mixkey()
-        // Mixes a string seed into a key that is an array of integers, and
-        // returns a shortened string seed that is equivalent to the result key.
-        //
+
         function mixkey(seed, key) {
             var stringseed = seed + "", smear, j = 0;
             while(j < stringseed.length)key[mask & j] = mask & (smear ^= key[mask & j] * 19) + stringseed.charCodeAt(j++);
             return tostring(key);
         } //
-        // autoseed()
-        // Returns an object for autoseeding, using window.crypto and Node crypto
-        // module if available.
-        //
+
         function autoseed() {
             try {
                 if (nodecrypto) return tostring(nodecrypto.randomBytes(width));
@@ -83376,23 +80542,11 @@ typeof navigator !== "undefined" && function(global, factory) {
                 ];
             }
         } //
-        // tostring()
-        // Converts an array of charcodes to a string
-        //
         function tostring(a) {
             return String.fromCharCode.apply(0, a);
         } //
-        // When seedrandom.js is loaded, we immediately mix a few bits
-        // from the built-in RNG into the entropy pool.  Because we do
-        // not want to interfere with deterministic PRNG state later,
-        // seedrandom will not call math.random on its own again after
-        // initialization.
-        //
+
         mixkey(math.random(), pool); //
-    // Nodejs and AMD support: export the implementation as a module using
-    // either convention.
-    //
-    // End anonymous scope, and pass initial values.
     }
     function initialize$2(BMMath) {
         seedRandom([], BMMath);
@@ -83729,7 +80883,6 @@ typeof navigator !== "undefined" && function(global, factory) {
             return path;
         }
         function initiateExpression(elem, data, property) {
-            // Bail out if we don't want expressions
             function noOp(_value) {
                 return _value;
             }
@@ -83966,7 +81119,6 @@ typeof navigator !== "undefined" && function(global, factory) {
             var randSeed = Math.floor(Math.random() * 1000000);
             var globalData = elem.globalData;
             function executeExpression(_value) {
-                // globalData.pushExpression();
                 value = _value;
                 if (this.frameExpressionId === elem.globalData.frameId && this.propType !== "textSelector") return value;
                 if (this.propType === "textSelector") {
@@ -84120,8 +81272,6 @@ typeof navigator !== "undefined" && function(global, factory) {
                 velocity = createTypedArray("float32", v1.length);
                 var i;
                 for(i = 0; i < v1.length; i += 1)// removing frameRate
-                // if needed, don't add it here
-                // velocity[i] = this.elem.globalData.frameRate*((v2[i] - v1[i])/delta);
                 velocity[i] = (v2[i] - v1[i]) / delta;
             } else velocity = (v2 - v1) / delta;
             return velocity;
@@ -84942,18 +82092,12 @@ typeof navigator !== "undefined" && function(global, factory) {
             // Empirical value, matching AE's blur appearance.
             var kBlurrinessToSigma = 0.3;
             var sigma = this.filterManager.effectElements[0].p.v * kBlurrinessToSigma; // Dimensions mapping:
-            //
-            //   1 -> horizontal & vertical
-            //   2 -> horizontal only
-            //   3 -> vertical only
-            //
+
             var dimensions = this.filterManager.effectElements[1].p.v;
             var sigmaX = dimensions == 3 ? 0 : sigma; // eslint-disable-line eqeqeq
             var sigmaY = dimensions == 2 ? 0 : sigma; // eslint-disable-line eqeqeq
             this.feGaussianBlur.setAttribute("stdDeviation", sigmaX + " " + sigmaY); // Repeat edges mapping:
-            //
-            //   0 -> off -> duplicate
-            //   1 -> on  -> wrap
+
             var edgeMode = this.filterManager.effectElements[2].p.v == 1 ? "wrap" : "duplicate"; // eslint-disable-line eqeqeq
             this.feGaussianBlur.setAttribute("edgeMode", edgeMode);
         }
@@ -85399,9 +82543,6 @@ class ScrollBar {
         this.tabHeight = window.innerHeight / (this.container.scrollHeight - window.innerHeight) * window.innerHeight;
         this.tab.style.height = `${this.tabHeight}px`;
         this.tab.style.transformOrigin = "0 0";
-        // anime.set(this.tab, {
-        //     scaleY : `${this.tabHeight * 100}%`
-        // })
         this.tab.style.background = "#ffffff";
         this.tab.style.width = "100%";
         this.y = 0;
