@@ -1,18 +1,16 @@
-import * as THREE from 'three'
+import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
-import { LoopSubdivision } from 'three-subdivide';
-import glb from '/icon.glb'
-import frag from '/shaders/mesh.frag'
-import meshdither from '/shaders/mesh.glsl'
-import headfrag from'/shaders/head.glsl'
-import vs from'/shaders/mesh.vert'
-import vertHead from '/shaders/vertex/head.vert'
-import vertBody from '/shaders/vertex/body.vert'
-import { times } from 'lodash';
+// import { LoopSubdivision } from 'three-subdivide'; // Only needed if your model uses subdivision
+import glb from '/icon.glb'; // Update with the correct path to your glb file
+import frag from '/shaders/mesh.frag';
+import meshdither from '/shaders/mesh.glsl';
+import headfrag from '/shaders/head.glsl';
+import vs from '/shaders/mesh.vert';
+import vertHead from '/shaders/vertex/head.vert';
+import vertBody from '/shaders/vertex/body.vert';
 
-
-const clamp = (num, min, max) => Math.min(Math.max(num, min), max)
+const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
 class ThreeD {
     constructor(pixelRatio, tier, app){ //lets set up our three.js scene
@@ -116,31 +114,38 @@ class ThreeD {
         this.renderer.setPixelRatio(pixelRatio)
     }
 
-    loadGlb(){
-        // Instantiate a loader
+    loadGlb() {
         const loader = new GLTFLoader();
-
-        // Optional: Provide a DRACOLoader instance to decode compressed mesh data
         const dracoLoader = new DRACOLoader();
         dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
-        loader.setDRACOLoader( dracoLoader );
+        loader.setDRACOLoader(dracoLoader);
 
-        return loader.loadAsync(glb).then((glb) => {
+        return loader.load(glb)
+            .then((gltf) => {
+                const geo = gltf.scene.children[0].geometry;
+                this.geometry = geo; 
+                this.mesh = new THREE.Mesh(this.geometry, this.material);
+                this.group.add(this.mesh);
+                this.mesh.geometry.computeBoundingBox();
 
-             const geo = glb.scene.children[0].geometry
-            // const smoothGeo = LoopSubdivision.modify(geo, 1)
-            // this.geometry = smoothGeo
-            this.geometry = geo
-            this.mesh = new THREE.Mesh(this.geometry, this.material)
-            //this.scene.add( this.mesh );
-            this.group.add(this.mesh)
-            this.mesh.geometry.computeBoundingBox()
-            this.mesh.rotation.x = Math.PI / 2 ;
-            
-            // this.mesh.rotation.y = THREE.MathUtils.degToRad(180)
-            this.ready()
-        })
+                // Choose ONE of the following scaling solutions:
 
+                // SOLUTION 1: If you've removed the scaling in SketchUp export
+                // this.mesh.scale.set(0.001, 0.001, 0.001); // Convert millimeters to meters 
+
+                // SOLUTION 2: If you cannot change the SketchUp export
+                this.mesh.scale.set(100, 100, 100);  // Counteract the 0.01 export scale 
+
+                this.mesh.rotation.x = Math.PI / 2; // Correct for Y-up to Z-up
+
+                // Logging for debugging:
+                console.log(this.mesh); 
+
+                this.ready();
+            })
+            .catch((error) => {
+                console.error('Error loading glb model:', error);
+            });
     }
 
 
