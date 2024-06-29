@@ -1,0 +1,10 @@
+<svg width="168" height="54" xmlns="http://www.w3.org/2000/svg" fill="none">
+
+ <g>
+  <title>Layer 1</title>
+  <rect id="svg_1" fill="white" rx="26.5" height="53" width="167" y="0.5" x="0.5"/>
+  <rect id="svg_2" stroke="#9B9B9B" rx="26.5" height="53" width="167" y="0.5" x="0.21429"/>
+  <path id="svg_3" fill="#090909" d="m30.336,17.84z"/>
+  <text transform="matrix(1.12902 0 0 1 -4.65283 0)" stroke="null" font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Varta'" font-size="24" stroke-width="0" id="svg_4" y="30.94737" x="33.32325" fill="#000000">Auto Cad</text>
+ </g>
+</svg>
